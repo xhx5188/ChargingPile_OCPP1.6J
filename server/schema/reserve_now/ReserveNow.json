@@ -1,0 +1,11 @@
+{
+        "connectorId": 1,
+        "expiryDate": "date-time",
+        "idTag": {
+            "type": "string",
+            "maxLength": 20
+        },
+        "reservationId": {
+            "type": "integer"
+        }
+}

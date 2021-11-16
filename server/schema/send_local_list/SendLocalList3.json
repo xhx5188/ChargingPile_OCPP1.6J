@@ -1,0 +1,27 @@
+{
+  "listVersion": 3,
+  "localAuthorizationList": [
+    {
+      "idTag": "111111",
+      "idTagInfo": {
+          "status": "Expired"
+      }
+    }, {
+      "idTag": "222222",
+      "idTagInfo": {
+          "status": "Expired"
+      }
+    }, {
+      "idTag": "333333",
+      "idTagInfo": {
+          "status": "Expired"
+      }
+    }, {
+      "idTag": "444444",
+      "idTagInfo": {
+          "status": "Expired"
+      }
+    }
+  ],
+  "updateType": "Full"
+}

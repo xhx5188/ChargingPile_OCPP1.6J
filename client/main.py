@@ -83,12 +83,22 @@ class ChargePoint(cp):
         response = await self.call(request)
         return response
 
+    async def send_heartbeat(self):
+        request = call.HeartbeatPayload(
+        )
+        response = await self.call(request)
+        return response
+
+
+
 
 
 
 async def main():
     async with websockets.connect(
-        'ws://192.168.31.186:9000/CP_1',
+        # 'ws://192.168.31.186:9000/CP_1',
+        # 'ws://0.0.0.0:9000/CP_1',
+        'ws://10.10.42.4:9000/CP_1',
         subprotocols=['ocpp1.6']
     ) as ws:
 
@@ -103,7 +113,6 @@ async def main():
         await asyncio.wait(tasks)
         logging.info('*' * 100)
 
-        # sleep(15)
         tasks = [cp.get_a_start(), cp.send_status_notification(0, "Available", "NoError")]
         await asyncio.wait(tasks)
         logging.info('*' * 100)
@@ -116,9 +125,23 @@ async def main():
         await asyncio.wait(tasks)
         logging.info('*' * 100)
 
+        tasks = [cp.get_a_start(), cp.send_heartbeat()]
+        await asyncio.wait(tasks)
+        logging.info('*' * 100)
+
         tasks = [cp.start()]
         await asyncio.wait(tasks)
         logging.info('*' * 100)
+
+        # tasks = [cp.start(), cp.send_boot_notification(), cp.send_start_transaction,
+        #          cp.send_status_notification(0, "Available", "NoError"), cp.send_status_notification(0, "Preparing", "NoError"),
+        #         cp.send_authorize(), cp.send_heartbeat()]
+        # tasks = [cp.start(), cp.send_authorize(), cp.send_heartbeat()]
+        # await asyncio.wait(tasks)
+
+        # responce = await asyncio.gather(cp.start(), cp.send_boot_notification(), cp.send_start_transaction,
+        #          cp.send_status_notification(0, "Available", "NoError"), cp.send_status_notification(0, "Preparing", "NoError"),
+        #         cp.send_authorize(), cp.send_heartbeat())
 
         while True:
             pass

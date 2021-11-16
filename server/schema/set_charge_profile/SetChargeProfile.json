@@ -1,0 +1,19 @@
+{
+  "connectorId": 1,
+  "csChargingProfiles": {
+    "chargingProfileId": 1,
+    "stackLevel": 1,
+    "chargingProfilePurpose": "ChargePointMaxProfile",
+    "chargingProfileKind": "Absolute",
+    "chargingSchedule": {
+      "chargingRateUnit": "W",
+      "chargingSchedulePeriod": [
+        {
+            "startPeriod": 0,
+            "limit": 8.1
+        }
+      ],
+      "minChargingRate": 8.1
+    }
+  }
+}
