@@ -1,4 +1,5 @@
 import asyncio
+import gc
 import json
 import logging
 import time
@@ -7,18 +8,20 @@ from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v16 import call_result
+from websockets.legacy.server import WebSocketServer
+
 
 class Value():
     bootnotification: int = 0
     chargePoint = None
-    connector = ["" for x in range(10)]
+    # connector = ["" for x in range(10)]
     connectorTotal = 10
 
     message_boot_notification = None
-    message_firmware_status_notification = None
+    message_firmware_status_notification = ""
     message_heartbeat = None
     message_meter_values = None
-    message_status_notification = [None for x in range(10)]
+    message_status_notification = [{} for x in range(10)]
 
 class ChargePoint(cp):
     @on(Action.Authorize)
@@ -35,7 +38,8 @@ class ChargePoint(cp):
         Value.message_boot_notification = kwargs
 
         return call_result.BootNotificationPayload(
-            current_time="2021-03-13T07:07:01.557Z",
+            # current_time="2021-03-13T07:07:01.557Z",
+            current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z'),
             interval=10,
             status=RegistrationStatus.accepted
         )
@@ -50,6 +54,7 @@ class ChargePoint(cp):
 
     @on(Action.FirmwareStatusNotification)
     def on_firmware_status_notification(self, **kwargs):
+        Value.message_firmware_status_notification = kwargs["status"]
         return call_result.FirmwareStatusNotificationPayload()
 
     @on(Action.Heartbeat)
@@ -68,7 +73,6 @@ class ChargePoint(cp):
     @on(Action.StatusNotification)
     def on_status_notification(self, **kwargs):
         connectorID = kwargs['connector_id']
-        Value.connector[connectorID] = kwargs['status']
         Value.message_status_notification[connectorID] = kwargs
         return call_result.StatusNotificationPayload()
 
@@ -116,22 +120,35 @@ async def on_connect(websocket, path):
 
 async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: int = 6) ->str:
     count = 0
-    while Value.connector[ConnectorID].lower() != expected_status.lower():
+    while Value.message_status_notification[ConnectorID].get("status") != expected_status.lower():
         await asyncio.sleep(10)
         count += 1
 
         if timeout == count:
-            return ""
-    return Value.connector[ConnectorID]
+            return Value.message_status_notification[ConnectorID]["status"]
+    return Value.message_status_notification[ConnectorID]["status"]
 
 
-def clearConnectorStatus():
-    for i in range(Value.connectorTotal):
-        Value.connector[i] = ""
+async def waitFirmwareStatus(expected_status: str, timeout: int = 30) ->str:
+    count = 0
+    while Value.message_firmware_status_notification != expected_status.lower():
+        await asyncio.sleep(10)
+        count += 1
+
+        if timeout == count:
+            return Value.message_firmware_status_notification
+    return Value.message_firmware_status_notification
+
 
 def clearTriggerMessage():
     Value.message_boot_notification = None
-    Value.message_firmware_status_notification = None
+    Value.message_firmware_status_notification = ""
     Value.message_heartbeat = None
     Value.message_meter_values = None
-    Value.message_status_notification = [None for x in range(10)]
+    Value.message_status_notification = [{} for x in range(10)]
+
+
+async def waitServerClose(server: WebSocketServer):
+    server.close()
+    gc.collect()
+    await asyncio.sleep(40)
