@@ -120,13 +120,13 @@ async def on_connect(websocket, path):
 
 async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: int = 6) ->str:
     count = 0
-    while Value.message_status_notification[ConnectorID].get("status") != expected_status.lower():
+    while Value.message_status_notification[ConnectorID].get("status") != expected_status:
         await asyncio.sleep(10)
         count += 1
 
         if timeout == count:
-            return Value.message_status_notification[ConnectorID]["status"]
-    return Value.message_status_notification[ConnectorID]["status"]
+            return Value.message_status_notification[ConnectorID].get("status")
+    return Value.message_status_notification[ConnectorID].get("status")
 
 
 async def waitFirmwareStatus(expected_status: str, timeout: int = 30) ->str:

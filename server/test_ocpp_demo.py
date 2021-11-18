@@ -112,23 +112,12 @@ async def test_get_and_change_configuration(event_loop):
     while Value.bootnotification == 0:
         await asyncio.sleep(1)
 
-    #获取配置信息
-    response = await service.getConfiguration(event_loop)
-    configs = response[0].configuration_key
-    logging.info(configs)
-    new_configs = [i for i in configs if i['readonly'] != True]
-    logging.info(new_configs)
-
     #改变配置信息
     response = await service.changeConfiguration(event_loop, key="LocalAuthListEnabled", value="false")
     assert response[0].status == RegistrationStatus.accepted
 
     # 获取配置信息
-    response = await service.getConfiguration(event_loop)
-    configs = response[0].configuration_key
-    new_configs = [i for i in configs if i['readonly'] != True]
-    logging.info(new_configs)
-    result = [i["value"] for i in new_configs if i["key"] == "LocalAuthListEnabled"]
+    result = await service.getConfiguration(event_loop, "LocalAuthListEnabled")
     assert result[0] == "false"
 
     # 改变配置信息
@@ -136,11 +125,7 @@ async def test_get_and_change_configuration(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 获取配置信息
-    response = await service.getConfiguration(event_loop)
-    configs = response[0].configuration_key
-    new_configs = [i for i in configs if i['readonly'] != True]
-    logging.info(new_configs)
-    result = [i["value"] for i in new_configs if i["key"] == "LocalAuthListEnabled"]
+    result = await service.getConfiguration(event_loop, "LocalAuthListEnabled")
     assert result[0] == "true"
 
     await waitServerClose(server)
