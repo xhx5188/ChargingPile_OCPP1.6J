@@ -25,13 +25,11 @@ async def changeAvailability(event_loop, connector_id: int, type: str):
     return response
 
 
-async def getConfiguration(event_loop, key: str):
-    request = call.GetConfigurationPayload()
+async def getConfiguration(event_loop, key: list = None):
+    request = call.GetConfigurationPayload(key)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)
-
-    configs = response[0].configuration_key
-    result = [i["value"] for i in configs if i["key"] == key]
+    result = response[0].configuration_key
     return result
 
 async def changeConfiguration(event_loop, key: str, value):

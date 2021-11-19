@@ -9,31 +9,19 @@ import websockets
 from ocpp.v16.enums import RegistrationStatus
 
 from server import service
-from server.connect import Value, on_connect, clearTriggerMessage, waitConnectorStatus, waitFirmwareStatus, \
-    waitServerClose, waitAuthorize
-
-
-def setup_function():
-    logging.info("testcase started")
-    clearTriggerMessage()
-
-
-def teardown_function():
-    Value.bootnotification = 0
-    logging.info("testcase finished")
+from server.connect import Value, on_connect, clearTriggerMessage, waitConnectorStatus, \
+    waitServerClose, waitRequest
 
 
 @pytest.mark.asyncio
 async def test_remote_start_transaction_cable_plugged(event_loop):
-    server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
-    logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
-        await asyncio.sleep(1)
+    flag = await waitRequest("boot_notification", 100)
+    assert flag == True
 
     # 获取配置信息"AuthorizeRemoteTxRequests"
-    result = await service.getConfiguration(event_loop, "AuthorizeRemoteTxRequests")
+    result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
-    assert result[0] == "true"
+    assert result[0]['value'] == "true"
 
     # 获取桩充电之前的状态
     status = await waitConnectorStatus(0, "Available")
@@ -43,7 +31,7 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test2-8_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -51,7 +39,7 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitAuthorize()
+    flag = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -61,26 +49,24 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     # 结束远程充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
+
+    # 获取桩结束充电之后的状态
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
-
-    await waitServerClose(server)
 
 
 @pytest.mark.asyncio
 async def test_remote_start_transaction(event_loop):
-    server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
-    logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
-        await asyncio.sleep(1)
+    flag = await waitRequest("boot_notification", 100)
+    assert flag == True
 
     # 获取配置信息"AuthorizeRemoteTxRequests"
-    result = await service.getConfiguration(event_loop, "AuthorizeRemoteTxRequests")
+    result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
-    assert result[0] == "true"
+    assert result[0]['value'] == "true"
 
     # 改变配置信息"MeterValueSampleInterval"
-    Value.bootnotification = 0
+    Value.flag_boot_notification = 0
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="3")
     assert response[0].status == RegistrationStatus.accepted
 
@@ -92,7 +78,7 @@ async def test_remote_start_transaction(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test2-8_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -100,7 +86,7 @@ async def test_remote_start_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitAuthorize()
+    flag = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -110,28 +96,26 @@ async def test_remote_start_transaction(event_loop):
     # 结束远程充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
+
+    # 获取结束充电后的状态
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
-
-    await waitServerClose(server)
 
 
 #timeout: 刷卡进入preparing,超时则进入available
 @pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
 async def test_remote_start_transaction_time_out(event_loop):
-    server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
-    logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
-        await asyncio.sleep(1)
+    flag = await waitRequest("boot_notification", 100)
+    assert flag == True
 
     # 获取配置信息"AuthorizeRemoteTxRequests"
-    result = await service.getConfiguration(event_loop, "AuthorizeRemoteTxRequests")
+    result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
-    assert result[0] == "true"
+    assert result[0]['value'] == "true"
 
     # 改变配置信息"ConnectionTimeOut"
-    Value.bootnotification = 0
+    Value.flag_boot_notification = 0
     response = await service.changeConfiguration(event_loop, key="ConnectionTimeOut", value="60")
     assert response[0].status == RegistrationStatus.accepted
 
@@ -143,7 +127,7 @@ async def test_remote_start_transaction_time_out(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test2-8_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -151,7 +135,7 @@ async def test_remote_start_transaction_time_out(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitAuthorize()
+    flag = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -165,20 +149,16 @@ async def test_remote_start_transaction_time_out(event_loop):
 
     # 拔枪。。。待补充
 
-    await waitServerClose(server)
-
 
 @pytest.mark.asyncio
 async def test_remote_stop_transaction(event_loop):
-    server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
-    logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
-        await asyncio.sleep(1)
+    flag = await waitRequest("boot_notification", 100)
+    assert flag == True
 
     # 获取配置信息"AuthorizeRemoteTxRequests"
-    result = await service.getConfiguration(event_loop, "AuthorizeRemoteTxRequests")
+    result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
-    assert result[0] == "true"
+    assert result[0]['value'] == "true"
 
     # 获取桩充电之前的状态
     status = await waitConnectorStatus(0, "Available")
@@ -188,7 +168,7 @@ async def test_remote_stop_transaction(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test2-8_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -196,7 +176,7 @@ async def test_remote_stop_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitAuthorize()
+    flag = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -208,5 +188,3 @@ async def test_remote_stop_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
-
-    await waitServerClose(server)

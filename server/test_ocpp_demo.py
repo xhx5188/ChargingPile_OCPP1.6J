@@ -21,7 +21,7 @@ def setup_function():
 
 
 def teardown_function():
-    Value.bootnotification = 0
+    Value.flag_boot_notification = 0
     logging.info("testcase finished")
 
 
@@ -29,7 +29,7 @@ def teardown_function():
 async def test_clear_cache1(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.clearCache(event_loop)
@@ -43,7 +43,7 @@ async def test_clear_cache1(event_loop):
 async def test_clear_cache2(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.clearCache(event_loop)
@@ -56,7 +56,7 @@ async def test_clear_cache2(event_loop):
 async def test_clear_cache3(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.clearCache(event_loop)
@@ -68,7 +68,7 @@ async def test_clear_cache3(event_loop):
 async def test_remote_start_and_stop_transaction(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     with open("./schema/remote_start_transaction/RemoteStartTransaction.json", 'r') as f:
@@ -93,7 +93,7 @@ async def test_remote_start_and_stop_transaction(event_loop):
 async def test_change_availability(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.changeAvailability(event_loop, connector_id=0, type="Inoperative")
@@ -109,7 +109,7 @@ async def test_change_availability(event_loop):
 async def test_get_and_change_configuration(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     #改变配置信息
@@ -135,7 +135,7 @@ async def test_get_and_change_configuration(event_loop):
 async def test_clear_cache(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.clearCache(event_loop)
@@ -149,7 +149,7 @@ async def test_clear_cache(event_loop):
 async def test_set_charging_profile(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     with open("./schema/set_charge_profile/SetChargeProfile.json", 'r') as f:
@@ -164,7 +164,7 @@ async def test_set_charging_profile(event_loop):
 async def test_clear_charge_profile(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     with open("./schema/clear_charge_profile/ClearChargeProfile.json", 'r') as f:
@@ -181,7 +181,7 @@ async def test_clear_charge_profile(event_loop):
 async def test_data_transfer(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.dataTransfer(event_loop, "AUTEL", "111", "data")
@@ -201,7 +201,7 @@ async def test_get_composite_schedule(event_loop):
 async def test_get_diagnostics(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.getDiagnostics(event_loop, '/diagnostics')
@@ -214,7 +214,7 @@ async def test_get_diagnostics(event_loop):
 async def test_send_get_local_list(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     # send local list to the charge point in case of full update
@@ -276,7 +276,7 @@ async def test_send_get_local_list(event_loop):
 async def test_reserve_now(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     expiry_date = (datetime.now() + timedelta(minutes=3)).strftime('%Y-%m-%dT%H:%M:%S.001Z')
@@ -291,20 +291,20 @@ async def test_reserve_now(event_loop):
 async def test_reset_hard(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.reset(event_loop, "Hard")
     logging.info(response)
     assert response[0].status == RegistrationStatus.accepted
     server.close()
-    Value.bootnotification = 0
+    Value.flag_boot_notification = 0
 
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
-    assert Value.bootnotification == 1
+    assert Value.flag_boot_notification == 1
 
     await waitServerClose(server)
 
@@ -313,7 +313,7 @@ async def test_reset_hard(event_loop):
 async def test_reset(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.reset(event_loop, "Hard")
@@ -326,7 +326,7 @@ async def test_reset(event_loop):
 async def test_reset_soft(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.reset(event_loop, "Soft")
@@ -339,7 +339,7 @@ async def test_reset_soft(event_loop):
 async def test_trigger_message_boot_notification(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     clearTriggerMessage()
@@ -358,7 +358,7 @@ async def test_trigger_message_boot_notification(event_loop):
 async def test_trigger_message_heartbeat(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.triggerMessage(event_loop, requested_message="Heartbeat")
@@ -371,7 +371,7 @@ async def test_trigger_message_heartbeat(event_loop):
 async def test_trigger_message_meter_values(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     clearTriggerMessage()
@@ -388,7 +388,7 @@ async def test_trigger_message_meter_values(event_loop):
 async def test_trigger_message_status_notification(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     clearTriggerMessage()
@@ -408,7 +408,7 @@ async def test_trigger_message_status_notification(event_loop):
 async def test_unlock_connector(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     response = await service.unlockConnector(event_loop, connector_id=1)
@@ -421,7 +421,7 @@ async def test_unlock_connector(event_loop):
 async def test_update_firmware(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.bootnotification == 0:
+    while Value.flag_boot_notification == 0:
         await asyncio.sleep(1)
 
     expiry_date = (datetime.utcnow() + timedelta(hours=1)).strftime('%Y-%m-%dT%H:%M:%S.123Z')
