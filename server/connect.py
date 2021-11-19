@@ -14,8 +14,8 @@ from websockets.legacy.server import WebSocketServer
 class Value():
     bootnotification: int = 0
     chargePoint = None
-    # connector = ["" for x in range(10)]
     connectorTotal = 10
+    flag_authorize = 0
 
     message_boot_notification = None
     message_firmware_status_notification = ""
@@ -26,6 +26,7 @@ class Value():
 class ChargePoint(cp):
     @on(Action.Authorize)
     def on_authorize(self, **kwargs):
+        Value.flag_authorize = 1
         return call_result.AuthorizePayload(
             id_tag_info={
                 "status": "Accepted"
@@ -121,7 +122,7 @@ async def on_connect(websocket, path):
 async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: int = 6) ->str:
     count = 0
     while Value.message_status_notification[ConnectorID].get("status") != expected_status:
-        await asyncio.sleep(10)
+        await asyncio.sleep(5)
         count += 1
 
         if timeout == count:
@@ -140,7 +141,18 @@ async def waitFirmwareStatus(expected_status: str, timeout: int = 30) ->str:
     return Value.message_firmware_status_notification
 
 
+async def waitAuthorize(timeout: int = 10) ->bool:
+    count = 0
+    while Value.flag_authorize != 1:
+        await asyncio.sleep(3)
+        count+= 1
+
+        if timeout == count:
+            return False
+    return True
+
 def clearTriggerMessage():
+    Value.flag_authorize = 0
     Value.message_boot_notification = None
     Value.message_firmware_status_notification = ""
     Value.message_heartbeat = None
@@ -151,4 +163,4 @@ def clearTriggerMessage():
 async def waitServerClose(server: WebSocketServer):
     server.close()
     gc.collect()
-    await asyncio.sleep(40)
+    await asyncio.sleep(12)

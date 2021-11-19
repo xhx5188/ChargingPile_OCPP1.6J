@@ -256,6 +256,19 @@ async def test_send_get_local_list(event_loop):
     logging.info(response)
     assert response[0].list_version == data.get("listVersion")
 
+    # send local list to the charge point in case of full update
+    with open("./schema/send_local_list/clearLocalList.json", 'r') as f:
+        data = json.load(f)
+    response = await service.sendLocalList(event_loop, list_version=data.get("listVersion"),
+                                           update_type=data.get("updateType"),
+                                           local_authorization_list=data.get("localAuthorizationList"))
+    assert response[0].status == RegistrationStatus.accepted
+
+    # get local list for the charge point
+    response = await service.getLocalList(event_loop)
+    logging.info(response)
+    assert response[0].list_version == 0
+
     await waitServerClose(server)
 
 
@@ -289,12 +302,8 @@ async def test_reset_hard(event_loop):
 
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    timeout = 0
-    while Value.bootnotification == 0 and timeout <= 60:
+    while Value.bootnotification == 0:
         await asyncio.sleep(1)
-        timeout += 1
-    if timeout > 60:
-        assert False
     assert Value.bootnotification == 1
 
     await waitServerClose(server)

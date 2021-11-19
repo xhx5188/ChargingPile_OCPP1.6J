@@ -13,6 +13,7 @@ from server.connect import Value, on_connect, clearTriggerMessage, waitConnector
 
 def setup_function():
     logging.info("testcase started")
+    clearTriggerMessage()
 
 
 def teardown_function():
