@@ -10,9 +10,6 @@ from server.connect import Value, clearTriggerMessage, waitConnectorStatus, wait
 
 @pytest.mark.asyncio
 async def test_hard_reset_without_transaction(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     #等待桩状态为可用
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
@@ -51,9 +48,6 @@ async def test_hard_reset_without_transaction(event_loop):
 
 @pytest.mark.asyncio
 async def test_soft_reset_without_transaction(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     #等待桩状态为可用
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
@@ -92,16 +86,12 @@ async def test_soft_reset_without_transaction(event_loop):
 
 @pytest.mark.asyncio
 async def test_hard_reset_with_transaction(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
 
     # 改变配置信息"MeterValueSampleInterval"
-    Value.flag_boot_notification = 0
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="15")
     assert response[0].status == RegistrationStatus.accepted
 
@@ -121,7 +111,7 @@ async def test_hard_reset_with_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitRequest("authorize")
+    flag, _ = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -134,11 +124,11 @@ async def test_hard_reset_with_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     #等待结束充电
-    flag = await waitRequest("stop_transaction")
+    flag, _ = await waitRequest("stop_transaction")
     assert flag == True
 
     #等待充电桩重启
-    flag = await waitRequest("boot_notification")
+    flag, _ = await waitRequest("boot_notification")
     assert flag == True
 
     # 等待桩状态为可用
@@ -150,16 +140,12 @@ async def test_hard_reset_with_transaction(event_loop):
 
 @pytest.mark.asyncio
 async def test_soft_reset_with_transaction(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
 
     # 改变配置信息"MeterValueSampleInterval"
-    Value.flag_boot_notification = 0
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="2")
     assert response[0].status == RegistrationStatus.accepted
 
@@ -179,7 +165,7 @@ async def test_soft_reset_with_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitRequest("authorize")
+    flag, _ = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -192,11 +178,11 @@ async def test_soft_reset_with_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     #等待结束充电
-    flag = await waitRequest("stop_transaction")
+    flag, _ = await waitRequest("stop_transaction")
     assert flag == True
 
     # 等待充电桩重启
-    flag = await waitRequest("boot_notification")
+    flag, _ = await waitRequest("boot_notification")
     assert flag == True
 
     # 等待桩状态为可用

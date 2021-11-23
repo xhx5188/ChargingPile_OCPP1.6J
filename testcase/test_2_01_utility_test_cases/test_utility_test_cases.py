@@ -9,9 +9,6 @@ from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 
 @pytest.mark.asyncio
 async def test_revert_charge_point_to_basic_idle_state1(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     # 改变配置信息"MeterValueSampleInterval"
     value = "1"
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value=value)
@@ -40,9 +37,6 @@ async def test_revert_charge_point_to_basic_idle_state1(event_loop):
 
 @pytest.mark.asyncio
 async def test_revert_charge_point_to_basic_idle_state2(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     #设置桩可用
     clearTriggerMessage()
     response = await service.changeAvailability(event_loop, connector_id=0, type="Operative")
@@ -58,9 +52,6 @@ async def test_revert_charge_point_to_basic_idle_state2(event_loop):
 
 @pytest.mark.asyncio
 async def test_revert_charge_point_to_basic_idle_state3(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     #清除缓存
     response = await service.clearCache(event_loop)
     assert response[0].status == RegistrationStatus.accepted

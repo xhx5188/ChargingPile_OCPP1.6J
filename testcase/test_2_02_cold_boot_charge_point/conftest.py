@@ -1,7 +1,7 @@
 import websockets
 from websockets.legacy.server import WebSocketServer
 
-from server.connect import waitServerClose
+from server.connect import waitServerClose, waitRequest
 
 import logging
 from datetime import datetime
@@ -17,9 +17,20 @@ from ocpp.v16 import call_result
 @pytest.fixture(scope="function", autouse=True)
 async def server():
     clearTriggerMessage()
+    Val.boot_reject_count = 0
+    Val.boot_response_status = RegistrationStatus.rejected
+    Val.last_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')
+    Val.current_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')
+    Val.interval = ""
+
     server: WebSocketServer = await websockets.serve(on_connect_boot_reject, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Special server Started listening to new connections...")
-    yield server
+    flag, _ = await waitRequest("boot_notification", 100)
+    if flag == True:
+        logging.info("the charge point has connected to this server")
+        yield server
+    else:
+        logging.info("the charge point connect to this server timeout, and close server.")
     await waitServerClose(server)
 
 

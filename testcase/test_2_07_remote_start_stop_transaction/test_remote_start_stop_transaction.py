@@ -15,9 +15,6 @@ from server.connect import Value, on_connect, clearTriggerMessage, waitConnector
 
 @pytest.mark.asyncio
 async def test_remote_start_transaction_cable_plugged(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
@@ -39,7 +36,7 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitRequest("authorize")
+    flag, _ = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -57,16 +54,12 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
 
 @pytest.mark.asyncio
 async def test_remote_start_transaction(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
 
     # 改变配置信息"MeterValueSampleInterval"
-    Value.flag_boot_notification = 0
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="3")
     assert response[0].status == RegistrationStatus.accepted
 
@@ -86,7 +79,7 @@ async def test_remote_start_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitRequest("authorize")
+    flag, _ = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -106,9 +99,6 @@ async def test_remote_start_transaction(event_loop):
 @pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
 async def test_remote_start_transaction_time_out(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
@@ -135,7 +125,7 @@ async def test_remote_start_transaction_time_out(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitRequest("authorize")
+    flag, _ = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -152,9 +142,6 @@ async def test_remote_start_transaction_time_out(event_loop):
 
 @pytest.mark.asyncio
 async def test_remote_stop_transaction(event_loop):
-    flag = await waitRequest("boot_notification", 100)
-    assert flag == True
-
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
@@ -176,7 +163,7 @@ async def test_remote_stop_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag = await waitRequest("authorize")
+    flag, _ = await waitRequest("authorize")
     assert flag == True
 
     # 获取桩充电之后的状态
