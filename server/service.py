@@ -98,7 +98,7 @@ async def getLocalList(event_loop):
 
 async def reserveNow(event_loop, connector_id: int, expiry_date: str, id_tag: str,
                         reservation_id: int, parent_id_tag: str = None):
-    request = call.ReserveNowPayload(connector_id, expiry_date, id_tag, reservation_id)
+    request = call.ReserveNowPayload(connector_id, expiry_date, id_tag, reservation_id, parent_id_tag)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)
     return response

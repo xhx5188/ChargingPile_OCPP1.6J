@@ -63,7 +63,6 @@ async def test_remote_start_transaction_connector_id_shall_not_be_0(event_loop):
     assert response[0].status == RegistrationStatus.rejected
 
 
-
 @pytest.mark.asyncio
 async def test_remote_stop_transaction_rejected(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"

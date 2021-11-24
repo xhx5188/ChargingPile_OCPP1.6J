@@ -8,9 +8,13 @@ from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 
 @pytest.mark.asyncio
 async def test_unlock_failure(event_loop):
-    pass
+    # 解锁枪
+    response = await service.unlockConnector(event_loop, connector_id=1)
+    assert response[0].status == "UnlockFailed"
 
 
 @pytest.mark.asyncio
-async def test_unlock_failure(event_loop):
-    pass
+async def test_unknown_connector(event_loop):
+    # 解锁枪
+    response = await service.unlockConnector(event_loop, connector_id=2)
+    assert response[0].status == "NotSupported"

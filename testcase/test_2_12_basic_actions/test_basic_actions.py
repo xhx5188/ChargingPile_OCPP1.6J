@@ -32,6 +32,7 @@ async def test_start_charging_session_authorize_invalid(event_loop):
     # _, msg = await waitRequest("authorize")
 
 
+@pytest.mark.skip(reason="需要socket版本的桩")
 @pytest.mark.asyncio
 async def test_start_charging_session_lock_failure(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"

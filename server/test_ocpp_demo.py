@@ -432,3 +432,7 @@ async def test_update_firmware(event_loop):
     assert status == "Installed"
 
     await waitServerClose(server)
+
+
+def test_1():
+    logging.warning("aaa")

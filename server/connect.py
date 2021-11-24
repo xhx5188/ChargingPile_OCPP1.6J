@@ -10,6 +10,7 @@ from websockets.legacy.server import WebSocketServer
 
 
 class Value():
+    server: WebSocketServer = None
     chargePoint = None
     transactionId = None
     connectorTotal = 10
@@ -35,6 +36,7 @@ def clearTriggerMessage():
     for k, _ in Value.flag.items():
         Value.flag[k] = None
 
+tmp = 1
 
 class ChargePoint(cp):
     @on(Action.Authorize)
@@ -50,6 +52,16 @@ class ChargePoint(cp):
     def on_boot_notification(self, **kwargs):
         Value.flag["boot_notification"] = kwargs
         Value.message_boot_notification = kwargs
+        global tmp
+        if tmp == 1:
+            tmp += 1
+            return call_result.BootNotificationPayload(
+                current_time="2048-00-00T00:00:00.000Z",
+                # current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z'),
+                interval=10,
+                status=RegistrationStatus.accepted
+            )
+
 
         return call_result.BootNotificationPayload(
             # current_time="2021-03-13T07:07:01.557Z",
@@ -164,11 +176,13 @@ async def waitRequest(requestType:str = "", timeout: int = 10):
     count = 0
     while not Value.flag.get(requestType):
         await asyncio.sleep(3)
-        count += 1
-
         if timeout == count:
             return False, Value.flag.get(requestType)
-    return True, Value.flag.get(requestType)
+        count += 1
+    msg = Value.flag[requestType]
+    # 清空上一个请求的内容，等待下一个请求
+    Value.flag[requestType] = None
+    return True, msg
 
 
 async def waitServerClose(server: WebSocketServer):

@@ -11,19 +11,18 @@ import websockets
 from ocpp.v16 import call
 from ocpp.v16.enums import RegistrationStatus, ResetType
 
-from server.connect import on_connect, Value
+from server.connect import on_connect, Value, waitRequest, waitServerClose
 
 loop = None
 
 async def main():
-    server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
+    Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    while Value.flag_boot_notification == 0:
-        await asyncio.sleep(1)
+    flag, _ = await waitRequest("boot_notification")
 
 
-    await asyncio.sleep(1000)
-    server.close()
+    # await asyncio.sleep(36000000)
+    await waitServerClose(Value.server)
 
 
 
