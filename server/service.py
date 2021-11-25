@@ -89,7 +89,7 @@ async def sendLocalList(event_loop, list_version: int, update_type, local_author
     return response
 
 
-async def getLocalList(event_loop):
+async def getLocalListVersion(event_loop):
     request = call.GetLocalListVersionPayload()
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)

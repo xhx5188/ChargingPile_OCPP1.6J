@@ -234,7 +234,6 @@ async def test_offline_start_transaction_3(event_loop):
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
-
     flag, msg = await waitRequest("stop_transaction")
     assert flag == True
     assert msg['reason'] == "DeAuthorized"
@@ -252,4 +251,110 @@ async def test_offline_start_transaction_3(event_loop):
 
 @pytest.mark.asyncio
 async def test_stop_transaction(event_loop):
-    
+    # 获取配置信息"AuthorizeRemoteTxRequests"
+    result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
+    logging.info(result)
+    assert result[0]['value'] == "true"
+
+    # 改变配置信息"MeterValueSampleInterval"
+    response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="5")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 插枪。。。
+
+    # 等待充电桩状态
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
+
+    # 远程启动充电
+    clearTriggerMessage()
+    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+        data = json.load(f)
+    response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
+                                                    connector_id=data.get('connectorId'),
+                                                    charging_profile=data.get('chargingProfile'))
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 等待充电桩鉴权
+    flag, _ = await waitRequest("authorize")
+    assert flag == True
+
+    # 等待本地发送充电请求
+    flag, _ = await waitRequest("start_transaction")
+    assert flag == True
+
+    # 判断插枪状态
+    status = await waitConnectorStatus(1, "Charging")
+    assert status == "Charging"
+
+    # 断开连接
+    await waitServerClose(Value.server)
+
+    # 本地停止充电。。。
+
+    # 重新建立连接
+    clearTriggerMessage()
+    Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
+    logging.info("Server Started listening to old connections...")
+    flag, _ = await waitRequest("boot_notification")
+    assert flag == True
+
+    # 等待本地发送停止充电请求
+    flag, msg = await waitRequest("stop_transaction")
+    assert flag == True
+    assert msg['reason'] == "Local"
+
+    # 判断枪的停止充电后的状态
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
+
+    # 插枪。。。
+
+    # 等待充电桩状态
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
+
+
+@pytest.mark.asyncio
+async def test_offline_transaction(event_loop):
+    # 改变配置信息"LocalAuthorizeOffline"
+    response = await service.changeConfiguration(event_loop, key="LocalAuthorizeOffline", value="true")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 改变配置信息"AllowOfflineTxForUnknowId"
+    response = await service.changeConfiguration(event_loop, key="AllowOfflineTxForUnknowId", value="true")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 断开连接
+    await waitServerClose(Value.server)
+
+    # 本地离线开始充电。。。
+    # 本地离线停止充电。。。
+
+    # 重新建立连接
+    clearTriggerMessage()
+    Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
+    logging.info("Server Started listening to old connections...")
+    flag, _ = await waitRequest("boot_notification")
+    assert flag == True
+
+    # 等待本地发送充电请求
+    flag, msg = await waitRequest("start_transaction")
+    assert flag == True
+
+    # 等待本地发送停止充电请求
+    flag, msg = await waitRequest("stop_transaction")
+    assert flag == True
+    assert msg['idTagInfo']['status'] == "Local"
+
+    # 判断枪的停止充电后的状态
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
+
+    # 拔枪。。。
+
+    # 判断拔枪后的状态
+    # status = await waitConnectorStatus(1, "Available")
+    # assert status == "Available"
+
+

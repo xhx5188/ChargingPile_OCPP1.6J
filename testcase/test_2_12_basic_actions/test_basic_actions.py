@@ -2,13 +2,10 @@ import asyncio
 import json
 import logging
 import time
-
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from server import service
 from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
-from dateutil.parser import parse
 
 @pytest.mark.asyncio
 async def test_start_charging_session_authorize_invalid(event_loop):

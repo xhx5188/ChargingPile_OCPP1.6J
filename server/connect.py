@@ -36,7 +36,7 @@ def clearTriggerMessage():
     for k, _ in Value.flag.items():
         Value.flag[k] = None
 
-tmp = 1
+# tmp = 1
 
 class ChargePoint(cp):
     @on(Action.Authorize)
@@ -52,15 +52,15 @@ class ChargePoint(cp):
     def on_boot_notification(self, **kwargs):
         Value.flag["boot_notification"] = kwargs
         Value.message_boot_notification = kwargs
-        global tmp
-        if tmp == 1:
-            tmp += 1
-            return call_result.BootNotificationPayload(
-                current_time="2048-00-00T00:00:00.000Z",
-                # current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z'),
-                interval=10,
-                status=RegistrationStatus.accepted
-            )
+        # global tmp
+        # if tmp == 1:
+        #     tmp += 1
+        #     return call_result.BootNotificationPayload(
+        #         current_time="2048-00-00T00:00:00.000Z",
+        #         # current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z'),
+        #         interval=10,
+        #         status=RegistrationStatus.accepted
+        #     )
 
 
         return call_result.BootNotificationPayload(

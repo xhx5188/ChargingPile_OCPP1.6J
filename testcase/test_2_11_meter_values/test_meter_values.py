@@ -118,8 +118,8 @@ async def test_clock_aligned_meter_values(event_loop):
     # 插枪。。。
 
     # 等待充电桩状态
-    # status = await waitConnectorStatus(1, "Preparing")
-    # assert status == "Preparing"
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
 
     # 远程启动充电
     clearTriggerMessage()

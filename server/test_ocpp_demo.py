@@ -13,7 +13,7 @@ from ocpp.v16.enums import RegistrationStatus, ResetType
 
 from server import service
 from server.connect import Value, on_connect, clearTriggerMessage, waitConnectorStatus, waitFirmwareStatus, \
-    waitServerClose
+    waitServerClose, waitRequest
 
 
 def setup_function():
@@ -214,8 +214,7 @@ async def test_get_diagnostics(event_loop):
 async def test_send_get_local_list(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     print("Server Started listening to new connections...")
-    while Value.flag_boot_notification == 0:
-        await asyncio.sleep(1)
+    flag, _ = await waitRequest("boot_notification")
 
     # send local list to the charge point in case of full update
     with open("./schema/send_local_list/SendLocalList1.json", 'r') as f:
@@ -226,7 +225,7 @@ async def test_send_get_local_list(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # get local list for the charge point
-    response = await service.getLocalList(event_loop)
+    response = await service.getLocalListVersion(event_loop)
     logging.info(response)
     assert response[0].list_version == data.get("listVersion")
 
@@ -239,7 +238,7 @@ async def test_send_get_local_list(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # get local list for the charge point
-    response = await service.getLocalList(event_loop)
+    response = await service.getLocalListVersion(event_loop)
     logging.info(response)
     assert response[0].list_version == data.get("listVersion")
 
@@ -252,7 +251,7 @@ async def test_send_get_local_list(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # get local list for the charge point
-    response = await service.getLocalList(event_loop)
+    response = await service.getLocalListVersion(event_loop)
     logging.info(response)
     assert response[0].list_version == data.get("listVersion")
 
@@ -265,7 +264,7 @@ async def test_send_get_local_list(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # get local list for the charge point
-    response = await service.getLocalList(event_loop)
+    response = await service.getLocalListVersion(event_loop)
     logging.info(response)
     assert response[0].list_version == 0
 
