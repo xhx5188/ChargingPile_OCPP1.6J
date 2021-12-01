@@ -1,6 +1,7 @@
 import asyncio
 import gc
 import logging
+import time
 from datetime import datetime
 from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp
@@ -88,7 +89,7 @@ class ChargePoint(cp):
 
     @on(Action.Heartbeat)
     def on_heartbeat(self, **kwargs):
-        Value.flag["heartbeat"] = kwargs
+        Value.flag["heartbeat"] = {"timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')}
         return call_result.HeartbeatPayload(
             current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')
             # current_time="2021-03-13T07:07:01.557Z"
@@ -159,7 +160,10 @@ async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: i
 
         if timeout == count:
             return Value.message_status_notification[ConnectorID].get("status")
-    return Value.message_status_notification[ConnectorID].get("status")
+
+    result = Value.message_status_notification[ConnectorID]["status"]
+    Value.message_status_notification[ConnectorID]["status"] = None
+    return result
 
 
 async def waitFirmwareStatus(expected_status: str, timeout: int = 30) ->str:
@@ -187,5 +191,5 @@ async def waitRequest(requestType:str = "", timeout: int = 10):
 
 async def waitServerClose(server: WebSocketServer):
     server.close()
-    gc.collect()
+    # gc.collect()
     await asyncio.sleep(12)

@@ -1,16 +1,12 @@
-import asyncio
 import json
 import logging
 import time
-
 import pytest
-from websockets.legacy.server import WebSocketServer
-import websockets
 from ocpp.v16.enums import RegistrationStatus
 
+from connector.connector import Connector
 from server import service
-from server.connect import Value, on_connect, clearTriggerMessage, waitConnectorStatus, \
-    waitServerClose, waitRequest
+from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
 
 
 @pytest.mark.asyncio
@@ -19,6 +15,9 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
+
+    # 插枪
+    Connector.slot()
 
     # 获取桩充电之前的状态
     status = await waitConnectorStatus(0, "Available")
@@ -39,10 +38,15 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     flag, _ = await waitRequest("authorize")
     assert flag == True
 
+    # 等待本地开始充电
+    flag, _ = await waitRequest("start_transaction")
+    assert flag == True
+
     # 获取桩充电之后的状态
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
+    clearTriggerMessage()
     # 结束远程充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
@@ -50,6 +54,13 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     # 获取桩结束充电之后的状态
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
+
+    # 拔枪
+    Connector.unslot()
+
+    # 获取拔枪后的状态
+    status = await waitConnectorStatus(1, "Available")
+    assert status == "Available"
 
 
 @pytest.mark.asyncio
@@ -63,6 +74,9 @@ async def test_remote_start_transaction(event_loop):
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="3")
     assert response[0].status == RegistrationStatus.accepted
 
+    # 插枪
+    Connector.slot()
+
     # 获取桩充电之前的状态
     status = await waitConnectorStatus(0, "Available")
     assert status == "Available"
@@ -82,17 +96,33 @@ async def test_remote_start_transaction(event_loop):
     flag, _ = await waitRequest("authorize")
     assert flag == True
 
+    # 等待本地开始充电
+    flag, _ = await waitRequest("start_transaction")
+    assert flag == True
+
     # 获取桩充电之后的状态
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
+    clearTriggerMessage()
     # 结束远程充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
 
+    # 等待本地开始充电
+    flag, _ = await waitRequest("stop_transaction")
+    assert flag == True
+
     # 获取结束充电后的状态
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
+
+    # 拔枪
+    Connector.unslot()
+
+    # 获取拔枪后的状态
+    status = await waitConnectorStatus(1, "Available")
+    assert status == "Available"
 
 
 #timeout: 刷卡进入preparing,超时则进入available
@@ -146,6 +176,13 @@ async def test_remote_stop_transaction(event_loop):
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
+
+    # 改变配置信息"MeterValueSampleInterval"
+    response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="3")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 插枪
+    Connector.slot()
 
     # 获取桩充电之前的状态
     status = await waitConnectorStatus(0, "Available")

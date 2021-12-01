@@ -1,15 +1,16 @@
 import json
 import logging
-
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
+from connector.connector import Connector
 from server import service
-from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
+from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
+import allure
 
 
 @pytest.mark.skip(reason="no fixed cable")
 @pytest.mark.asyncio
+@allure.feature("test_unlock_connector_no_charging_no_fixed_cable")
 async def test_unlock_connector_no_charging_no_fixed_cable(event_loop):
     #未插枪。。。
 
@@ -23,6 +24,7 @@ async def test_unlock_connector_no_charging_no_fixed_cable(event_loop):
 
 
 @pytest.mark.asyncio
+@allure.feature("test_unlock_connector_no_charging_with_fixed_cable")
 async def test_unlock_connector_no_charging_with_fixed_cable(event_loop):
     # 解锁枪
     response = await service.unlockConnector(event_loop, connector_id=1)
@@ -30,15 +32,17 @@ async def test_unlock_connector_no_charging_with_fixed_cable(event_loop):
     assert response[0].status == "UnlockFailed"
 
 
-@pytest.mark.skip(reason="no fixed cable")
+# @pytest.mark.skip(reason="no fixed cable")
 @pytest.mark.asyncio
+@allure.feature("test_unlock_connector_with_charging_no_fixed_cable")
 async def test_unlock_connector_with_charging_no_fixed_cable(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
 
-    # 插枪。。。
+    # 插枪
+    Connector.slot()
 
     # 判断插枪状态
     status = await waitConnectorStatus(1, "Preparing")
@@ -61,7 +65,7 @@ async def test_unlock_connector_with_charging_no_fixed_cable(event_loop):
     flag, _ = await waitRequest("start_transaction")
     assert flag == True
 
-    # 判断插枪状态
+    # 判断充电状态
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
@@ -77,17 +81,24 @@ async def test_unlock_connector_with_charging_no_fixed_cable(event_loop):
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
-    #拔枪。。。
+    # 拔枪
+    Connector.unslot()
+
+    # 判断插枪状态
+    status = await waitConnectorStatus(1, "Available")
+    assert status == "Available"
 
 
 @pytest.mark.asyncio
+@allure.feature("test_unlock_connector_with_charging_with_fixed_cable")
 async def test_unlock_connector_with_charging_with_fixed_cable(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
 
-    # 插枪。。。
+    # 插枪
+    Connector.slot()
 
     # 判断插枪状态
     status = await waitConnectorStatus(1, "Preparing")
@@ -123,12 +134,17 @@ async def test_unlock_connector_with_charging_with_fixed_cable(event_loop):
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
 
+    # 等待本地发送结束请求
+    flag, _ = await waitRequest("stop_transaction")
+    assert flag == True
+
     # 判断插枪状态
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
-    #拔枪。。。
+    #拔枪
+    Connector.unslot()
 
     # 判断插枪状态
-    # status = await waitConnectorStatus(1, "Available")
-    # assert status == "Available"
+    status = await waitConnectorStatus(1, "Available")
+    assert status == "Available"

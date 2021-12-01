@@ -1,21 +1,15 @@
 import json
 import logging
-
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from server import service
-from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
-
+from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
+from connector.connector import Connector
 
 @pytest.mark.asyncio
 async def test_hard_reset_without_transaction(event_loop):
-    #等待桩状态为可用
-    status = await waitConnectorStatus(1, "Available")
-    assert status == "Available"
-
     #远程设置桩为不可用
-    response = await service.changeAvailability(event_loop, connector_id=0, type="Inoperative")
+    response = await service.changeAvailability(event_loop, connector_id=1, type="Inoperative")
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待桩状态为不可用
@@ -28,17 +22,17 @@ async def test_hard_reset_without_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩重启
-    flag = await waitRequest("boot_notification")
+    flag, _ = await waitRequest("boot_notification")
     assert flag == True
 
     #判断重启之后桩的状态仍不可用
     status = await waitConnectorStatus(1, "Unavailable")
     assert status == "Unavailable"
-    status = await waitConnectorStatus(1, "Available")
+    status = await waitConnectorStatus(0, "Available")
     assert status == "Available"
 
     # 远程设置桩为可用
-    response = await service.changeAvailability(event_loop, connector_id=0, type="Operative")
+    response = await service.changeAvailability(event_loop, connector_id=1, type="Operative")
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待桩状态为可用
@@ -48,12 +42,8 @@ async def test_hard_reset_without_transaction(event_loop):
 
 @pytest.mark.asyncio
 async def test_soft_reset_without_transaction(event_loop):
-    #等待桩状态为可用
-    status = await waitConnectorStatus(1, "Available")
-    assert status == "Available"
-
     #远程设置桩为不可用
-    response = await service.changeAvailability(event_loop, connector_id=0, type="Inoperative")
+    response = await service.changeAvailability(event_loop, connector_id=1, type="Inoperative")
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待桩状态为不可用
@@ -66,17 +56,17 @@ async def test_soft_reset_without_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     #等待充电桩重启
-    flag = await waitRequest("boot_notification", 100)
+    flag, _ = await waitRequest("boot_notification", 100)
     assert flag == True
 
     #判断重启之后桩的状态仍不可用
     status = await waitConnectorStatus(1, "Unavailable")
     assert status == "Unavailable"
-    status = await waitConnectorStatus(1, "Available")
+    status = await waitConnectorStatus(0, "Available")
     assert status == "Available"
 
     # 远程设置桩为可用
-    response = await service.changeAvailability(event_loop, connector_id=0, type="Operative")
+    response = await service.changeAvailability(event_loop, connector_id=1, type="Operative")
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待桩状态为可用
@@ -95,6 +85,9 @@ async def test_hard_reset_with_transaction(event_loop):
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="15")
     assert response[0].status == RegistrationStatus.accepted
 
+    # 插枪
+    Connector.slot()
+
     #等待桩状态为可用
     status = await waitConnectorStatus(0, "Available")
     assert status == "Available"
@@ -112,6 +105,10 @@ async def test_hard_reset_with_transaction(event_loop):
 
     # 等待充电桩鉴权
     flag, _ = await waitRequest("authorize")
+    assert flag == True
+
+    # 等待本地开始充电
+    flag, _ = await waitRequest("start_transaction")
     assert flag == True
 
     # 获取桩充电之后的状态
@@ -149,6 +146,9 @@ async def test_soft_reset_with_transaction(event_loop):
     response = await service.changeConfiguration(event_loop, key="MeterValueSampleInterval", value="2")
     assert response[0].status == RegistrationStatus.accepted
 
+    # 插枪
+    Connector.slot()
+
     # 等待桩状态为可用
     status = await waitConnectorStatus(0, "Available")
     assert status == "Available"
@@ -166,6 +166,10 @@ async def test_soft_reset_with_transaction(event_loop):
 
     # 等待充电桩鉴权
     flag, _ = await waitRequest("authorize")
+    assert flag == True
+
+    # 等待本地开始充电
+    flag, _ = await waitRequest("start_transaction")
     assert flag == True
 
     # 获取桩充电之后的状态

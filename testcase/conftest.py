@@ -3,6 +3,7 @@ import pytest
 import websockets
 from websockets.legacy.server import WebSocketServer
 
+from connector.connector import Connector
 from server import service
 from server.connect import on_connect, waitServerClose, clearTriggerMessage, waitRequest, waitConnectorStatus, Value
 
@@ -11,6 +12,7 @@ logging.basicConfig(level=logging.INFO,
 
 @pytest.fixture(scope="function", autouse=True)
 async def server(event_loop):
+    Connector()
     clearTriggerMessage()
     logging.info("*" * 50 + "set up" + "*" * 50)
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
@@ -25,6 +27,7 @@ async def server(event_loop):
         if status == "Charging":
             response = await service.remoteStopTransaction(event_loop, Value.transactionId)
             logging.info(response)
+        Connector.unslot()
 
     else:
         logging.info("the charge point connect to this server timeout, and close server.")

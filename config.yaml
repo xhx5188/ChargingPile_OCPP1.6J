@@ -1,0 +1,3 @@
+connector:
+  com: "COM4"
+  bps: 9600
