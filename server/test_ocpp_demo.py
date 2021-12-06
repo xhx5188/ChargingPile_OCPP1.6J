@@ -8,8 +8,7 @@ import pytest
 from websockets.legacy.server import WebSocketServer
 import websockets
 
-from ocpp.v16 import call
-from ocpp.v16.enums import RegistrationStatus, ResetType
+from ocpp.v16.enums import RegistrationStatus
 
 from server import service
 from server.connect import Value, on_connect, clearTriggerMessage, waitConnectorStatus, waitFirmwareStatus, \

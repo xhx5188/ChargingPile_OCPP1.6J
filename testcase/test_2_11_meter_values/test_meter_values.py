@@ -1,14 +1,15 @@
 import json
 import logging
-import time
-
+import allure
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
+from connector.connector import Connector
 from server import service
-from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
+from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 from dateutil.parser import parse
 
+
+@allure.feature("test_sampled_meter_values")
 @pytest.mark.asyncio
 async def test_sampled_meter_values(event_loop):
     # 改变配置信息"MeterValueSampleInterval"
@@ -20,8 +21,8 @@ async def test_sampled_meter_values(event_loop):
     # response = await service.changeConfiguration(event_loop, key="ClockAlignedDataInterval", value="0")
     # assert response[0].status == RegistrationStatus.accepted
 
-    # 获取配置信息"MeterValueSampleData"
-    result = await service.getConfiguration(event_loop, ["MeterValueSampleData"])
+    # 获取配置信息"MeterValuesSampledData"
+    result = await service.getConfiguration(event_loop, ["MeterValuesSampledData"])
     logging.info(result)
     # assert result[0]['value'] == str(set_interval)
 
@@ -31,11 +32,12 @@ async def test_sampled_meter_values(event_loop):
     assert result[0]['value'] == "true"
 
     clearTriggerMessage()
-    #插枪。。。
+    # 插枪
+    Connector.slot()
 
     # 等待充电桩状态
-    # status = await waitConnectorStatus(1, "Preparing")
-    # assert status == "Preparing"
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
 
     # 远程启动充电
     clearTriggerMessage()
@@ -61,14 +63,12 @@ async def test_sampled_meter_values(event_loop):
     # 等待充电桩发送测量信息
     clearTriggerMessage()
     _, msg = await waitRequest("meter_values")
-    logging.info("*" * 100)
     logging.info(msg)
     time1 = parse(msg["meter_value"][0]["timestamp"])
 
     # 等待充电桩发送测量信息
     clearTriggerMessage()
     _, msg = await waitRequest("meter_values")
-    logging.info("*" * 100)
     logging.info(msg)
     time2 = parse(msg["meter_value"][0]["timestamp"])
 
@@ -78,7 +78,6 @@ async def test_sampled_meter_values(event_loop):
     # 等待充电桩发送测量信息
     clearTriggerMessage()
     _, msg = await waitRequest("meter_values")
-    logging.info("*" * 100)
     logging.info(msg)
     time3 = parse(msg["meter_value"][0]["timestamp"])
 
@@ -88,12 +87,13 @@ async def test_sampled_meter_values(event_loop):
     # 结束充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
+
+    # 获取结束充电后枪的状态
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
-    #拔枪。。。
 
-
+@allure.feature("test_clock_aligned_meter_values")
 @pytest.mark.asyncio
 async def test_clock_aligned_meter_values(event_loop):
     # 改变配置信息"ClockAlignedDataInterval"

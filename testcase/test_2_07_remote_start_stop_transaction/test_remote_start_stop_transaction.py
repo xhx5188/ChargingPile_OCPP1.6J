@@ -3,12 +3,13 @@ import logging
 import time
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from connector.connector import Connector
 from server import service
 from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
+import allure
 
 
+@allure.feature("test_remote_start_transaction_cable_plugged")
 @pytest.mark.asyncio
 async def test_remote_start_transaction_cable_plugged(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
@@ -63,6 +64,7 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     assert status == "Available"
 
 
+@allure.feature("test_remote_start_transaction")
 @pytest.mark.asyncio
 async def test_remote_start_transaction(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
@@ -125,6 +127,7 @@ async def test_remote_start_transaction(event_loop):
     assert status == "Available"
 
 
+@allure.feature("test_remote_start_transaction_time_out")
 #timeout: 刷卡进入preparing,超时则进入available
 @pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
@@ -167,9 +170,8 @@ async def test_remote_start_transaction_time_out(event_loop):
     assert status == "Available"
     logging.info(time.time())
 
-    # 拔枪。。。待补充
 
-
+@allure.feature("test_remote_stop_transaction")
 @pytest.mark.asyncio
 async def test_remote_stop_transaction(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"

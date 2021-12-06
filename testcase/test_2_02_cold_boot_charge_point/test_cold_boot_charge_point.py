@@ -1,15 +1,15 @@
-import asyncio
 import logging
 import pytest
 import websockets
 from ocpp.v16.enums import RegistrationStatus
 from websockets.legacy.server import WebSocketServer
 from server import service
-from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest, Value
+from server.connect import waitConnectorStatus, waitRequest, Value
 from testcase.test_2_02_cold_boot_charge_point.conftest import Val, on_connect_boot_reject, on_connect_boot_pending
 from dateutil.parser import parse
+import allure
 
-
+@allure.feature("test_cold_boot_charge_point")
 @pytest.mark.asyncio
 async def test_cold_boot_charge_point(event_loop):
     Value.server: WebSocketServer = await websockets.serve(on_connect_boot_reject, \
@@ -57,6 +57,7 @@ async def test_cold_boot_charge_point(event_loop):
     assert abs(interval - Val.interval) <= 1
 
 
+@allure.feature("test_cold_boot_charge_point_pending")
 @pytest.mark.asyncio
 async def test_cold_boot_charge_point_pending(event_loop):
     Value.server: WebSocketServer = await websockets.serve(on_connect_boot_pending, \

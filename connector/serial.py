@@ -67,6 +67,3 @@ class Serial():
   # print(self.main_engine.out_waiting)#获取输出缓冲区的字节数
   # print(self.main_engine.readall())#读取全部字符。
 
-
-def get_path():
-  return os.getcwd()

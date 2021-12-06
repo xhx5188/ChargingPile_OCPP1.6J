@@ -1,8 +1,11 @@
 import asyncio
 import pytest
 from server.connect import waitConnectorStatus, waitRequest
+import allure
 
 
+@allure.feature("test_fault_behavior")
+@pytest.mark.skip("需要将桩设为错误状态")
 @pytest.mark.asyncio
 async def test_fault_behavior(event_loop):
     # 将充电桩设为错误状态。。。

@@ -30,10 +30,9 @@ import yaml
 #     Connector()
 #     Connector.slot()
 
-
 class Connector():
     @classmethod
-    def slot(self):
+    def slot(cls):
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # s.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
         s.connect(("10.10.41.44", 8080))
@@ -42,9 +41,37 @@ class Connector():
         s.close()
 
     @classmethod
-    def unslot(self):
+    def unslot(cls):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("10.10.41.44", 8080))
         data = bytes.fromhex("a00100a1")
         s.send(data)
         s.close()
+
+    @classmethod
+    def unelectricity(cls):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("10.10.41.44", 8080))
+        data = bytes.fromhex("a00401a5")
+        s.send(data)
+        s.close()
+
+    @classmethod
+    def electricity(cls):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("10.10.41.44", 8080))
+        data = bytes.fromhex("a00400a4")
+        s.send(data)
+        s.close()
+
+def test_unelectricity():
+    Connector.unelectricity()
+
+def test_electricity():
+    Connector.electricity()
+
+def test_slot():
+    Connector.slot()
+
+def test_unslot():
+    Connector.unslot()

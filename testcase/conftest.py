@@ -12,7 +12,6 @@ logging.basicConfig(level=logging.INFO,
 
 @pytest.fixture(scope="function", autouse=True)
 async def server(event_loop):
-    Connector()
     clearTriggerMessage()
     logging.info("*" * 50 + "set up" + "*" * 50)
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])

@@ -1,7 +1,5 @@
 import asyncio
-import gc
 import logging
-import time
 from datetime import datetime
 from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp
@@ -16,9 +14,10 @@ class Value():
     transactionId = None
     connectorTotal = 10
     flag = {"authorize": None, "boot_notification": None, "data_transfer": None,
-            "diagnostics_tatus_notification": None, "firmware_status_notification": None,
+            "diagnostics_status_notification": None, "firmware_status_notification": None,
             "heartbeat": None, "meter_values": None, "status_notification": None,
-            "start_transaction": None, "stop_transaction": None}
+            "start_transaction": None, "stop_transaction": None, "extended_trigger_message": None,
+            "sign_certificate": None}
 
     message_boot_notification = None
     message_firmware_status_notification = ""
@@ -78,7 +77,7 @@ class ChargePoint(cp):
 
     @on(Action.DiagnosticsStatusNotification)
     def on_diagnostics_status_notification(self, **kwargs):
-        Value.flag["diagnostics_tatus_notification"] = kwargs
+        Value.flag["diagnostics_status_notification"] = kwargs
         return call_result.DiagnosticsStatusNotificationPayload()
 
     @on(Action.FirmwareStatusNotification)
@@ -109,13 +108,13 @@ class ChargePoint(cp):
         return call_result.StatusNotificationPayload()
 
     @on(Action.StartTransaction)
-    def on_start_transaction(self, connector_id: int, id_tag: str, **kwargs):
+    def on_start_transaction(self, **kwargs):
         Value.flag["start_transaction"] = kwargs
         eg = {
             "status": RegistrationStatus.accepted
         }
         return call_result.StartTransactionPayload(
-            transaction_id=connector_id,
+            transaction_id=kwargs['connector_id'],
             id_tag_info=eg
         )
 
@@ -127,6 +126,21 @@ class ChargePoint(cp):
         }
         return call_result.StopTransactionPayload(
             id_tag_info=dict
+        )
+
+    # @on(Action.ExtendedTriggerMessage)
+    # def on_extended_trigger_message(self, **kwargs):
+    #     Value.flag["extended_trigger_message"] = kwargs
+    #
+    #     return call_result.ExtendedTriggerMessagePayload(
+    #         status="Accepted"
+    #     )
+
+    @on(Action.SignCertificate)
+    def on_sign_certificate(self, **kwargs):
+        Value.flag["sign_certificate"] = kwargs
+        return call_result.SignCertificatePayload(
+            status="Accepted"
         )
 
 async def on_connect(websocket, path):
@@ -152,7 +166,7 @@ async def on_connect(websocket, path):
     await Value.chargePoint.start()
 
 
-async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: int = 6) ->str:
+async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: int = 10) ->str:
     count = 0
     while Value.message_status_notification[ConnectorID].get("status") != expected_status:
         await asyncio.sleep(3)

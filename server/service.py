@@ -31,11 +31,13 @@ async def getConfiguration(event_loop, key: list = None):
     result = response[0].configuration_key
     return result
 
+
 async def changeConfiguration(event_loop, key: str, value):
     request = call.ChangeConfigurationPayload(key, value)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)
     return response
+
 
 async def clearCache(event_loop):
     request = call.ClearCachePayload()
@@ -76,7 +78,7 @@ async def getCompositeSchedule(event_loop, connector_id: int, duration: int, cha
 
 async def getDiagnostics(event_loop, location: str, retries: int = None, retry_interval: int = None,
                             start_time: str = None, stop_time: str = None):
-    request = call.GetDiagnosticsPayload(location, retries, retries, start_time, stop_time)
+    request = call.GetDiagnosticsPayload(location, retries, retry_interval, start_time, stop_time)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)
     return response
@@ -128,6 +130,18 @@ async def unlockConnector(event_loop, connector_id: int):
 async def updateFirmware(event_loop, location: str, retrieve_date: str, retries: int = None,
                                         retry_interval: int = None):
     request = call.UpdateFirmwarePayload(location, retrieve_date, retries, retry_interval)
+    tasks = [event_loop.create_task(Value.chargePoint.call(request))]
+    response = await asyncio.gather(*tasks)
+    return response
+
+async def extendedTriggerMessage(event_loop, requested_message: str, connector_id = None):
+    request = call.ExtendedTriggerMessagePayload(requested_message, connector_id)
+    tasks = [event_loop.create_task(Value.chargePoint.call(request))]
+    response = await asyncio.gather(*tasks)
+    return response
+
+async def certificateSigned(event_loop, certificate_chain: str):
+    request = call.CertificateSignedPayload(certificate_chain)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)
     return response

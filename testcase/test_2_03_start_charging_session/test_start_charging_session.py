@@ -1,5 +1,3 @@
-import logging
-
 import pytest
 from ocpp.v16.enums import RegistrationStatus
 from server import service

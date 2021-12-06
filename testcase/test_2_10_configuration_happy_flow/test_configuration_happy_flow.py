@@ -1,13 +1,11 @@
-import json
 import logging
-
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from server import service
-from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
+import allure
 
 
+@allure.feature("test_retrieve_configuration")
 @pytest.mark.asyncio
 async def test_retrieve_configuration(event_loop):
     # 获取配置信息"SupportedFeatureProfiles"
@@ -58,7 +56,7 @@ async def test_retrieve_configuration(event_loop):
     # 获取配置信息"GetConfigurationMaxKeys"
     result = await service.getConfiguration(event_loop, ["GetConfigurationMaxKeys"])
     logging.info(result)
-    len = int(result[0]['value'])
+    cfg_max = int(result[0]['value'])
 
     get_config_list = ["AuthorizeRemoteTxRequests", "ClockAlignedDataInterval", "ConnectionTimeOut",
                        "ConnectorPhaseRotation", "GetConfigurationMaxKeys", "HeartbeatInterval",
@@ -72,8 +70,10 @@ async def test_retrieve_configuration(event_loop):
     logging.info("*" * 100)
     result = await service.getConfiguration(event_loop, get_config_list)
     logging.info(result)
+    assert len(result) == cfg_max
 
 
+@allure.feature("test_change_set_configuration")
 @pytest.mark.asyncio
 async def test_change_set_configuration(event_loop):
     # 改变配置信息"MeterValueSampleInterval"

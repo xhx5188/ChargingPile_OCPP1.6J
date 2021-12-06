@@ -1,3 +1,6 @@
 connector:
   com: "COM4"
   bps: 9600
+
+chargePoint:
+  id_tag: "AE0022A1GM9C00041C"

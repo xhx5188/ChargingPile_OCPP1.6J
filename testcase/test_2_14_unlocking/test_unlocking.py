@@ -1,11 +1,9 @@
-import json
-import logging
-import time
 import pytest
-from ocpp.v16.enums import RegistrationStatus
 from server import service
-from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
+import allure
 
+
+@allure.feature("test_unlock_failure")
 @pytest.mark.asyncio
 async def test_unlock_failure(event_loop):
     # 解锁枪
@@ -13,6 +11,7 @@ async def test_unlock_failure(event_loop):
     assert response[0].status == "UnlockFailed"
 
 
+@allure.feature("test_unknown_connector")
 @pytest.mark.asyncio
 async def test_unknown_connector(event_loop):
     # 解锁枪

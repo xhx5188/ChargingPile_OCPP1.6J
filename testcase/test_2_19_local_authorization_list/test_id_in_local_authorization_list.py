@@ -1,13 +1,11 @@
-import asyncio
 import json
-import logging
-import time
 import pytest
 from ocpp.v16.enums import RegistrationStatus
 from server import service
-from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
+import allure
 
 
+@allure.feature("test_get_local_list_version_not_supported")
 @pytest.mark.asyncio
 async def test_get_local_list_version_not_supported(event_loop):
     # 改变配置信息"LocalAuthListEnabled"

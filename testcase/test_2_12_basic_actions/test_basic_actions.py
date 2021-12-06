@@ -1,12 +1,15 @@
-import asyncio
 import json
 import logging
-import time
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-from server import service
-from server.connect import Value, clearTriggerMessage, waitConnectorStatus, waitRequest
 
+from connector.connector import Connector
+from server import service
+from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
+import allure
+
+@allure.feature("test_start_charging_session_authorize_invalid")
+@pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
 async def test_start_charging_session_authorize_invalid(event_loop):
     # 改变配置信息"MinimumStatusDuration"
@@ -17,11 +20,12 @@ async def test_start_charging_session_authorize_invalid(event_loop):
     response = await service.changeConfiguration(event_loop, key="LocalPreAuthorize", value="true")
     assert response[0].status == RegistrationStatus.accepted
 
-    # 插枪。。。
+    # 插枪
+    Connector.slot()
 
     # 等待充电桩状态
-    # status = await waitConnectorStatus(1, "Preparing")
-    # assert status == "Preparing"
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
 
     # 刷无效卡。。。
 
@@ -29,6 +33,7 @@ async def test_start_charging_session_authorize_invalid(event_loop):
     # _, msg = await waitRequest("authorize")
 
 
+@allure.feature("test_start_charging_session_lock_failure")
 @pytest.mark.skip(reason="需要socket版本的桩")
 @pytest.mark.asyncio
 async def test_start_charging_session_lock_failure(event_loop):
@@ -36,6 +41,9 @@ async def test_start_charging_session_lock_failure(event_loop):
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
+
+    # 插枪
+    Connector.slot()
 
     # 远程启动充电
     clearTriggerMessage()
@@ -57,36 +65,3 @@ async def test_start_charging_session_lock_failure(event_loop):
     # EV driver plugs in the cable halfway...
     # 测试锁失败，半途插枪，需要socket版本的桩。
     # 最好可以让socket版本的桩的锁不能锁住，找硬件他们给一个模拟。
-
-
-
-
-# @pytest.mark.asyncio
-# async def test_11(event_loop):
-#     # 获取配置信息"AuthorizeRemoteTxRequests"
-#     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
-#     logging.info(result)
-#     assert result[0]['value'] == "true"
-#
-#     # 远程启动充电
-#     clearTriggerMessage()
-#     with open("./schema/RemoteStartTransaction.json", 'r') as f:
-#         data = json.load(f)
-#     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
-#                                                     connector_id=data.get('connectorId'),
-#                                                     charging_profile=data.get('chargingProfile'))
-#     assert response[0].status == RegistrationStatus.accepted
-#
-#     # 等待充电桩鉴权
-#     flag, _ = await waitRequest("authorize")
-#     assert flag == True
-#
-#     # 判断插枪状态
-#     status = await waitConnectorStatus(1, "Charging")
-#     assert status == "Charging"
-#
-#
-#     response = await service.reset(event_loop, "Soft")
-#     assert response[0].status == RegistrationStatus.accepted
-#
-#     await asyncio.sleep(20)
