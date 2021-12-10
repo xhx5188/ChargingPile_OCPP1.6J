@@ -1,13 +1,13 @@
+# coding:utf-8
 
 # from dateutil.parser import parse
 # a = parse('2021-11-22T09:59:19.000Z')
 # b = parse('2021-11-22T10:59:19.000Z')
 # print((b - a).seconds)
+import hashlib
 import logging
 import time
 from datetime import datetime
-
-from connector.serial import get_path
 
 
 def test_2():
@@ -26,6 +26,7 @@ def hextostr(list):#list为整数表示的列表
     print("hexstr=%s" % hexstr)
     strsend=hexstr.decode('hex')#以unicode码的形式写到串口
     return strsend
+
 
 def test_3():
     # print(hextostr([16, 17]))
@@ -48,3 +49,81 @@ def test_4():
     print("3333")
     print(interval)
 
+def test_5():
+    # b = b'+NOTIFY:0,3,6,20,U\xaa\x14\x00\x00\x00\x00\x00\x00\x00\x00\x00\x1f\xc2\xfa\xfe\xc0\xdc\xef\xc7\r\n'
+    # # b = str(b, 'gbk')
+    # b = b.decode('utf-8')
+    print("*" * 100)
+    print(b'\x31'.decode('utf-8', "ignore"))
+
+
+def test_6():
+    sha256 = hashlib.sha256()
+    data = "asd"
+    sha256.update(data.encode())
+    res = sha256.hexdigest()
+    print("sha256加密结果:", res)
+    return res
+
+def test_7():
+    hash = hashlib.sha256()
+    key = b'\x02\x06\x48\x94\x4d\xd5\xb2\xc0\xf9\x7a\x8f\x7f\x30\x99\x09\xe2\x47\xb0\x28\x29\x5a\xf6\x8a\x78\xd1\xcd\xc6\xae\x1a\x11\x2c\x23'
+    # data = "123"
+    # hash.update(data.encode('utf-8'))
+    hash.update(key)
+    print(hash.hexdigest().upper())
+
+
+
+from hashlib import sha256
+import hmac
+
+def get_sign(key, data):
+
+    #sha256加密有2种
+    hsobj = sha256()
+    hsobj.update(data)
+    return hsobj.hexdigest().upper()
+
+    # return hmac.new(key, data, digestmod=sha256).hexdigest().upper()
+
+
+def test_8():
+    key = '3d90-a7ef-8426b1c5'.encode("utf-8")
+    data = b'ljk'
+    print()
+    print(get_sign(key, data))   #5B41E23FD85B483E850F1935D9E9154FE7BE7A1BE3076B2D371CA14B3020691D
+
+
+
+def test_9():
+    id = "44332211b5e2ae63".encode('utf-8')
+    logging.info(type(id))
+    passwd = b'\x02\x06\x48\x94\x4d\xd5\xb2\xc0\xf9\x7a\x8f\x7f\x30\x99\x09\xe2\x47\xb0\x28\x29\x5a\xf6\x8a\x78\xd1\xcd\xc6\xae\x1a\x11\x2c\x23'
+    logging.info(type(passwd))
+    salt = "3d90-a7ef-8426b1c5".encode('utf-8')
+    WIFI_MAC = "AA:BB:CC:DD:EE:FF".encode('utf-8')
+    data = id+passwd+salt+WIFI_MAC
+    logging.info(data)
+    logging.info(type(data))
+
+    sha256 = hashlib.sha256()
+    sha256.update(data)
+    res = sha256.hexdigest()
+    logging.info("sha256加密结果:%s", res)
+    return res
+
+def test_10():
+    print(isinstance("11".encode('utf-8'), (bytes, bytearray)))
+    print(isinstance("11", (bytes, bytearray)))
+    a = "cb3c5120e58c17a551f4751ab67484d5c92816b37796f03f08e671db9fce4a26"
+    new_a = ""
+    while a is not "":
+        new_a += a[-2]+a[-1]
+        a = a[:-2]
+    print(new_a)
+    print(len(new_a))
+
+def test_11():
+    list = []
+    print(list)

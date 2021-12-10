@@ -37,7 +37,6 @@ async def test_clear_cache1(event_loop):
     await waitServerClose(server)
 
 
-
 @pytest.mark.asyncio
 async def test_clear_cache2(event_loop):
     server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])

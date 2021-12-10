@@ -48,7 +48,7 @@ class ChargePointReject(ChargePoint):
                 status=RegistrationStatus.rejected
             )
         else:
-            Value.flag["boot_notification"] = kwargs
+            Value.flag["boot_notification"].append(kwargs)
             return call_result.BootNotificationPayload(
                 current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z'),
                 interval=Val.interval,
@@ -82,7 +82,7 @@ async def on_connect_boot_reject(websocket, path):
 class ChargePointPending(ChargePoint):
     @on(Action.BootNotification)
     def on_boot_notification(self, **kwargs):
-        Value.flag["boot_notification"] = kwargs
+        Value.flag["boot_notification"].append(kwargs)
         if Val.flag_pend == True:
             return call_result.BootNotificationPayload(
                 current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z'),

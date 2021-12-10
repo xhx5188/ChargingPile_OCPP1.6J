@@ -59,6 +59,14 @@ cd test_2_18*
 pytest -sv test*.py --alluredir ${reprot_path}
 cd ..
 
+cd test_2_20*
+pytest -sv test*.py --alluredir ${reprot_path}
+cd ..
+
+cd test_2_21*
+pytest -sv test*.py --alluredir ${reprot_path}
+cd ..
+
 cd test_2_23*
 pytest -sv test*.py --alluredir ${reprot_path}
 cd ..

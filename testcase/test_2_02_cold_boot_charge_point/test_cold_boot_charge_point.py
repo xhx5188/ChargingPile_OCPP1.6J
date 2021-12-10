@@ -29,10 +29,6 @@ async def test_cold_boot_charge_point(event_loop):
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
 
-    #等待枪1可用
-    status = await waitConnectorStatus(1, "Available")
-    assert status == "Available"
-
     # 等待心跳
     flag, msg = await waitRequest("heartbeat")
     assert flag == True

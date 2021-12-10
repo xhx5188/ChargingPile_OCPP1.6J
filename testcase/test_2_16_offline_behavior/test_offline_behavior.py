@@ -293,6 +293,7 @@ async def test_offline_start_transaction_3(event_loop):
     assert status == "Available"
 
 
+@pytest.mark.skip(reason="需要本地停止充电")
 @allure.feature("test_stop_transaction")
 @pytest.mark.asyncio
 async def test_stop_transaction(event_loop):

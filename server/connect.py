@@ -13,14 +13,13 @@ class Value():
     chargePoint = None
     transactionId = None
     connectorTotal = 10
-    flag = {"authorize": None, "boot_notification": None, "data_transfer": None,
-            "diagnostics_status_notification": None, "firmware_status_notification": None,
-            "heartbeat": None, "meter_values": None, "status_notification": None,
-            "start_transaction": None, "stop_transaction": None, "extended_trigger_message": None,
-            "sign_certificate": None}
+    flag = {"authorize": [], "boot_notification": [], "data_transfer": [],
+            "diagnostics_status_notification": [], "firmware_status_notification": [],
+            "heartbeat": [], "meter_values": [], "status_notification": [],
+            "start_transaction": [], "stop_transaction": [], "extended_trigger_message": [],
+            "sign_certificate": []}
 
     message_boot_notification = None
-    message_firmware_status_notification = ""
     message_heartbeat = None
     message_meter_values = None
     message_status_notification = [{} for x in range(10)]
@@ -28,20 +27,19 @@ class Value():
 
 def clearTriggerMessage():
     Value.message_boot_notification = None
-    Value.message_firmware_status_notification = ""
     Value.message_heartbeat = None
     Value.message_meter_values = None
     Value.message_status_notification = [{} for x in range(10)]
 
     for k, _ in Value.flag.items():
-        Value.flag[k] = None
+        Value.flag[k] = []
 
 # tmp = 1
 
 class ChargePoint(cp):
     @on(Action.Authorize)
     def on_authorize(self, **kwargs):
-        Value.flag["authorize"] = kwargs
+        Value.flag["authorize"].append(kwargs)
         return call_result.AuthorizePayload(
             id_tag_info={
                 "status": "Accepted"
@@ -50,7 +48,7 @@ class ChargePoint(cp):
 
     @on(Action.BootNotification)
     def on_boot_notification(self, **kwargs):
-        Value.flag["boot_notification"] = kwargs
+        Value.flag["boot_notification"].append(kwargs)
         Value.message_boot_notification = kwargs
         # global tmp
         # if tmp == 1:
@@ -72,23 +70,24 @@ class ChargePoint(cp):
 
     @on(Action.DataTransfer)
     def on_data_transfer(self, **kwargs):
-        Value.flag["data_transfer"] = kwargs
+        Value.flag["data_transfer"].append(kwargs)
         return call_result.DataTransferPayload(status="Accepted")
 
     @on(Action.DiagnosticsStatusNotification)
     def on_diagnostics_status_notification(self, **kwargs):
-        Value.flag["diagnostics_status_notification"] = kwargs
+        Value.flag["diagnostics_status_notification"].append(kwargs)
+        logging.info(kwargs)
         return call_result.DiagnosticsStatusNotificationPayload()
 
     @on(Action.FirmwareStatusNotification)
     def on_firmware_status_notification(self, **kwargs):
-        Value.flag["firmware_status_notification"] = kwargs
-        Value.message_firmware_status_notification = kwargs["status"]
+        Value.flag["firmware_status_notification"].append(kwargs)
+        Value.flag["firmware_status_notification"][-1]["timestamp"] = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')
         return call_result.FirmwareStatusNotificationPayload()
 
     @on(Action.Heartbeat)
     def on_heartbeat(self, **kwargs):
-        Value.flag["heartbeat"] = {"timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')}
+        Value.flag["heartbeat"].append({"timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')})
         return call_result.HeartbeatPayload(
             current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.123Z')
             # current_time="2021-03-13T07:07:01.557Z"
@@ -96,20 +95,20 @@ class ChargePoint(cp):
 
     @on(Action.MeterValues)
     def on_meter_values(self, **kwargs):
-        Value.flag["meter_values"] = kwargs
+        Value.flag["meter_values"].append(kwargs)
         Value.message_meter_values = kwargs
         return call_result.MeterValuesPayload()
 
     @on(Action.StatusNotification)
     def on_status_notification(self, **kwargs):
-        Value.flag["status_notification"] = kwargs
+        Value.flag["status_notification"].append(kwargs)
         connectorID = kwargs['connector_id']
         Value.message_status_notification[connectorID] = kwargs
         return call_result.StatusNotificationPayload()
 
     @on(Action.StartTransaction)
     def on_start_transaction(self, **kwargs):
-        Value.flag["start_transaction"] = kwargs
+        Value.flag["start_transaction"].append(kwargs)
         eg = {
             "status": RegistrationStatus.accepted
         }
@@ -120,7 +119,7 @@ class ChargePoint(cp):
 
     @on(Action.StopTransaction)
     def on_stop_transaction(self, **kwargs):
-        Value.flag["stop_transaction"] = kwargs
+        Value.flag["stop_transaction"].append(kwargs)
         dict = {
             "status": "Accepted"
         }
@@ -128,17 +127,9 @@ class ChargePoint(cp):
             id_tag_info=dict
         )
 
-    # @on(Action.ExtendedTriggerMessage)
-    # def on_extended_trigger_message(self, **kwargs):
-    #     Value.flag["extended_trigger_message"] = kwargs
-    #
-    #     return call_result.ExtendedTriggerMessagePayload(
-    #         status="Accepted"
-    #     )
-
     @on(Action.SignCertificate)
     def on_sign_certificate(self, **kwargs):
-        Value.flag["sign_certificate"] = kwargs
+        Value.flag["sign_certificate"].append(kwargs)
         return call_result.SignCertificatePayload(
             status="Accepted"
         )
@@ -179,17 +170,6 @@ async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: i
     Value.message_status_notification[ConnectorID]["status"] = None
     return result
 
-
-async def waitFirmwareStatus(expected_status: str, timeout: int = 30) ->str:
-    count = 0
-    while Value.message_firmware_status_notification != expected_status.lower():
-        await asyncio.sleep(10)
-        count += 1
-
-        if timeout == count:
-            return Value.message_firmware_status_notification
-    return Value.message_firmware_status_notification
-
 async def waitRequest(requestType:str = "", timeout: int = 10):
     count = 0
     while not Value.flag.get(requestType):
@@ -197,9 +177,9 @@ async def waitRequest(requestType:str = "", timeout: int = 10):
         if timeout == count:
             return False, Value.flag.get(requestType)
         count += 1
-    msg = Value.flag[requestType]
-    # 清空上一个请求的内容，等待下一个请求
-    Value.flag[requestType] = None
+    msg = Value.flag.get(requestType)[0]
+    # 清空已处理的请求的内容，等待下一个请求
+    del (Value.flag.get(requestType)[0])
     return True, msg
 
 

@@ -1,4 +1,5 @@
 import logging
+
 import pytest
 import websockets
 from websockets.legacy.server import WebSocketServer
@@ -7,8 +8,6 @@ from connector.connector import Connector
 from server import service
 from server.connect import on_connect, waitServerClose, clearTriggerMessage, waitRequest, waitConnectorStatus, Value
 
-logging.basicConfig(level=logging.INFO,
-                    format='[%(levelname)s %(filename)s:%(lineno)d] %(message)s')
 
 @pytest.fixture(scope="function", autouse=True)
 async def server(event_loop):

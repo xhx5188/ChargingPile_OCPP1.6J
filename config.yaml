@@ -2,5 +2,10 @@ connector:
   STAIP: "10.10.41.44"
   port: 8080
 
+bluetooth:
+  com: "COM3"
+  bps: 115200
+  bleMAC: "34:ab:95:74:ec:82"
+
 chargePoint:
   id_tag: "AE0022A1GM9C00041C"
