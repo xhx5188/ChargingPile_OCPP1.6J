@@ -21,14 +21,12 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     Connector.slot()
 
     # 获取桩充电之前的状态
-    status = await waitConnectorStatus(0, "Available")
-    assert status == "Available"
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -36,12 +34,15 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag, _ = await waitRequest("authorize")
+    flag, msg = await waitRequest("authorize")
     assert flag == True
+    logging.info(msg)
+    assert msg['id_tag'] == data.get('idTag')
 
     # 等待本地开始充电
-    flag, _ = await waitRequest("start_transaction")
+    flag, msg = await waitRequest("start_transaction")
     assert flag == True
+    logging.info(msg)
 
     # 获取桩充电之后的状态
     status = await waitConnectorStatus(1, "Charging")
@@ -51,6 +52,12 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     # 结束远程充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
+
+    # 等待本地开始充电
+    flag, msg = await waitRequest("stop_transaction")
+    logging.info(msg)
+    assert flag == True
+    assert msg['reason'] == "Remote"
 
     # 获取桩结束充电之后的状态
     status = await waitConnectorStatus(1, "Preparing")
@@ -80,14 +87,12 @@ async def test_remote_start_transaction(event_loop):
     Connector.slot()
 
     # 获取桩充电之前的状态
-    status = await waitConnectorStatus(0, "Available")
-    assert status == "Available"
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -143,14 +148,12 @@ async def test_remote_start_transaction_time_out(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 获取桩充电之前的状态
-    status = await waitConnectorStatus(0, "Available")
-    assert status == "Available"
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -187,14 +190,12 @@ async def test_remote_stop_transaction(event_loop):
     Connector.slot()
 
     # 获取桩充电之前的状态
-    status = await waitConnectorStatus(0, "Available")
-    assert status == "Available"
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),

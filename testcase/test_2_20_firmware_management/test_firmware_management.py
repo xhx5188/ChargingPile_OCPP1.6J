@@ -75,6 +75,7 @@ async def test_download_failed(event_loop):
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
 
+
 @allure.feature("test_installation_failed")
 @pytest.mark.asyncio
 async def test_installation_failed(event_loop):

@@ -29,7 +29,7 @@ async def test_remote_start_charging_session_rejected(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("./schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -71,7 +71,7 @@ async def test_remote_start_transaction_connector_id_shall_not_be_0(event_loop):
     assert status == "Preparing"
 
     # 远程启动充电
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("./schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=0,
@@ -96,7 +96,7 @@ async def test_remote_stop_transaction_rejected(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("./schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),

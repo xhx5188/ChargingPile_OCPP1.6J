@@ -1,3 +1,5 @@
+import asyncio
+
 from connector.connector import Connector
 from server import service
 from server.connect import waitServerClose, waitConnectorStatus
@@ -15,7 +17,7 @@ from ocpp.v16 import call_result
 
 @pytest.fixture(scope="function", autouse=True)
 async def server(event_loop):
-    Connector()
+    await asyncio.sleep(10)
     clearTriggerMessage()
     logging.info("*" * 50 + "set up" + "*" * 50)
     logging.info("*" * 50 + "testcase" + "*" * 50)
@@ -27,6 +29,17 @@ async def server(event_loop):
         logging.info(response)
     Connector.unslot()
     await waitServerClose(Value.server)
+
+
+@pytest.fixture(scope="function", autouse=True)
+async def reboot(event_loop):
+    logging.info("掉电")
+    Connector.unelectricity()
+    await asyncio.sleep(60)
+    logging.info("重新上电")
+    Connector.electricity()
+    await asyncio.sleep(20)
+    yield
 
 
 class Val:

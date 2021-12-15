@@ -28,11 +28,10 @@ async def test_unlock_connector_no_charging_no_fixed_cable(event_loop):
 async def test_unlock_connector_no_charging_with_fixed_cable(event_loop):
     # 解锁枪
     response = await service.unlockConnector(event_loop, connector_id=1)
-    #为支撑sevadis平台，暂时修改为"UnlockFailed"状态
-    assert response[0].status == "UnlockFailed"
+    assert response[0].status == "NotSupported"
 
 
-# @pytest.mark.skip(reason="no fixed cable")
+@pytest.mark.skip(reason="no fixed cable")
 @pytest.mark.asyncio
 @allure.feature("test_unlock_connector_with_charging_no_fixed_cable")
 async def test_unlock_connector_with_charging_no_fixed_cable(event_loop):
@@ -127,8 +126,7 @@ async def test_unlock_connector_with_charging_with_fixed_cable(event_loop):
 
     # 解锁枪
     response = await service.unlockConnector(event_loop, connector_id=1)
-    # 为支撑sevadis平台，暂时修改为"Unlocked"状态
-    assert response[0].status == "Unlocked"
+    assert response[0].status == "NotSupported"
 
     #结束充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])

@@ -67,10 +67,9 @@ async def test_retrieve_configuration(event_loop):
                         "UnlockConnectorOnEVSideDisconnect"]
 
     # 获取配置信息
-    logging.info("*" * 100)
     result = await service.getConfiguration(event_loop, get_config_list)
     logging.info(result)
-    assert len(result) == cfg_max
+    assert len(result) <= cfg_max
 
 
 @allure.feature("test_change_set_configuration")

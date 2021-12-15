@@ -1,9 +1,8 @@
+import asyncio
 import logging
-
 import pytest
 import websockets
 from websockets.legacy.server import WebSocketServer
-
 from connector.connector import Connector
 from server import service
 from server.connect import on_connect, waitServerClose, clearTriggerMessage, waitRequest, waitConnectorStatus, Value
@@ -11,11 +10,12 @@ from server.connect import on_connect, waitServerClose, clearTriggerMessage, wai
 
 @pytest.fixture(scope="function", autouse=True)
 async def server(event_loop):
+    await asyncio.sleep(10)
     clearTriggerMessage()
     logging.info("*" * 50 + "set up" + "*" * 50)
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
-    flag, _ = await waitRequest("boot_notification")
+    flag, _ = await waitRequest("heartbeat")
     if flag == True:
         logging.info("the charge point has connected to this server")
         logging.info("*" * 50 + "testcase" + "*" * 50)

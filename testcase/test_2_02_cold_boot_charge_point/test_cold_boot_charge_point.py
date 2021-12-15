@@ -3,11 +3,13 @@ import pytest
 import websockets
 from ocpp.v16.enums import RegistrationStatus
 from websockets.legacy.server import WebSocketServer
+
 from server import service
 from server.connect import waitConnectorStatus, waitRequest, Value
 from testcase.test_2_02_cold_boot_charge_point.conftest import Val, on_connect_boot_reject, on_connect_boot_pending
 from dateutil.parser import parse
 import allure
+
 
 @allure.feature("test_cold_boot_charge_point")
 @pytest.mark.asyncio
@@ -15,6 +17,7 @@ async def test_cold_boot_charge_point(event_loop):
     Value.server: WebSocketServer = await websockets.serve(on_connect_boot_reject, \
                                                            '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("Server Started listening to new connections...")
+
 
     # 等待bootnotification
     flag, _ = await waitRequest("boot_notification")

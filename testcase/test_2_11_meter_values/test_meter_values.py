@@ -18,8 +18,8 @@ async def test_sampled_meter_values(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 改变配置信息"ClockAlignedDataInterval"
-    # response = await service.changeConfiguration(event_loop, key="ClockAlignedDataInterval", value="0")
-    # assert response[0].status == RegistrationStatus.accepted
+    response = await service.changeConfiguration(event_loop, key="ClockAlignedDataInterval", value="0")
+    assert response[0].status == RegistrationStatus.accepted
 
     # 获取配置信息"MeterValuesSampledData"
     result = await service.getConfiguration(event_loop, ["MeterValuesSampledData"])
@@ -49,8 +49,10 @@ async def test_sampled_meter_values(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag, _ = await waitRequest("authorize")
+    flag, msg = await waitRequest("authorize")
+    logging.info(msg)
     assert flag == True
+    assert msg['id_tag'] == data.get('idTag')
 
     # 等待本地发送充电请求
     flag, _ = await waitRequest("start_transaction")
@@ -108,14 +110,14 @@ async def test_clock_aligned_meter_values(event_loop):
     # 获取配置信息"MeterValueAlignedData"
     result = await service.getConfiguration(event_loop, ["MeterValueAlignedData"])
     logging.info(result)
-    # assert result[0]['value'] == "0"
 
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
 
-    # 插枪。。。
+    # 插枪
+    Connector.slot()
 
     # 等待充电桩状态
     status = await waitConnectorStatus(1, "Preparing")
@@ -131,8 +133,9 @@ async def test_clock_aligned_meter_values(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待充电桩鉴权
-    flag, _ = await waitRequest("authorize")
+    flag, msg = await waitRequest("authorize")
     assert flag == True
+    assert msg['id_tag'] == data.get('idTag')
 
     # 等待本地发送充电请求
     flag, _ = await waitRequest("start_transaction")
@@ -145,14 +148,14 @@ async def test_clock_aligned_meter_values(event_loop):
     # 等待充电桩发送测量信息
     clearTriggerMessage()
     _, msg = await waitRequest("meter_values")
-    logging.info("*" * 100)
+    logging.info("-" * 100)
     logging.info(msg)
     time1 = parse(msg["meter_value"][0]["timestamp"])
 
     # 等待充电桩发送测量信息
     clearTriggerMessage()
     _, msg = await waitRequest("meter_values")
-    logging.info("*" * 100)
+    logging.info("-" * 100)
     logging.info(msg)
     time2 = parse(msg["meter_value"][0]["timestamp"])
 
@@ -162,7 +165,7 @@ async def test_clock_aligned_meter_values(event_loop):
     # 等待充电桩发送测量信息
     clearTriggerMessage()
     _, msg = await waitRequest("meter_values")
-    logging.info("*" * 100)
+    logging.info("-" * 100)
     logging.info(msg)
     time3 = parse(msg["meter_value"][0]["timestamp"])
 
@@ -172,7 +175,12 @@ async def test_clock_aligned_meter_values(event_loop):
     # 结束充电
     response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
     assert response[0].status == RegistrationStatus.accepted
+
+    # 等待本地发送结束充电请求
+    flag, _ = await waitRequest("stop_transaction")
+    assert flag == True
+
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
-    #充电。。。
+

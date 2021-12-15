@@ -26,7 +26,7 @@ async def test_power_failure_stop_transaction_before_going_down(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("./schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -90,7 +90,7 @@ async def test_power_failure_stop_transaction(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("../test_2_08_resetting_happy_flow/schema/RemoteStartTransaction.json", 'r') as f:
+    with open("schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),

@@ -65,8 +65,6 @@ async def test_connection_loss_during_transaction(event_loop):
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("第一次重连成功")
-    flag, _ = await waitRequest("boot_notification")
-    assert flag == True
 
     flag, _ = await waitRequest("meter_values")
     assert flag == True
@@ -83,8 +81,6 @@ async def test_connection_loss_during_transaction(event_loop):
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("第二次重连成功")
-    flag, _ = await waitRequest("boot_notification")
-    assert flag == True
 
     flag, _ = await waitRequest("meter_values")
     assert flag == True
@@ -144,8 +140,6 @@ async def test_offline_start_transaction_1(event_loop):
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("重连成功")
-    flag, _ = await waitRequest("boot_notification")
-    assert flag == True
 
     # 等待本地发送充电请求
     flag, _ = await waitRequest("start_transaction")
@@ -204,8 +198,6 @@ async def test_offline_start_transaction_2(event_loop):
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("重连成功")
-    flag, _ = await waitRequest("boot_notification")
-    assert flag == True
 
     # 等待本地发送充电请求
     flag, msg = await waitRequest("start_transaction")
@@ -265,8 +257,6 @@ async def test_offline_start_transaction_3(event_loop):
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("重连成功")
-    flag, _ = await waitRequest("boot_notification")
-    assert flag == True
 
     # 等待本地发送充电请求
     flag, msg = await waitRequest("start_transaction")
@@ -344,8 +334,6 @@ async def test_stop_transaction(event_loop):
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("重连成功")
-    flag, _ = await waitRequest("boot_notification")
-    assert flag == True
 
     # 等待本地发送停止充电请求
     flag, msg = await waitRequest("stop_transaction")
@@ -387,8 +375,6 @@ async def test_offline_transaction(event_loop):
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
     logging.info("重连成功")
-    flag, _ = await waitRequest("boot_notification")
-    assert flag == True
 
     # 等待本地发送充电请求
     flag, msg = await waitRequest("start_transaction")

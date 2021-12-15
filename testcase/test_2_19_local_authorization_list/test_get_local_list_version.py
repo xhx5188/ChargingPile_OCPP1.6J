@@ -18,16 +18,11 @@ async def test_get_local_list_version_not_supported(event_loop):
     assert response[0].list_version == -1
 
 
-    # result = await service.getConfiguration(event_loop, ["LocalAuthListEnabled"])
-    #
-    # response = await service.getLocalListVersion(event_loop)
-    # assert response[0].list_version == -1
-
 @allure.feature("test_get_local_list_version_empty")
 @pytest.mark.asyncio
 async def test_get_local_list_version_empty(event_loop):
     # 改变配置信息"LocalAuthListEnabled"
-    response = await service.changeConfiguration(event_loop, key="LocalAuthListEnabled", value="True")
+    response = await service.changeConfiguration(event_loop, key="LocalAuthListEnabled", value="true")
     assert response[0].status == "Accepted"
 
     # 发送本地列表给桩 updateType=full

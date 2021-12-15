@@ -1,9 +1,11 @@
+import allure
 import pytest
 from ocpp.v16.enums import RegistrationStatus
 from server import service
 from server.connect import waitConnectorStatus
 
 
+@allure.feature("test_regular_charging_plugin_first")
 @pytest.mark.skip(reason = "需要本地开始充电")
 @pytest.mark.asyncio
 async def test_regular_charging_plugin_first(event_loop):
