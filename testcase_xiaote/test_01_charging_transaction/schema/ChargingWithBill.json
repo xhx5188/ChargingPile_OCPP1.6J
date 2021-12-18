@@ -1,0 +1,29 @@
+{
+  "connectorId": 2,
+  "idTag": "1",
+  "chargingProfile": {
+    "chargingProfileId": 1,
+    "transactionId": 2,
+    "stackLevel": 1,
+    "chargingProfilePurpose": "ChargePointMaxProfile",
+    "chargingProfileKind": "Absolute",
+    "recurrencyKind": "Daily",
+    "validFrom": "date-time",
+    "validTo": "date-time",
+    "chargingSchedule": {
+      "duration": 10,
+      "startSchedule": "date-time",
+      "chargingRateUnit": "W",
+      "chargingSchedulePeriod": [
+        {
+          "startPeriod": 1,
+          "limit": 1.5,
+          "numberPhases": 1
+        }
+      ],
+      "minChargingRate": 1.5
+    }
+  },
+  "balance": 1000000,
+  "billTemplateId": "BillTemplate1"
+}

@@ -2,9 +2,10 @@ import asyncio
 from ocpp.v16 import call
 from server.connect import Value, clearTriggerMessage
 
-async def remoteStartTransaction(event_loop, id_tag: str, connector_id: int = None, charging_profile: dict = None):
+async def remoteStartTransaction(event_loop, id_tag: str, connector_id: int = None, charging_profile: dict = None, \
+                                 balance: int = None, bill_template_id: str = None):
     Value.transactionId = charging_profile['transactionId']
-    request = call.RemoteStartTransactionPayload(id_tag, connector_id, charging_profile)
+    request = call.RemoteStartTransactionPayload(id_tag, connector_id, charging_profile, balance, bill_template_id)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)
     return response
@@ -61,7 +62,7 @@ async def clearChargeProfile(event_loop, id: int = None, connector_id: int = Non
     return response
 
 
-async def dataTransfer(event_loop, vendor_id: str, message_id: str = None, data: str = None):
+async def dataTransfer(event_loop, vendor_id: str, message_id: str = None, data = None):
     clearTriggerMessage()
     request = call.DataTransferPayload(vendor_id, message_id, data)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]

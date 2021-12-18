@@ -78,7 +78,7 @@ def test_7():
 from hashlib import sha256
 import hmac
 
-def get_sign(key, data):
+def get_sign(data):
 
     #sha256加密有2种
     hsobj = sha256()
@@ -87,16 +87,21 @@ def get_sign(key, data):
 
     # return hmac.new(key, data, digestmod=sha256).hexdigest().upper()
 
-
+#723CA6C4AFF62F72B80AB138A643A63C7AD4089EDC20D60458E266BDEEFE4518
 def test_8():
-    key = '3d90-a7ef-8426b1c5'.encode("utf-8")
-    data = b'ljk'
+    data = b'11111111:11111111111111111111111111111111:111111111111111111:11111111111111111'
     print()
-    print(get_sign(key, data))   #5B41E23FD85B483E850F1935D9E9154FE7BE7A1BE3076B2D371CA14B3020691D
-
-
+    print(get_sign(data))
 
 def test_9():
+    data = b'\x311'
+    print()
+    print(get_sign(data))
+
+    data = b'11'
+    print(get_sign(data))
+
+def test_10():
     id = "44332211b5e2ae63".encode('utf-8')
     logging.info(type(id))
     passwd = b'\x02\x06\x48\x94\x4d\xd5\xb2\xc0\xf9\x7a\x8f\x7f\x30\x99\x09\xe2\x47\xb0\x28\x29\x5a\xf6\x8a\x78\xd1\xcd\xc6\xae\x1a\x11\x2c\x23'
@@ -113,7 +118,7 @@ def test_9():
     logging.info("sha256加密结果:%s", res)
     return res
 
-def test_10():
+def test_11():
     print(isinstance("11".encode('utf-8'), (bytes, bytearray)))
     print(isinstance("11", (bytes, bytearray)))
     a = "cb3c5120e58c17a551f4751ab67484d5c92816b37796f03f08e671db9fce4a26"
@@ -124,6 +129,11 @@ def test_10():
     print(new_a)
     print(len(new_a))
 
-def test_11():
-    list = []
-    print(list)
+def test_12():
+    a = b'123\x34\x35'
+    print(a.hex())
+    print(get_sign(a))
+    print(get_sign(b'\x31\x32\x33\x34\x35'))
+
+    data = b'\x11\x22\x33\x44\xc8\xc2\xad\x41\x3a\x02\x06\x48\x94\x4d\xd5\xb2\xc0\xf9\x7a\x8f\x7f\x30\x99\x09\xe2\x47\xb0\x28\x29\x5a\xf6\x8a\x78\xd1\xcd\xc6\xae\x1a\x11\x2c\x23\x3a\x33\x64\x39\x30\x2d\x61\x37\x65\x66\x2d\x38\x34\x32\x36\x62\x31\x63\x35\x3a\x41\x41\x3a\x42\x42\x3a\x43\x43\x3a\x44\x44\x3a\x45\x45\x3a\x46\x46'
+    print(get_sign(data))

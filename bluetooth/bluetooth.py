@@ -1,8 +1,6 @@
 import logging
 from time import sleep
-
 import yaml
-
 from bluetooth import sha256, crc32
 from bluetooth.serial import Serial
 
@@ -12,6 +10,7 @@ class Buletooth():
         self.path = path
         self._serial = Serial(path=path)
         self.random = ""
+
 
     def sendAT(self, at_cmd: str, times=5, endTag="OK"):
         for i in range(times):
@@ -27,10 +26,11 @@ class Buletooth():
         raise Exception("send at command failed: %s" % at_cmd)
         return False
 
+
     def sendHexData(self, data: str):
         self._serial.send_hex_data(data)
         line = "111"
-        res = ""
+        res = b''
         while line:
             if "NOTIFY" in str(line):
                 res = line
@@ -67,11 +67,12 @@ class Buletooth():
         auth_key = sha256.get_authkey(cp_random)
         logging.info("sha256加密结果:%s", auth_key)
 
-        new_auth_key = ""
-        while auth_key is not "":
-            new_auth_key += auth_key[-2] + auth_key[-1]
-            auth_key = auth_key[:-2]
-        auth_data = "55aa30000100000000000100"+new_auth_key
+        # new_auth_key = ""
+        # while auth_key is not "":
+        #     new_auth_key += auth_key[-2] + auth_key[-1]
+        #     auth_key = auth_key[:-2]
+        # auth_data = "55aa30000100000000000100"+new_auth_key
+        auth_data = "55aa30000100000000000100" + auth_key
         crc_data = crc32.crc32c_hex(auth_data)
         auth_data += crc_data
         logging.info(auth_data)
@@ -84,10 +85,10 @@ class Buletooth():
     def get_random(self, b: bytes) ->str:
         l = [(hex(i)[2:]).zfill(2) for i in list(b)]
         l = l[-10: -6]
-        l = l[::-1]
         cp_random = "".join(l)
         return cp_random
 
 
 def test_1():
     Buletooth("../config.yaml").connect()
+
