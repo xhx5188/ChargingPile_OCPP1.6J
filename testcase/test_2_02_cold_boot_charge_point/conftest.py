@@ -1,15 +1,11 @@
 import asyncio
-
 from connector.connector import Connector
 from server import service
 from server.connect import waitServerClose, waitConnectorStatus
-
 import logging
 from datetime import datetime
-
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from server.connect import Value, clearTriggerMessage, ChargePoint
 from ocpp.routing import on
 from ocpp.v16.enums import Action

@@ -14,10 +14,6 @@ import allure
 async def test_unlock_connector_no_charging_no_fixed_cable(event_loop):
     #未插枪。。。
 
-    #判断未插枪状态
-    status = await waitConnectorStatus(1, "Available")
-    assert status == "Available"
-
     #解锁枪
     response = await service.unlockConnector(event_loop, connector_id=1)
     assert response[0].status == "Unlocked"

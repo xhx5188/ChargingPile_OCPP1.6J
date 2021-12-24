@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import pytest
@@ -17,6 +18,7 @@ async def test_idle_charge_point(event_loop):
     pass
 
 
+@pytest.mark.need_swipe_card
 @allure.feature("test_connection_loss_during_transaction")
 @pytest.mark.asyncio
 async def test_connection_loss_during_transaction(event_loop):
@@ -110,8 +112,8 @@ async def test_connection_loss_during_transaction(event_loop):
     assert status == "Available"
 
 
+@pytest.mark.need_swipe_card
 @allure.feature("test_offline_start_transaction_1")
-@pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
 async def test_offline_start_transaction_1(event_loop):
     # 改变配置信息"AllowOfflineTxForUnknowId"
@@ -133,8 +135,9 @@ async def test_offline_start_transaction_1(event_loop):
     # 插枪
     Connector.slot()
 
-    # 用一张有效卡进行本地启动充电。。。
-
+    # 刷卡
+    print("请刷一张未绑定卡启动充电:")
+    await asyncio.sleep(120)
 
     # 重新建立连接
     clearTriggerMessage()
@@ -148,6 +151,8 @@ async def test_offline_start_transaction_1(event_loop):
     # 判断枪的状态
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
+
+    print("请再刷卡停止充电:")
 
     # 本地主动发送停止充电请求。。。
     flag, msg = await waitRequest("stop_transaction")
@@ -167,7 +172,6 @@ async def test_offline_start_transaction_1(event_loop):
 
 
 @allure.feature("test_offline_start_transaction_2")
-@pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
 async def test_offline_start_transaction_2(event_loop):
     # 改变配置信息"AllowOfflineTxForUnknowId"
@@ -192,7 +196,9 @@ async def test_offline_start_transaction_2(event_loop):
     # 插枪
     Connector.slot()
 
-    # 用一张无效卡进行本地启动充电。。。
+    # 刷卡
+    print("请刷一张未绑定卡启动充电:")
+    await asyncio.sleep(120)
 
     # 重新建立连接
     clearTriggerMessage()
@@ -207,6 +213,10 @@ async def test_offline_start_transaction_2(event_loop):
     # 判断枪的状态
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
+
+    # 判断枪的状态
+    status = await waitConnectorStatus(1, "SuspendedEVSE")
+    assert status == "SuspendedEVSE"
 
     # 本地主动发送停止充电请求。。。
     flag, msg = await waitRequest("stop_transaction")

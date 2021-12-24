@@ -133,8 +133,6 @@ async def test_remote_start_transaction(event_loop):
 
 
 @allure.feature("test_remote_start_transaction_time_out")
-#timeout: 刷卡进入preparing,超时则进入available
-@pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
 async def test_remote_start_transaction_time_out(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
@@ -146,10 +144,6 @@ async def test_remote_start_transaction_time_out(event_loop):
     Value.flag_boot_notification = 0
     response = await service.changeConfiguration(event_loop, key="ConnectionTimeOut", value="60")
     assert response[0].status == RegistrationStatus.accepted
-
-    # 获取桩充电之前的状态
-    status = await waitConnectorStatus(1, "Preparing")
-    assert status == "Preparing"
 
     # 远程启动充电
     clearTriggerMessage()
@@ -164,12 +158,12 @@ async def test_remote_start_transaction_time_out(event_loop):
     flag, _ = await waitRequest("authorize")
     assert flag == True
 
-    # 获取桩充电之后的状态
-    status = await waitConnectorStatus(1, "Charging")
-    assert status == "Charging"
+    # 获取桩充电之前的状态
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
 
     logging.info(time.time())
-    status = await waitConnectorStatus(1, "Available", 20)
+    status = await waitConnectorStatus(1, "Available", 40)
     assert status == "Available"
     logging.info(time.time())
 

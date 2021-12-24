@@ -1,9 +1,9 @@
 {
-  "connectorId": 2,
-  "idTag": "1",
+  "connectorId": 1,
+  "idTag": "AE0022A1GM9C00041C",
   "chargingProfile": {
     "chargingProfileId": 1,
-    "transactionId": 2,
+    "transactionId": 1,
     "stackLevel": 1,
     "chargingProfilePurpose": "ChargePointMaxProfile",
     "chargingProfileKind": "Absolute",
@@ -23,7 +23,5 @@
       ],
       "minChargingRate": 1.5
     }
-  },
-  "balance": 1000000,
-  "billTemplateId": "BillTemplate1"
+  }
 }

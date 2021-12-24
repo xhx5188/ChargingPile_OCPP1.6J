@@ -2,14 +2,14 @@ import json
 import logging
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from connector.connector import Connector
 from server import service
 from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 import allure
 
+
+@pytest.mark.need_swipe_card
 @allure.feature("test_start_charging_session_authorize_invalid")
-@pytest.mark.skip(reason="需要刷卡")
 @pytest.mark.asyncio
 async def test_start_charging_session_authorize_invalid(event_loop):
     # 改变配置信息"MinimumStatusDuration"
@@ -27,10 +27,16 @@ async def test_start_charging_session_authorize_invalid(event_loop):
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
-    # 刷无效卡。。。
+    # 刷卡
+    print("请刷一张未绑定卡启动充电:")
 
     # 等待认证失败
-    # _, msg = await waitRequest("authorize")
+    flag, msg = await waitRequest("authorize")
+    assert flag == True
+    logging.info(msg)
+    # 等待本地开始充电
+    flag, _ = await waitRequest("start_transaction")
+    assert flag == False
 
 
 @allure.feature("test_start_charging_session_lock_failure")
@@ -41,9 +47,6 @@ async def test_start_charging_session_lock_failure(event_loop):
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
     assert result[0]['value'] == "true"
-
-    # 插枪
-    Connector.slot()
 
     # 远程启动充电
     clearTriggerMessage()
