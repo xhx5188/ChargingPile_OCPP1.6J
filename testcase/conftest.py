@@ -3,7 +3,6 @@ import logging
 import pytest
 import websockets
 from websockets.legacy.server import WebSocketServer
-
 from bluetooth.bluetooth import Buletooth
 from connector.connector import Connector
 from server import service

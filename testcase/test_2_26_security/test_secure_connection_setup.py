@@ -13,11 +13,10 @@ from server.connect import waitRequest
 @pytest.mark.asyncio
 async def test_update_passwd(event_loop):
     # 改变配置信息"AuthorizationKey"
-    response = await service.changeConfiguration(event_loop, key="AuthorizationKey", value="OCA_OCTT_admin_test")
+    key = "OCA_OCTT_admin_test"
+    response = await service.changeConfiguration(event_loop, key="AuthorizationKey", value=key.encode().hex().upper())
     assert response[0].status == RegistrationStatus.accepted
-    await asyncio.sleep(10)
-
-    # 等待重连。。。
+    await asyncio.sleep(60)
 
 
 @allure.feature("test_update_certificate")

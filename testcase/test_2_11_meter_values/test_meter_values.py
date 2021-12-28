@@ -182,5 +182,3 @@ async def test_clock_aligned_meter_values(event_loop):
 
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
-
-

@@ -108,7 +108,7 @@ async def test_regular_charging_session2(event_loop):
     assert status == "Available"
 
 
-# @pytest.mark.need_swipe_card
+@pytest.mark.need_swipe_card
 @allure.feature("test_regular_charging_session3")
 @pytest.mark.asyncio
 async def test_regular_charging_session3(event_loop):

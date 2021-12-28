@@ -12,13 +12,36 @@ import allure
 
 
 @allure.feature("test_idle_charge_point")
-@pytest.mark.skip(reason = "用例有疑问")
 @pytest.mark.asyncio
 async def test_idle_charge_point(event_loop):
-    pass
+    flag, msg = await waitRequest("heartbeat")
+    assert flag == True
+
+    flag, msg = await waitRequest("heartbeat")
+    assert flag == True
+
+    flag, msg = await waitRequest("heartbeat")
+    assert flag == True
+
+    # 断开连接
+    logging.info("断开连接")
+    await waitServerClose(Value.server)
+
+    # 重新建立连接
+    clearTriggerMessage()
+    Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
+    logging.info("重连成功")
+
+    flag, msg = await waitRequest("heartbeat")
+    assert flag == True
+
+    flag, msg = await waitRequest("heartbeat")
+    assert flag == True
+
+    flag, msg = await waitRequest("heartbeat")
+    assert flag == True
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_connection_loss_during_transaction")
 @pytest.mark.asyncio
 async def test_connection_loss_during_transaction(event_loop):
@@ -59,30 +82,16 @@ async def test_connection_loss_during_transaction(event_loop):
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
-    logging.info("断开连接第一次")
+    logging.info("断开连接")
     # 断开连接
     await waitServerClose(Value.server)
+
+    await asyncio.sleep(15)
 
     # 重新建立连接
     clearTriggerMessage()
     Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
-    logging.info("第一次重连成功")
-
-    flag, _ = await waitRequest("meter_values")
-    assert flag == True
-    flag, _ = await waitRequest("meter_values")
-    assert flag == True
-    flag, _ = await waitRequest("meter_values")
-    assert flag == True
-
-    logging.info("断开连接第二次")
-    # 断开连接
-    await waitServerClose(Value.server)
-
-    # 重新建立连接
-    clearTriggerMessage()
-    Value.server: WebSocketServer = await websockets.serve(on_connect, '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
-    logging.info("第二次重连成功")
+    logging.info("重连成功")
 
     flag, _ = await waitRequest("meter_values")
     assert flag == True
@@ -97,8 +106,9 @@ async def test_connection_loss_during_transaction(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待本地发送结束充电请求
-    flag, _ = await waitRequest("stop_transaction")
+    flag, msg = await waitRequest("stop_transaction")
     assert flag == True
+    assert msg['reason'] == "Remote"
 
     # 判断结束充电后枪的状态
     status = await waitConnectorStatus(1, "Preparing")
@@ -111,8 +121,8 @@ async def test_connection_loss_during_transaction(event_loop):
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
 
-
-@pytest.mark.need_swipe_card
+@pytest.mark.skip(reason="需要刷卡")
+# @pytest.mark.need_swipe_card
 @allure.feature("test_offline_start_transaction_1")
 @pytest.mark.asyncio
 async def test_offline_start_transaction_1(event_loop):
@@ -171,6 +181,7 @@ async def test_offline_start_transaction_1(event_loop):
     assert status == "Available"
 
 
+@pytest.mark.skip(reason="需要刷卡")
 @allure.feature("test_offline_start_transaction_2")
 @pytest.mark.asyncio
 async def test_offline_start_transaction_2(event_loop):

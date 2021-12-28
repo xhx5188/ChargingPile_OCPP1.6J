@@ -20,6 +20,8 @@ async def test_get_local_list_version_not_supported(event_loop):
                                            local_authorization_list=data.get("localAuthorizationList"))
     assert response[0].status == RegistrationStatus.accepted
 
+
+
     # 发送本地列表给桩 updateType=differential
     with open("schema/SendLocalList2.json", 'r') as f:
         data = json.load(f)
