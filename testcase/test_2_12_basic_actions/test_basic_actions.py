@@ -28,7 +28,7 @@ async def test_start_charging_session_authorize_invalid(event_loop):
     assert status == "Preparing"
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
 
     # 等待认证失败
     flag, msg = await waitRequest("authorize")

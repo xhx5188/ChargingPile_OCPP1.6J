@@ -76,7 +76,6 @@ class ChargePoint(cp):
     @on(Action.DiagnosticsStatusNotification)
     def on_diagnostics_status_notification(self, **kwargs):
         Value.flag["diagnostics_status_notification"].append(kwargs)
-        logging.info(kwargs)
         return call_result.DiagnosticsStatusNotificationPayload()
 
     @on(Action.FirmwareStatusNotification)
@@ -113,7 +112,7 @@ class ChargePoint(cp):
             "status": RegistrationStatus.accepted
         }
         return call_result.StartTransactionPayload(
-            transaction_id=kwargs['connector_id'],
+            transaction_id=1,
             id_tag_info=eg
         )
 

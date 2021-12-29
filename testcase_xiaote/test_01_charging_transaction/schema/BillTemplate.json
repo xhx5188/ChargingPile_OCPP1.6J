@@ -7,62 +7,62 @@
       {
         "startTime": "00:00",
         "sectAttri": 2,
-        "energyPrice": 67000,
-        "servicePrice": 13000
+        "energyPrice": 10000,
+        "servicePrice": 10000
       },
       {
         "startTime": "01:00",
         "sectAttri": 1,
-        "energyPrice": 102000,
-        "servicePrice": 8000
+        "energyPrice": 20000,
+        "servicePrice": 20000
       },
       {
-        "startTime": "03:30",
+        "startTime": "02:00",
         "sectAttri": 2,
-        "energyPrice": 67000,
-        "servicePrice": 13000
+        "energyPrice": 30000,
+        "servicePrice": 30000
       },
       {
         "startTime": "06:00",
         "sectAttri": 1,
-        "energyPrice": 102000,
-        "servicePrice": 8000
+        "energyPrice": 40000,
+        "servicePrice": 40000
       },
       {
-        "startTime": "08:30",
+        "startTime": "09:00",
         "sectAttri": 2,
-        "energyPrice": 67000,
-        "servicePrice": 13000
+        "energyPrice": 50000,
+        "servicePrice": 50000
       },
       {
         "startTime": "11:00",
         "sectAttri": 1,
-        "energyPrice": 102000,
-        "servicePrice": 8000
+        "energyPrice": 60000,
+        "servicePrice": 60000
       },
       {
         "startTime": "13:00",
         "sectAttri": 2,
-        "energyPrice": 67000,
-        "servicePrice": 13000
+        "energyPrice": 70000,
+        "servicePrice": 70000
       },
       {
         "startTime": "15:00",
         "sectAttri": 3,
-        "energyPrice": 23000,
-        "servicePrice": 35000
+        "energyPrice": 100000,
+        "servicePrice": 100000
       },
       {
-        "startTime": "16:00",
+        "startTime": "18:00",
         "sectAttri": 3,
-        "energyPrice": 23000,
-        "servicePrice": 35000
+        "energyPrice": 200000,
+        "servicePrice": 200000
       },
       {
         "startTime": "23:00",
         "sectAttri": 2,
-        "energyPrice": 67000,
-        "servicePrice": 13000
+        "energyPrice": 300000,
+        "servicePrice": 300000
       }
     ]
   }

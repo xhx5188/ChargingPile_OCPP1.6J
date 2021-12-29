@@ -11,6 +11,7 @@ from server.connect import waitRequest, waitConnectorStatus, clearTriggerMessage
 @allure.feature("test_download_and_install")
 @pytest.mark.asyncio
 async def test_download_and_install(event_loop):
+    clearTriggerMessage()
     # uri = "https://autel-cloud-energy-gateway-enetest.auteltech.cn/api/app-version-manager/version/upgrade/ota" #中国测试环境
     uri = "https://gateway-enetestuk.autel.com/api/app-version-manager/version/upgrade/ota" #英国测试环境
     retrieve_date = (datetime.utcnow() + timedelta(seconds=3)).strftime('%Y-%m-%dT%H:%M:%S.123Z')
@@ -43,7 +44,7 @@ async def test_download_and_install(event_loop):
     flag, msg = await waitRequest("boot_notification", 400)
     assert flag == True
 
-    # 等待充电桩被设置为不可用状态
+    # 等待充电桩被设置为可用状态
     status = await waitConnectorStatus(0, "Available")
     assert status == "Available"
     status = await waitConnectorStatus(1, "Available")
@@ -79,6 +80,7 @@ async def test_download_failed(event_loop):
 @allure.feature("test_installation_failed")
 @pytest.mark.asyncio
 async def test_installation_failed(event_loop):
+    clearTriggerMessage()
     uri = "https://gateway-enetestuk.autel.com/api/app-version-manager/version/upgrade/ota"  # 英国测试环境
     retrieve_date = (datetime.utcnow() + timedelta(seconds=3)).strftime('%Y-%m-%dT%H:%M:%S.123Z')
     response = await service.updateFirmware(event_loop, uri, retrieve_date)
@@ -107,18 +109,8 @@ async def test_installation_failed(event_loop):
     # 掉电
     logging.info("掉电")
     Connector.unelectricity()
+
     await asyncio.sleep(30)
-
-    # 本地发送固件安装失败通知
-    flag, msg = await waitRequest("firmware_status_notification", 400)
-    assert flag == True
-    assert msg["status"] == "InstallationFailed"
-
-    # 等待充电桩状态
-    status = await waitConnectorStatus(0, "Available")
-    assert status == "Available"
-    status = await waitConnectorStatus(1, "Available")
-    assert status == "Available"
 
     clearTriggerMessage()
     # 上电
@@ -126,8 +118,13 @@ async def test_installation_failed(event_loop):
     Connector.electricity()
 
     # 等待桩重启
-    flag, _ = await waitRequest("boot_notification", 200)
+    flag, _ = await waitRequest("boot_notification", 50)
     assert flag == True
+
+    # 本地发送固件安装失败通知
+    flag, msg = await waitRequest("firmware_status_notification", 100)
+    assert flag == True
+    assert msg["status"] == "InstallationFailed"
 
     # 等待充电桩状态
     status = await waitConnectorStatus(0, "Available")

@@ -1,5 +1,8 @@
+import asyncio
 import logging
 from time import sleep
+
+import pytest
 import yaml
 from bluetooth import sha256, crc32
 from bluetooth.serial import Serial
@@ -19,7 +22,7 @@ class Buletooth():
             while s:
                 line = self._serial.read_line()
                 s = str(line, 'utf-8')
-                logging.info(s)
+                # logging.info(s)
                 if endTag in s:
                     return True
                 sleep(0.1)
@@ -36,12 +39,12 @@ class Buletooth():
                 res = line
 
             line = self._serial.read_line()
-            logging.info(line)
+            # logging.info(line)
             sleep(0.1)
         return res
 
 
-    def connect(self):
+    def connect_bluetooth_server(self):
         with open(self.path, 'r') as f:
             cfg = yaml.safe_load(f)
             mac = cfg['bluetooth']['bleMAC']
@@ -66,20 +69,20 @@ class Buletooth():
 
         auth_key = sha256.get_authkey(cp_random)
         logging.info("sha256加密结果:%s", auth_key)
-
-        # new_auth_key = ""
-        # while auth_key is not "":
-        #     new_auth_key += auth_key[-2] + auth_key[-1]
-        #     auth_key = auth_key[:-2]
-        # auth_data = "55aa30000100000000000100"+new_auth_key
         auth_data = "55aa30000100000000000100" + auth_key
         crc_data = crc32.crc32c_hex(auth_data)
         auth_data += crc_data
-        logging.info(auth_data)
+        logging.info("auth_data = %s" % auth_data)
 
         self.sendAT("AT+BLEGATTCWR=0,3,5,,48\r\n", endTag=">")
         response = self.sendHexData(auth_data)
-        logging.info(response)
+        logging.info(response.hex())
+        if "010000" in response.hex():
+            return True
+        return False
+
+    def disconnect_bluetooth_server(self):
+        return self.sendAT("AT+BLEDISCONN=0\r\n")
 
 
     def get_random(self, b: bytes) ->str:
@@ -89,6 +92,57 @@ class Buletooth():
         return cp_random
 
 
-def test_1():
-    Buletooth("../config.yaml").connect()
+    def local_start_charge(self):
+        # 本地启动充电
+        charging_data = "55aa49000100000003000000"
+        charging_data = charging_data + "010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        crc_data = crc32.crc32c_hex(charging_data)
+        charging_data += crc_data
+        logging.info("chargingData = %s" % charging_data)
+
+        self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=">")
+        response = self.sendHexData(charging_data)
+        logging.info(response.hex())
+        if "0300000000" in response.hex():
+            return True
+        return False
+
+
+    def local_stop_charge(self):
+        # 本地停止充电
+        charging_data = "55aa49000100000003000000"
+        charging_data = charging_data + "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        crc_data = crc32.crc32c_hex(charging_data)
+        charging_data += crc_data
+        logging.info("chargingData = %s" % charging_data)
+
+        self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=">")
+        response = self.sendHexData(charging_data)
+        logging.info(response.hex())
+        if "0300000000" in response.hex():
+            return True
+        return False
+
+
+@pytest.mark.asyncio
+async def test_1(event_loop):
+    # 插枪
+    from connector.connector import Connector
+    Connector.slot("../config.yaml")
+
+    blue_obj = Buletooth("../config.yaml")
+    flag = blue_obj.connect_bluetooth_server()
+    assert flag == True
+    flag = blue_obj.local_start_charge()
+    assert flag == True
+    sleep(10)
+    flag = blue_obj.local_stop_charge()
+
+    assert flag == True
+    flag = blue_obj.disconnect_bluetooth_server()
+    assert flag == True
+
+
+
+
 

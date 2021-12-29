@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import allure
 import pytest
@@ -22,7 +23,7 @@ async def test_regular_charging_session1(event_loop):
     assert status == "Preparing"
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
 
     # 等待充电桩鉴权
     logging.info("等待鉴权")
@@ -41,7 +42,7 @@ async def test_regular_charging_session1(event_loop):
     flag, _ = await waitRequest("meter_values")
     assert flag == True
 
-    print("请刷再次刷卡停止充电:")
+    logging.info("[请刷再次刷卡停止充电:]")
 
     # 等待本地结束充电
     flag, _ = await waitRequest("stop_transaction", 40)
@@ -57,6 +58,7 @@ async def test_regular_charging_session1(event_loop):
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
 
+
 @pytest.mark.need_swipe_card
 @allure.feature("test_regular_charging_session2")
 @pytest.mark.asyncio
@@ -70,7 +72,7 @@ async def test_regular_charging_session2(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
 
     # 等待充电桩鉴权
     logging.info("等待鉴权")
@@ -91,7 +93,7 @@ async def test_regular_charging_session2(event_loop):
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
-    print("请刷再次刷卡停止充电:")
+    logging.info("[请刷再次刷卡停止充电:]")
 
     # 等待本地停止充电
     flag, _ = await waitRequest("stop_transaction", 40)
@@ -121,7 +123,7 @@ async def test_regular_charging_session3(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
 
     # 等待充电桩鉴权
     logging.info("等待鉴权")

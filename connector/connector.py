@@ -1,4 +1,6 @@
 import socket
+from time import sleep
+
 import yaml
 
 class Connector():
@@ -40,6 +42,8 @@ class Connector():
         s.connect((ip, port))
         data = bytes.fromhex("a00401a5")
         s.send(data)
+        sleep(1)
+        s.send(data)
         s.close()
 
     @classmethod
@@ -52,6 +56,8 @@ class Connector():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((ip, port))
         data = bytes.fromhex("a00400a4")
+        s.send(data)
+        sleep(1)
         s.send(data)
         s.close()
 

@@ -1,0 +1,22 @@
+{
+  "vendorId": "Autel",
+  "messageId": "Billtemplate",
+  "data": {
+    "billTemplateid": "8be537b74df84c7a9361",
+    "sectNum": 2,
+    "templatelItem": [
+      {
+        "startTime": "00:00",
+        "sectAttri": 2,
+        "energyPrice": 67000,
+        "servicePrice": 13000
+      },
+      {
+        "startTime": "12:00",
+        "sectAttri": 1,
+        "energyPrice": 102000,
+        "servicePrice": 8000
+      }
+    ]
+  }
+}

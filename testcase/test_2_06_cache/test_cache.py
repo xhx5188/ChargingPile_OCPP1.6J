@@ -124,7 +124,7 @@ async def test_clear_authorization_data_in_authorization_cache(event_loop):
     assert response[0].status == "Accepted"
 
     # 刷卡
-    print("请刷一张未绑定卡:")
+    logging.info("[请刷一张未绑定卡:]")
 
     # 等待充电桩鉴权
     flag, msg = await waitRequest("authorize", 40)
@@ -142,7 +142,7 @@ async def test_clear_authorization_data_in_authorization_cache(event_loop):
     assert response[0].status == RegistrationStatus.accepted
 
     # 刷卡
-    print("请刷一张未绑定卡:")
+    logging.info("[请刷一张未绑定卡:]")
 
     # 等待充电桩鉴权
     flag, msg = await waitRequest("authorize", 40)

@@ -146,7 +146,7 @@ async def test_offline_start_transaction_1(event_loop):
     Connector.slot()
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
     await asyncio.sleep(120)
 
     # 重新建立连接
@@ -162,7 +162,7 @@ async def test_offline_start_transaction_1(event_loop):
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
-    print("请再刷卡停止充电:")
+    logging.info("[请再刷卡停止充电:]")
 
     # 本地主动发送停止充电请求。。。
     flag, msg = await waitRequest("stop_transaction")
@@ -208,7 +208,7 @@ async def test_offline_start_transaction_2(event_loop):
     Connector.slot()
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
     await asyncio.sleep(120)
 
     # 重新建立连接

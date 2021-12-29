@@ -20,7 +20,7 @@ async def test_stop_transaction1(event_loop):
     assert status == "Preparing"
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
 
     # 等待充电桩鉴权
     logging.info("等待鉴权")
@@ -35,7 +35,7 @@ async def test_stop_transaction1(event_loop):
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
-    print("请刷另一张卡停止充电:")
+    logging.info("[请刷另一张卡停止充电:]")
 
     # 等待充电桩鉴权
     logging.info("等待鉴权")
@@ -62,7 +62,7 @@ async def test_stop_transaction2(event_loop):
     assert status == "Preparing"
 
     # 刷卡
-    print("请刷一张未绑定卡启动充电:")
+    logging.info("[请刷一张未绑定卡启动充电:]")
 
     # 等待充电桩鉴权
     logging.info("等待鉴权")
@@ -77,7 +77,7 @@ async def test_stop_transaction2(event_loop):
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
-    print("请刷另一张卡停止充电:")
+    logging.info("[请刷另一张卡停止充电:]")
 
     # 等待充电桩鉴权
     logging.info("等待鉴权")

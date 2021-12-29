@@ -7,7 +7,7 @@ from server import service
 from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 
 
-@pytest.mark.skip(reason="skip")
+# 远程反复启停充电压测用例
 @pytest.mark.asyncio
 async def test_1(event_loop):
     # 插枪
