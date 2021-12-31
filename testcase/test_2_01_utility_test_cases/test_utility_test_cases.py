@@ -1,10 +1,8 @@
-import asyncio
 import json
 import logging
 import allure
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from connector.connector import Connector
 from server import service
 from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage
