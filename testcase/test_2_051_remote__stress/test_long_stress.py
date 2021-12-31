@@ -1,13 +1,16 @@
+import asyncio
 import json
 import logging
 import pytest
 from ocpp.v16.enums import RegistrationStatus
+
+from bluetooth.bluetooth import Buletooth
 from connector.connector import Connector
 from server import service
 from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 
 
-# 远程反复启停充电压测用例
+# 压力测试：远程反复启停充电
 @pytest.mark.asyncio
 async def test_1(event_loop):
     # 插枪
@@ -17,7 +20,7 @@ async def test_1(event_loop):
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
-    for i in range(10000):
+    for i in range(1):
         logging.info("times = %s" % i)
         # 远程启动充电
         clearTriggerMessage()
@@ -53,3 +56,4 @@ async def test_1(event_loop):
         assert response[0].status == RegistrationStatus.accepted
         status = await waitConnectorStatus(1, "Preparing", 30)
         assert status == "Preparing"
+

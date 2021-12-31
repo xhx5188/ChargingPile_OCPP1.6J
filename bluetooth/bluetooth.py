@@ -21,8 +21,8 @@ class Buletooth():
             s = True
             while s:
                 line = self._serial.read_line()
+                logging.info(line)
                 s = str(line, 'utf-8')
-                # logging.info(s)
                 if endTag in s:
                     return True
                 sleep(0.1)
@@ -116,11 +116,12 @@ class Buletooth():
         charging_data += crc_data
         logging.info("chargingData = %s" % charging_data)
 
-        self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=">")
-        response = self.sendHexData(charging_data)
-        logging.info(response.hex())
-        if "0300000000" in response.hex():
-            return True
+        for i in range(3):
+            self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=">")
+            response = self.sendHexData(charging_data)
+            logging.info(response.hex())
+            if "0300000000" in response.hex():
+                return True
         return False
 
 
@@ -137,10 +138,10 @@ async def test_1(event_loop):
     assert flag == True
     sleep(10)
     flag = blue_obj.local_stop_charge()
-
     assert flag == True
     flag = blue_obj.disconnect_bluetooth_server()
     assert flag == True
+    sleep(10)
 
 
 

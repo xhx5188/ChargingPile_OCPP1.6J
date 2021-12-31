@@ -98,7 +98,8 @@ async def main():
     async with websockets.connect(
         # 'ws://192.168.31.186:9000/CP_1',
         # 'ws://0.0.0.0:9000/CP_1',
-        'ws://10.10.42.4:9000/CP_1',
+        # 'ws://10.10.42.4:9000/CP_1',
+        'ws://10.10.41.45:20001/CP_1',
         subprotocols=['ocpp1.6']
     ) as ws:
 

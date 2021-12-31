@@ -3,7 +3,7 @@ connector:
   port: 8080
 
 bluetooth:
-  com: "COM3"
+  com: "COM9"
   bps: 115200
   bleMAC: "34:ab:95:74:ec:82"
 

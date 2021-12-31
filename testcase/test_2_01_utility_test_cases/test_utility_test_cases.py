@@ -10,6 +10,11 @@ from server import service
 from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage
 
 
+@allure.feature("test_revert_charge_point_to_basic_idle_s")
+@pytest.mark.asyncio
+async def test_revert_charge_point_to_basic_idle_s(event_loop):
+    assert True
+
 @allure.feature("test_revert_charge_point_to_basic_idle_state1")
 @pytest.mark.asyncio
 async def test_revert_charge_point_to_basic_idle_state1(event_loop):
