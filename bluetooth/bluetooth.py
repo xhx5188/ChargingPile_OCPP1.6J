@@ -1,7 +1,5 @@
-import asyncio
 import logging
 from time import sleep
-
 import pytest
 import yaml
 from bluetooth import sha256, crc32
@@ -15,15 +13,15 @@ class Buletooth():
         self.random = ""
 
 
-    def sendAT(self, at_cmd: str, times=5, endTag="OK"):
+    def sendAT(self, at_cmd: str, times=5, endTag=b'OK'):
         for i in range(times):
             self._serial.send_at(at_cmd)
-            s = True
-            while s:
+            line = "init"
+            while line:
                 line = self._serial.read_line()
                 logging.info(line)
-                s = str(line, 'utf-8')
-                if endTag in s:
+                # s = str(line, 'utf-8')
+                if endTag in line:
                     return True
                 sleep(0.1)
         raise Exception("send at command failed: %s" % at_cmd)
@@ -56,13 +54,13 @@ class Buletooth():
         self.sendAT("AT+BLEGATTCPRIMSRV=0\r\n")
         self.sendAT("AT+BLEGATTCCHAR=0,3\r\n")
 
-        self.sendAT("AT+BLEGATTCWR=0,3,6,1,2\r\n", endTag=">")
+        self.sendAT("AT+BLEGATTCWR=0,3,6,1,2\r\n", endTag=b">")
         self.sendHexData("0100")
-        self.sendAT("AT+BLEGATTCWR=0,3,7,1,2\r\n", endTag=">")
+        self.sendAT("AT+BLEGATTCWR=0,3,7,1,2\r\n", endTag=b">")
         self.sendHexData("0200")
 
         # 与充电桩交换随机数
-        self.sendAT("AT+BLEGATTCWR=0,3,5,,20\r\n", endTag=">")
+        self.sendAT("AT+BLEGATTCWR=0,3,5,,20\r\n", endTag=b">")
         response = self.sendHexData("55aa140001000000000000001122334429480c3a")
         cp_random = self.get_random(response)
         logging.info("cp_random = %s" % cp_random)
@@ -74,7 +72,7 @@ class Buletooth():
         auth_data += crc_data
         logging.info("auth_data = %s" % auth_data)
 
-        self.sendAT("AT+BLEGATTCWR=0,3,5,,48\r\n", endTag=">")
+        self.sendAT("AT+BLEGATTCWR=0,3,5,,48\r\n", endTag=b">")
         response = self.sendHexData(auth_data)
         logging.info(response.hex())
         if "010000" in response.hex():
@@ -100,7 +98,7 @@ class Buletooth():
         charging_data += crc_data
         logging.info("chargingData = %s" % charging_data)
 
-        self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=">")
+        self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=b">")
         response = self.sendHexData(charging_data)
         logging.info(response.hex())
         if "0300000000" in response.hex():
@@ -116,8 +114,8 @@ class Buletooth():
         charging_data += crc_data
         logging.info("chargingData = %s" % charging_data)
 
-        for i in range(3):
-            self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=">")
+        for i in range(10):
+            self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=b">")
             response = self.sendHexData(charging_data)
             logging.info(response.hex())
             if "0300000000" in response.hex():

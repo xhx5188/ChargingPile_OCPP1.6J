@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#  pipreqs . --encoding=utf8 --force
+pipreqs . --encoding=utf8 --force
 #  pip install -r requirements.txt
 rm -rf report
 reprot_path="../report"

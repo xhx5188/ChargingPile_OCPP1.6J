@@ -27,7 +27,7 @@ async def server(event_loop):
 
     BluetoothValue.blue_obj.local_stop_charge()
 
-    flag, _ = await waitRequest("heartbeat")
+    flag, _ = await waitRequest("heartbeat", 30)
     if flag == True:
         logging.info("the charge point has connected to this server")
         logging.info("*" * 50 + "testcase" + "*" * 50)
