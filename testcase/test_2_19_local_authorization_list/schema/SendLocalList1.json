@@ -6,6 +6,12 @@
       "idTagInfo": {
           "status": "Accepted"
       }
+    },
+    {
+      "idTag": "04F23ED28A6B12",
+      "idTagInfo": {
+          "status": "Accepted"
+      }
     }
   ],
   "updateType": "Full"
