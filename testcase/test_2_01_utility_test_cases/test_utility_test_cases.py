@@ -8,11 +8,6 @@ from server import service
 from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage
 
 
-@allure.feature("test_revert_charge_point_to_basic_idle_s")
-@pytest.mark.asyncio
-async def test_revert_charge_point_to_basic_idle_s(event_loop):
-    assert True
-
 @allure.feature("test_revert_charge_point_to_basic_idle_state1")
 @pytest.mark.asyncio
 async def test_revert_charge_point_to_basic_idle_state1(event_loop):
@@ -29,21 +24,26 @@ async def test_revert_charge_point_to_basic_idle_state1(event_loop):
     response = await service.changeConfiguration(event_loop, key="LocalPreAuthorize", value="false")
     assert response[0].status == RegistrationStatus.accepted
 
-    # 设置桩可用
+    # 先设置桩不可用
+    response = await service.changeAvailability(event_loop, connector_id=0, type="Inoperative")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 然后设置桩可用
     response = await service.changeAvailability(event_loop, connector_id=0, type="Operative")
     assert response[0].status == RegistrationStatus.accepted
 
-    # 获取桩状态
-    # status = await waitConnectorStatus(ConnectorID=0, expected_status="Available")
-    # assert status == "Available"
+    # 获取桩和枪的状态
+    status = await waitConnectorStatus(ConnectorID=0, expected_status="Available")
+    assert status == "Available"
+    status = await waitConnectorStatus(ConnectorID=1, expected_status="Available")
+    assert status == "Available"
 
     # 获取配置信息"AuthorizationCacheEnabled"
     result = await service.getConfiguration(event_loop, ["AuthorizationCacheEnabled"])
-    assert result[0]['value'] == "true"
-
-    # 清除缓存
-    response = await service.clearCache(event_loop)
-    assert response[0].status == RegistrationStatus.accepted
+    if result[0]['value'] == "true":
+        # 清除缓存
+        response = await service.clearCache(event_loop)
+        assert response[0].status == RegistrationStatus.accepted
 
     # 获取配置信息"LocalAuthListEnabled"
     result = await service.getConfiguration(event_loop, ["LocalAuthListEnabled"])

@@ -28,10 +28,20 @@ async def test_remote_start_transaction_cable_plugged(event_loop):
     clearTriggerMessage()
     with open("schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
+
+    # {
+    #     "connectorId": 1,
+    #     "idTag": "RFID1"
+    # }
+
+    # response = await service.remoteStartTransaction(event_loop, id_tag="RFID1",
+    #                                                 connector_id=data.get('connectorId'))
+    # assert response[0].status == RegistrationStatus.accepted
+
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
                                                     charging_profile=data.get('chargingProfile'))
-    assert response[0].status == RegistrationStatus.accepted
+
 
     # 等待充电桩鉴权
     flag, msg = await waitRequest("authorize")

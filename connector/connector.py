@@ -1,6 +1,5 @@
 import socket
 from time import sleep
-
 import yaml
 
 class Connector():
@@ -8,13 +7,13 @@ class Connector():
     def slot(cls, path="../../config.yaml"):
         with open(path, 'r') as f:
             cfg = yaml.safe_load(f)
+            # 从config.yaml文件中读取wifi模组的ip和port
             ip = cfg['connector']['STAIP']
             port = cfg['connector']['port']
 
         s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # s.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
         s.connect((ip, port))
-        data = bytes.fromhex("a00101a2")
+        data = bytes.fromhex("a00101a2") # 打开第一路继电器
         s.send(data)
         s.close()
 
@@ -27,7 +26,7 @@ class Connector():
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((ip, port))
-        data = bytes.fromhex("a00100a1")
+        data = bytes.fromhex("a00100a1") # 关闭第一路继电器
         s.send(data)
         s.close()
 
@@ -72,3 +71,4 @@ def test_slot():
 
 def test_unslot():
     Connector.unslot("../config.yaml")
+

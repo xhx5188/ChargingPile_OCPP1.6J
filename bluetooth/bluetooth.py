@@ -1,4 +1,5 @@
 import logging
+import time
 from time import sleep
 import pytest
 import yaml
@@ -30,7 +31,7 @@ class Buletooth():
 
     def sendHexData(self, data: str):
         self._serial.send_hex_data(data)
-        line = "111"
+        line = "init"
         res = b''
         while line:
             if "NOTIFY" in str(line):
@@ -115,11 +116,13 @@ class Buletooth():
         logging.info("chargingData = %s" % charging_data)
 
         for i in range(10):
-            self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=b">")
-            response = self.sendHexData(charging_data)
-            logging.info(response.hex())
-            if "0300000000" in response.hex():
-                return True
+            flag = self.sendAT("AT+BLEGATTCWR=0,3,5,,73\r\n", endTag=b">")
+            if flag == True:
+                response = self.sendHexData(charging_data)
+                logging.info(response.hex())
+                if "0300000000" in response.hex():
+                    return True
+            # time.sleep(0.5)
         return False
 
 
