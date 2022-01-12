@@ -10,11 +10,15 @@
 	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp1.png)
 		替换的代码：
 		connector_id: Optional[int] = None
+		
 		charging_profile: Optional[Dict] = None
+		
 		balance: Optional[int] = None
+		
 		bill_template_id: Optional[str] = None
 
 	
 		去掉ocpp json格式校验代码：
 	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp2.png)
-	
+
+  
