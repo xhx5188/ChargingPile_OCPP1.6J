@@ -22,4 +22,5 @@
 		去掉ocpp json格式校验代码：
 	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp2.png)
 
+thanks!
   
