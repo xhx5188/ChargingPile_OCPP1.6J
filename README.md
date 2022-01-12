@@ -8,6 +8,7 @@
   2.更改OCPP库：由于我们的小特tcu产品的ocpp协议做了部分修改，需要做出相应的适配。
 		远程启动充电增加部分字段：
 	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp1.png)
+	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp2.png)
 		替换的代码：
 		connector_id: Optional[int] = None
 		
