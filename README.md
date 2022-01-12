@@ -6,21 +6,11 @@
   ![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_websocket2.png)
   
   2.更改OCPP库：由于我们的小特tcu产品的ocpp协议做了部分修改，需要做出相应的适配。
-		远程启动充电增加部分字段：
+		远程启动充电增加部分字段,故远程启动充电请求中需要增加以下字段：
 	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp1.png)
-	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp2.png)
-		替换的代码：
-		connector_id: Optional[int] = None
-		
-		charging_profile: Optional[Dict] = None
-		
-		balance: Optional[int] = None
-		
-		bill_template_id: Optional[str] = None
 
 	
 		去掉ocpp json格式校验代码：
 	![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/update_ocpp2.png)
 
-thanks!
   
