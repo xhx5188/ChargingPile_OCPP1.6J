@@ -1,7 +1,0 @@
-allure_python_commons==2.9.45
-ocpp==0.11.0
-pytest==6.2.5
-python_dateutil==2.8.2
-server==0.0.0
-testcase==0.1.0
-websockets==10.1
