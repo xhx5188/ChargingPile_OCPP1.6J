@@ -22,11 +22,11 @@ async def server(event_loop):
         logging.info("*" * 50 + "testcase" + "*" * 50)
         yield
         logging.info("*" * 50 + "tear down" + "*" * 50)
-        # status = await waitConnectorStatus(1, "Charging", 1)
-        # if status == "Charging":
-        #     response = await service.remoteStopTransaction(event_loop, Value.transactionId)
-        #     logging.info(response)
-        # Connector.unslot()
+        status = await waitConnectorStatus(1, "Charging", 1)
+        if status == "Charging":
+            response = await service.remoteStopTransaction(event_loop, Value.transactionId)
+            logging.info(response)
+        Connector.unslot()
 
     else:
         logging.info("the charge point connect to this server timeout, and close server.")

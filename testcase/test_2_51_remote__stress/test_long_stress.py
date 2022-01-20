@@ -20,7 +20,7 @@ async def test_1(event_loop):
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
 
-    for i in range(1):
+    for i in range(100):
         logging.info("times = %s" % i)
         # 远程启动充电
         clearTriggerMessage()
