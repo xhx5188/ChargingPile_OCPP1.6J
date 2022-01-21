@@ -1,54 +1,52 @@
 #!/usr/bin/env bash
 
-cd ..
-pipreqs . --encoding=utf8 --force
-cd testcase
+#cd ..
+#pipreqs . --encoding=utf8 --force
+#cd testcase
 
-python -m pip install --upgrade pip || python3 -m pip install --upgrade pip
+#python -m pip install --upgrade pip || python3 -m pip install --upgrade pip # ¸üĞÂpip¹¤¾ß
+#pip install -r requirements.txt
 
-#  pip install -r requirements.txt
-rm -rf report
+rm -rf report  # É¾³ıÉÏÒ»´ÎµÄallure±¨¸æ
 reprot_path="../report"
 
+# Ö´ĞĞµÄ²âÊÔÄ¿Â¼
 array=(01 02 03 04 05 06 07 08 09 10
         11 12 13 14 15 16 17 18 19
         20 21 23 25)
 
-echo ""
-echo ""
-echo "excute the testcases that need swipe card"
-echo ""
-echo ""
+if [[ $# -gt 1 ]]; then
+  echo "Ä¬ÈÏ£¨Ã»ÓĞ²ÎÊı£©£ºÖ´ĞĞÈ«Á¿ÓÃÀı£»1£ºÖ´ĞĞĞèÒªË¢¿¨µÄÓÃÀı£»2£ºÖ´ĞĞ²»ĞèÒªË¢¿¨µÄÓÃÀı"
+  echo "²ÎÊı¸öÊı´íÎó£¬½Å±¾ÍË³ö£¡"
+  exit 1
+fi
 
-#æ‰§è¡Œéœ€è¦åˆ·å¡ç”¨ä¾‹
-for e in ${array[@]}; do
-  echo "swipe card testcase suite_$e"
+# ²ÎÊıÖµÎª1Ê±£¬Ö´ĞĞĞèÒªË¢¿¨µÄÓÃÀı
+if [[ $# -eq 0 || $# -eq 1 && $1 -eq 1 ]]; then
+  echo "ĞèÒªË¢¿¨²âÊÔÓÃÀı"
+  for e in ${array[@]}; do
+  echo "Ö´ĞĞĞèÒªË¢¿¨²âÊÔÌ×_$e"
   cd test_2_${e}*
-#  pytest test*.py --alluredir ${reprot_path} -m "need_swipe_card"
+  pytest test*.py --alluredir ${reprot_path} -m "need_swipe_card"
   cd ..
+  done
 
-done
 
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo "excute the testcases that not need swipe card"
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-#æ‰§è¡Œä¸éœ€è¦åˆ·å¡ç”¨ä¾‹
-for e in ${array[@]}; do
-  echo "no swipe card testcase suite_$e"
+# ²ÎÊıÖµÎª2Ê±£¬Ö´ĞĞ²»ĞèÒªË¢¿¨µÄÓÃÀı
+elif [[ $# -eq 0 || $# -eq 1 && $1 -eq 2 ]]; then
+  echo "²»ĞèÒªË¢¿¨²âÊÔÓÃÀı"
+  for e in ${array[@]}; do
+  echo "Ö´ĞĞ²»ĞèÒªË¢¿¨²âÊÔÌ×_$e"
   cd test_2_${e}*
   pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card"
   cd ..
-done
+  done
+
+else
+  echo "Ä¬ÈÏ£¨Ã»ÓĞ²ÎÊı£©£ºÖ´ĞĞÈ«Á¿ÓÃÀı£»1£ºÖ´ĞĞĞèÒªË¢¿¨µÄÓÃÀı£»2£ºÖ´ĞĞ²»ĞèÒªË¢¿¨µÄÓÃÀı"
+  echo "²ÎÊıÖµ´íÎó£¬½Å±¾ÍË³ö£¡"
+fi
 
 allure generate report/ -o report/html --clean
-allure serve report/
+allure serve report/ # Éú³Éallure ±¨¸æ·şÎñ
+exit 0
