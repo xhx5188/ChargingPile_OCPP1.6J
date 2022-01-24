@@ -30,7 +30,9 @@
 
      ![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/sample2.jpg)
 
-  7. 参考detail.md文件，修改ocpp_test/config.yaml配置文件中的配置信息，分别是wifi控制继电器的IP，蓝牙串口模块的端口号+蓝牙mac地址，充电桩SN。
+  7. 参考ocpp_test/detail.md文件，更改websocket库和ocpp库的源码
 
-  8. 交流桩的测试用例，可通过ocpp_test/testcase/start.sh执行。
+  8. 按照实际情况修改ocpp_test/config.yaml配置文件中的配置信息，分别是wifi控制继电器的IP，蓝牙串口模块的端口号+蓝牙mac地址，充电桩SN。
+  
+  9. 交流桩的测试用例，可通过ocpp_test/testcase/start.sh执行。
 
