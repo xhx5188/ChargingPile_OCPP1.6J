@@ -12,8 +12,6 @@
 
 ​		Python客户端脚本发送一些固定指令给esp8266WiFi模组，模组根据具体的指令控制继电器的开合。如下为		一个脚本通过wifi模块控制插枪/拔枪的例子：
 
-​	
-
 ```
 import socket
 from time import sleep
@@ -63,7 +61,10 @@ connector:
 - ### 配置WIFI模组的server模式
 
 配置esp8266WIFI模组：将模组连接串口调试工具，波特率设置115200，**串口工具配置自动换行**；按S1开关按	钮使**蓝灯点亮**。依次发送：
-	AT+CWMODE=3                  #配置WiFi模组为server模式
-	AT+CWJAP=“wifi名称”,”wifi密码”    #连接公司Guest wifi网络
-	AT+CIFSR                       #查询模组的IP地址，以便与python脚本交互。
+
+```
+AT+CWMODE=3                  #配置WiFi模组为server模式
+AT+CWJAP=“wifi名称”,”wifi密码”    #连接公司Guest wifi网络
+AT+CIFSR                       #查询模组的IP地址，以便与python脚本交互。
+```
 
