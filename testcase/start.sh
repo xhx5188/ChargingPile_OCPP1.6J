@@ -45,6 +45,7 @@ elif [[ $# -eq 0 || $# -eq 1 && $1 -eq 2 ]]; then
 else
   echo "默认（没有参数）：执行全量用例；1：执行需要刷卡的用例；2：执行不需要刷卡的用例"
   echo "参数值错误，脚本退出！"
+  exit 1
 fi
 
 allure generate report/ -o report/html --clean
