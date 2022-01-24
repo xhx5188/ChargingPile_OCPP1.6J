@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #cd ..
-#pipreqs . --encoding=utf8 --force
+#pip install -r requirements.txt
 #cd testcase
 
 #python -m pip install --upgrade pip || python3 -m pip install --upgrade pip # 更新pip工具
