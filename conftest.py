@@ -1,7 +1,7 @@
 import logging
 
 logging.basicConfig(level=logging.INFO,
-                    format='[%(levelname)s %(filename)s:%(lineno)d] %(message)s')
+                    format='[%(asctime)s %(levelname)s %(filename)s:%(lineno)d] %(message)s')
 
 def pytest_collection_modifyitems(items):
     """
