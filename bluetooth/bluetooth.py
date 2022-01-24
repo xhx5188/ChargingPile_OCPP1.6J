@@ -1,5 +1,4 @@
 import logging
-import time
 from time import sleep
 import pytest
 import yaml
