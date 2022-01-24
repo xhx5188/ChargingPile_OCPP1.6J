@@ -26,13 +26,15 @@
 
   5. 进入ocpp_test目录，添加requirements.txt文件中的库
 
-  6. 将wifi控制继电器的接线按如下图接好，枪的模拟电阻接继电器常开，电源控制接继电器常闭。
+  6. 参考ocpp_test/details/wifi控制继电器Python实现方案.md，配置wifi控制继电器模块的信息
+
+  7. 将wifi控制继电器的接线按如下图接好，枪的模拟电阻接继电器常开，电源控制接继电器常闭。
 
      ![image](https://github.com/pj635/ocpp_test/raw/master/screenshots/sample2.jpg)
 
-  7. 参考ocpp_test/detail.md文件，更改websocket库和ocpp库的源码
-
-  8. 按照实际情况修改ocpp_test/config.yaml配置文件中的配置信息，分别是wifi控制继电器的IP，蓝牙串口模块的端口号+蓝牙mac地址，充电桩SN。
+  8. 参考ocpp_test/details/修改源码.md文件，更改websocket库和ocpp库的源码
   
-  9. 交流桩的测试用例，可通过ocpp_test/testcase/start.sh执行。
+  9. 按照实际情况修改ocpp_test/config.yaml配置文件中的配置信息，分别是wifi控制继电器的IP，蓝牙串口模块的端口号+蓝牙mac地址，充电桩SN。
+  
+  10. 交流桩的测试用例，可通过ocpp_test/testcase/start.sh执行。
 
