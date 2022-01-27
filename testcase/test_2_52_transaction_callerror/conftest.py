@@ -11,6 +11,7 @@ from ocpp.routing import on
 from ocpp.v16.enums import Action
 from ocpp.v16 import call_result
 
+
 @pytest.fixture(scope="function", autouse=True)
 async def server(event_loop):
     await asyncio.sleep(10)
@@ -36,14 +37,15 @@ async def server(event_loop):
 
 
 
-class ChargePointRejectAuthorize(ChargePoint):
-    @on(Action.Authorize)
-    def on_authorize(self, **kwargs):
-        Value.flag["authorize"].append(kwargs)
-        return call_result.AuthorizePayload(
-            id_tag_info={
-                "status": "Invalid"
-            }
+class ChargePointStoptransactionCallerror(ChargePoint):
+    @on(Action.StopTransaction)
+    def on_stop_transaction(self, **kwargs):
+        Value.flag["stop_transaction"].append(kwargs)
+        dict = {
+            "status": "Accepted"
+        }
+        return call_result.StopTransactionPayload (
+            id_tag_info = dict
         )
 
 
@@ -66,5 +68,5 @@ async def on_connect(websocket, path):
         return await websocket.close()
 
     charge_point_id = path.strip('/')
-    Value.chargePoint = ChargePointRejectAuthorize(charge_point_id, websocket)
+    Value.chargePoint = ChargePointStoptransactionCallerror(charge_point_id, websocket)
     await Value.chargePoint.start()

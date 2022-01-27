@@ -4,8 +4,13 @@ from server.connect import Value, clearTriggerMessage
 
 async def remoteStartTransaction(event_loop, id_tag: str, connector_id: int = None, charging_profile: dict = {}, \
                                  balance: int = None, bill_template_id: str = None):
-    # Value.transactionId = charging_profile['transactionId']
-    Value.transactionId = charging_profile.get("transactionId")
+    if charging_profile != {}:
+        if connector_id == 1:
+            Value.transactionId_1 = charging_profile.get("transactionId")
+        elif connector_id == 2:
+            Value.transactionId_2 = charging_profile.get("transactionId")
+    else:
+        charging_profile == None
     request = call.RemoteStartTransactionPayload(id_tag, connector_id, charging_profile, balance, bill_template_id)
     tasks = [event_loop.create_task(Value.chargePoint.call(request))]
     response = await asyncio.gather(*tasks)

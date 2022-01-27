@@ -11,7 +11,8 @@ from websockets.legacy.server import WebSocketServer
 class Value():
     server: WebSocketServer = None
     chargePoint = None
-    transactionId = None
+    transactionId_1 = 1
+    transactionId_2 = 2
     connectorTotal = 10
     flag = {"authorize": [], "boot_notification": [], "data_transfer": [],
             "diagnostics_status_notification": [], "firmware_status_notification": [],
@@ -26,6 +27,8 @@ class Value():
 
 
 def clearTriggerMessage():
+    Value.transactionId_1 = 1
+    Value.transactionId_2 = 2
     Value.message_boot_notification = None
     Value.message_heartbeat = None
     Value.message_meter_values = None
@@ -111,10 +114,16 @@ class ChargePoint(cp):
         eg = {
             "status": RegistrationStatus.accepted
         }
-        return call_result.StartTransactionPayload(
-            transaction_id=1,
-            id_tag_info=eg
-        )
+        if kwargs["connectorId"] == 1:
+            return call_result.StartTransactionPayload(
+                transaction_id = Value.transactionId_1,
+                id_tag_info = eg
+            )
+        elif kwargs["connectorId"] == 2:
+            return call_result.StartTransactionPayload(
+                transaction_id=Value.transactionId_2,
+                id_tag_info=eg
+            )
 
     @on(Action.StopTransaction)
     def on_stop_transaction(self, **kwargs):
@@ -123,7 +132,7 @@ class ChargePoint(cp):
             "status": "Accepted"
         }
         return call_result.StopTransactionPayload(
-            id_tag_info=dict
+            id_tag_info = dict
         )
 
     @on(Action.SignCertificate)

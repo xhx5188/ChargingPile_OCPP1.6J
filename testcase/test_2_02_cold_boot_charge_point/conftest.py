@@ -21,7 +21,7 @@ async def server(event_loop):
     logging.info("*" * 50 + "tear down" + "*" * 50)
     status = await waitConnectorStatus(1, "Charging", 1)
     if status == "Charging":
-        response = await service.remoteStopTransaction(event_loop, Value.transactionId)
+        response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
         logging.info(response)
     Connector.unslot()
     await waitServerClose(Value.server)
