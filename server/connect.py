@@ -110,16 +110,17 @@ class ChargePoint(cp):
 
     @on(Action.StartTransaction)
     def on_start_transaction(self, **kwargs):
+        logging.info(kwargs)
         Value.flag["start_transaction"].append(kwargs)
         eg = {
             "status": RegistrationStatus.accepted
         }
-        if kwargs["connectorId"] == 1:
+        if kwargs["connector_id"] == 1:
             return call_result.StartTransactionPayload(
                 transaction_id = Value.transactionId_1,
                 id_tag_info = eg
             )
-        elif kwargs["connectorId"] == 2:
+        elif kwargs["connector_id"] == 2:
             return call_result.StartTransactionPayload(
                 transaction_id=Value.transactionId_2,
                 id_tag_info=eg

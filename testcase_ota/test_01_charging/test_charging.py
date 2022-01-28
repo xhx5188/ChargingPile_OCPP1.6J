@@ -190,7 +190,6 @@ async def test_charging_with_connector2_2(event_loop):
     assert status == "Finishing"
 
 
-
 @allure.feature("test_charging_with_all_connector")
 @pytest.mark.asyncio
 async def test_charging_with_all_connector(event_loop):
@@ -228,13 +227,16 @@ async def test_charging_with_all_connector(event_loop):
     assert flag == True
 
     # 获取桩充电之后的状态
-    status = await waitConnectorStatus(2, "Charging")
+    status = await waitConnectorStatus(1, "Charging", 50)
     assert status == "Charging"
-    status = await waitConnectorStatus(2, "Charging")
+    status = await waitConnectorStatus(2, "Charging", 50)
     assert status == "Charging"
 
+    logging.info("结束充电")
     # 结束远程充电
     response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
+    assert response[0].status == RegistrationStatus.accepted
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_2)
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待本地开始充电
@@ -242,7 +244,13 @@ async def test_charging_with_all_connector(event_loop):
     logging.info(msg)
     assert flag == True
     assert msg['reason'] == "Remote"
+    flag, msg = await waitRequest("stop_transaction")
+    logging.info(msg)
+    assert flag == True
+    assert msg['reason'] == "Remote"
 
     # 获取桩结束充电之后的状态
+    status = await waitConnectorStatus(1, "Finishing")
+    assert status == "Finishing"
     status = await waitConnectorStatus(2, "Finishing")
     assert status == "Finishing"
