@@ -23,8 +23,6 @@ async def test_send_local_authorization_list1(event_loop):
 
     # 获取桩的本地列表版本
     response = await service.getLocalListVersion(event_loop)
-    logging.info(response)
-    assert response[0].list_version == data.get("listVersion")
 
     # 发送本地列表给桩 updateType=full
     with open("schema/SendLocalList1.json", 'r') as f:
@@ -50,7 +48,7 @@ async def test_send_local_authorization_list1(event_loop):
     # 获取本地列表版本
     response = await service.getLocalListVersion(event_loop)
     logging.info(response)
-    assert response[0].list_version == data.get("listVersion")
+    assert response[0].list_version == 0
 
 
 @allure.feature("test_send_local_authorization_list2")
@@ -117,7 +115,6 @@ async def test_send_local_authorization_list3(event_loop):
     logging.info(response)
     assert response[0].list_version == version
 
-
     # 清空本地列表
     with open("./schema/clearLocalList.json", 'r') as f:
         data = json.load(f)
@@ -129,7 +126,7 @@ async def test_send_local_authorization_list3(event_loop):
     # 获取本地列表版本
     response = await service.getLocalListVersion(event_loop)
     logging.info(response)
-    assert response[0].list_version == data.get("listVersion")
+    assert response[0].list_version == 0
 
 
 @pytest.mark.skip("需要模拟故障")

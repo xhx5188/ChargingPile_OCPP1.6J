@@ -48,5 +48,5 @@ async def test_get_local_list_version_empty(event_loop):
 
     # 获取本地列表版本
     response = await service.getLocalListVersion(event_loop)
-    logging.info(response)
-    assert response[0].list_version == data.get("listVersion")
+    # OCPP协议：如果localAuthorizationList为空，updateType=Full,则本地认证列表会清空，标记为置0.
+    assert response[0].list_version == 0
