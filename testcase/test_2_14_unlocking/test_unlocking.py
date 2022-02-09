@@ -8,7 +8,7 @@ import allure
 from server.connect import waitConnectorStatus, clearTriggerMessage, waitRequest
 
 
-# @pytest.mark.skip(reason="需要socket版本的桩进行测试")
+@pytest.mark.skip(reason="需要socket版本的桩进行测试")
 @allure.feature("test_unlock_failure")
 @pytest.mark.asyncio
 async def test_unlock_failure(event_loop):
