@@ -5,7 +5,7 @@ import pytest
 from ocpp.v16.enums import RegistrationStatus
 from connector.connector import Connector
 from server import service
-from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage
+from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage, Value
 
 
 @pytest.mark.need_swipe_card
@@ -126,7 +126,7 @@ async def test_EV_side_disconnected1(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -197,7 +197,7 @@ async def test_EV_side_disconnected2(event_loop):
     assert status == "Preparing"
 
     clearTriggerMessage()
-    with open("schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -261,7 +261,7 @@ async def test_EV_side_disconnected3(event_loop):
     assert status == "Preparing"
 
     clearTriggerMessage()
-    with open("schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -291,7 +291,7 @@ async def test_EV_side_disconnected3(event_loop):
     logging.info(msg)
 
     # 结束远程充电
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"

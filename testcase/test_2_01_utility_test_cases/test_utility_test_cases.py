@@ -5,7 +5,7 @@ import pytest
 from ocpp.v16.enums import RegistrationStatus
 from connector.connector import Connector
 from server import service
-from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage
+from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage, Value
 
 
 @allure.feature("test_revert_charge_point_to_basic_idle_state1")
@@ -73,7 +73,7 @@ async def test_stop_charging_session(event_loop):
     Connector.slot()
 
     # 远程启动充电
-    with open("schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -94,7 +94,7 @@ async def test_stop_charging_session(event_loop):
 
     clearTriggerMessage()
     # 结束远程充电
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"

@@ -48,7 +48,7 @@ async def test_get_local_list_version_not_supported(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -66,7 +66,7 @@ async def test_get_local_list_version_not_supported(event_loop):
 
     clearTriggerMessage()
     # 结束远程充电
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待本地开始充电

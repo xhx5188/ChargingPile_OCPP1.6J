@@ -99,7 +99,7 @@ async def test_hard_reset_with_transaction(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -164,7 +164,7 @@ async def test_soft_reset_with_transaction(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),

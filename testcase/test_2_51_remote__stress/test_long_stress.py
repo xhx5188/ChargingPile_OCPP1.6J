@@ -7,7 +7,7 @@ from ocpp.v16.enums import RegistrationStatus
 from bluetooth.bluetooth import Buletooth
 from connector.connector import Connector
 from server import service
-from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
+from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest, Value
 
 
 # 压力测试：远程反复启停充电
@@ -24,7 +24,7 @@ async def test_1(event_loop):
         logging.info("times = %s" % i)
         # 远程启动充电
         clearTriggerMessage()
-        with open("schema/RemoteStartTransaction.json", 'r') as f:
+        with open("../schema/RemoteStartTransaction.json", 'r') as f:
             data = json.load(f)
         response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                         connector_id=data.get('connectorId'),
@@ -52,7 +52,7 @@ async def test_1(event_loop):
         assert msg['transaction_id'] == 1
 
         # 结束远程充电
-        response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+        response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
         assert response[0].status == RegistrationStatus.accepted
         status = await waitConnectorStatus(1, "Preparing", 30)
         assert status == "Preparing"

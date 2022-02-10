@@ -5,7 +5,7 @@ import pytest
 from ocpp.v16.enums import RegistrationStatus
 from connector.connector import Connector
 from server import service
-from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage
+from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage, Value
 
 
 @allure.feature("test_regular_start_charging_session")
@@ -35,7 +35,7 @@ async def test_regular_start_charging_session(event_loop):
     assert status == "Preparing"
 
     clearTriggerMessage()
-    with open("schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -54,7 +54,7 @@ async def test_regular_start_charging_session(event_loop):
     assert status == "Charging"
 
     # 结束远程充电
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
 
     flag, _ = await waitRequest("stop_transaction")
@@ -76,7 +76,7 @@ async def test_regular_start_charging_session(event_loop):
     assert status == "Preparing"
 
     clearTriggerMessage()
-    with open("schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -91,7 +91,7 @@ async def test_regular_start_charging_session(event_loop):
     assert status == "Charging"
 
     # 结束远程充电
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
 
     flag, _ = await waitRequest("stop_transaction")

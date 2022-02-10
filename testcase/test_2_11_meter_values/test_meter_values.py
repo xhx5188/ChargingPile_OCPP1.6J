@@ -5,7 +5,7 @@ import pytest
 from ocpp.v16.enums import RegistrationStatus
 from connector.connector import Connector
 from server import service
-from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
+from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest, Value
 from dateutil.parser import parse
 
 
@@ -41,7 +41,7 @@ async def test_sampled_meter_values(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -87,7 +87,7 @@ async def test_sampled_meter_values(event_loop):
     assert abs(interval - set_interval) <= 1
 
     # 结束充电
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
 
     # 获取结束充电后枪的状态
@@ -125,7 +125,7 @@ async def test_clock_aligned_meter_values(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -173,7 +173,7 @@ async def test_clock_aligned_meter_values(event_loop):
     assert abs(interval - set_interval) <= 1
 
     # 结束充电
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待本地发送结束充电请求

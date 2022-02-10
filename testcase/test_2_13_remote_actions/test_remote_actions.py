@@ -4,7 +4,7 @@ import pytest
 from ocpp.v16.enums import RegistrationStatus
 from connector.connector import Connector
 from server import service
-from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
+from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest, Value
 import allure
 
 
@@ -29,7 +29,7 @@ async def test_remote_start_charging_session_rejected(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -71,7 +71,7 @@ async def test_remote_start_transaction_connector_id_shall_not_be_0(event_loop):
     assert status == "Preparing"
 
     # 远程启动充电
-    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=0,
@@ -96,7 +96,7 @@ async def test_remote_stop_transaction_rejected(event_loop):
 
     # 远程启动充电
     clearTriggerMessage()
-    with open("./schema/RemoteStartTransaction.json", 'r') as f:
+    with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
                                                     connector_id=data.get('connectorId'),
@@ -116,11 +116,11 @@ async def test_remote_stop_transaction_rejected(event_loop):
     assert response[0].status == RegistrationStatus.rejected
 
     # 传输错误transactionId，结束远程充电失败
-    response = await service.remoteStopTransaction(event_loop, 2)
+    response = await service.remoteStopTransaction(event_loop, 100)
     assert response[0].status == RegistrationStatus.rejected
 
     # 传输正确transactionId，结束远程充电成功
-    response = await service.remoteStopTransaction(event_loop, data['chargingProfile']['transactionId'])
+    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
     assert response[0].status == RegistrationStatus.accepted
     status = await waitConnectorStatus(1, "Preparing")
     assert status == "Preparing"
