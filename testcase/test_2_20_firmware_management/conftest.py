@@ -1,6 +1,7 @@
 import logging
 import pytest
 from connector.connector import Connector
+from server import service
 from server.connect import waitRequest
 
 
@@ -15,3 +16,8 @@ async def waitHeartbeat(event_loop):
     logging.info(msg)
     if flag != True:
         raise Exception("charge point run failed")
+
+    # 桩恢复为available状态
+    await service.changeAvailability(event_loop, connector_id=0, type="Operative")
+    # 枪恢复为available状态
+    await service.changeAvailability(event_loop, connector_id=1, type="Operative")
