@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import allure
@@ -99,7 +100,7 @@ async def test_sampled_meter_values(event_loop):
 @pytest.mark.asyncio
 async def test_clock_aligned_meter_values(event_loop):
     # 改变配置信息"ClockAlignedDataInterval"
-    set_interval = 10
+    set_interval = 120
     response = await service.changeConfiguration(event_loop, key="ClockAlignedDataInterval", value=str(set_interval))
     assert response[0].status == RegistrationStatus.accepted
 
@@ -160,7 +161,7 @@ async def test_clock_aligned_meter_values(event_loop):
     time2 = parse(msg["meter_value"][0]["timestamp"])
 
     interval = (time2 - time1).seconds
-    assert abs(interval - set_interval) <= 1
+    assert abs(interval - 10) <= 1
 
     # 等待充电桩发送测量信息
     clearTriggerMessage()
@@ -170,7 +171,9 @@ async def test_clock_aligned_meter_values(event_loop):
     time3 = parse(msg["meter_value"][0]["timestamp"])
 
     interval = (time3 - time2).seconds
-    assert abs(interval - set_interval) <= 1
+    assert abs(interval - 10) <= 1
+
+    # await asyncio.sleep(600)
 
     # 结束充电
     response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)

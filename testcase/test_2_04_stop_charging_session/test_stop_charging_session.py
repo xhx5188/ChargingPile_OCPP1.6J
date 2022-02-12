@@ -165,10 +165,9 @@ async def test_EV_side_disconnected1(event_loop):
     logging.info(msg)  #ev side disconnected
 
 
-@allure.feature("test_EV_side_disconnected2")
+@allure.feature("test_EV_side_disconnected2_1")
 @pytest.mark.asyncio
-@pytest.mark.socket
-async def test_EV_side_disconnected2(event_loop):
+async def test_EV_side_disconnected2_1(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
@@ -218,21 +217,22 @@ async def test_EV_side_disconnected2(event_loop):
     logging.info("拔枪")
     Connector.unslot()
 
-    flag, _ = await waitRequest("stop_transaction")
+    flag, msg = await waitRequest("stop_transaction")
+    assert msg['reason'] == "EVDisconnected"
     assert flag == True
 
-    status = await waitConnectorStatus(1, "Finishing")
-    assert status == "Finishing"
+    status = await waitConnectorStatus(1, "Available")
+    assert status == "Available"
 
     # 解锁抢
     response = await service.unlockConnector(event_loop, connector_id=1)
     assert response[0].status == "Unlocked" or response[0].status == "NotSupported"
 
 
-@allure.feature("test_EV_side_disconnected3")
+@allure.feature("test_EV_side_disconnected2_2")
 @pytest.mark.asyncio
 @pytest.mark.socket
-async def test_EV_side_disconnected3(event_loop):
+async def test_EV_side_disconnected2_2(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)
@@ -246,12 +246,12 @@ async def test_EV_side_disconnected3(event_loop):
     response = await service.clearCache(event_loop)
     assert response[0].status == RegistrationStatus.accepted
 
-    response = await service.changeConfiguration(event_loop, key="UnlockConnectorOnEVSideDisconnect", value="false")
-    assert response[0].status == "Accepted" or response[0].status == "Rejected"
-
     # 改变配置信息"StopTransactionOnEVSideDisconnect"
-    response = await service.changeConfiguration(event_loop, key="StopTransactionOnEVSideDisconnect", value="false")
-    assert response[0].status == "Accepted"
+    response = await service.changeConfiguration(event_loop, key="StopTransactionOnEVSideDisconnect", value="true")
+    assert response[0].status == "Accepted" or response[0].status == "Rejected" or response[0].status == "NotSupported"
+
+    response = await service.changeConfiguration(event_loop, key="UnlockConnectorOnEVSideDisconnect", value="true")
+    assert response[0].status == "Accepted" or response[0].status == "Rejected"
 
     logging.info("插枪")
     Connector.slot()
@@ -282,21 +282,106 @@ async def test_EV_side_disconnected3(event_loop):
     logging.info("拔枪")
     Connector.unslot()
 
-    # 校验充电时拔枪后的状态
-    status = await waitConnectorStatus(1, "SuspendedEV")
-    assert status == "SuspendedEV" or status == "SuspendedEVSE"
+    flag, msg = await waitRequest("stop_transaction")
+    assert msg['reason'] == "EVDisconnected"
+    assert flag == True
 
     flag, msg = await waitRequest("status_notification")
-    assert flag == True
     logging.info(msg)
-
-    # 结束远程充电
-    response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
-    assert response[0].status == RegistrationStatus.accepted
-    status = await waitConnectorStatus(1, "Preparing")
-    assert status == "Preparing"
-
-    flag, _ = await waitRequest("stop_transaction")
     assert flag == True
+    assert msg["status"] == "Finishing"
+    assert msg["info"] == "EV side disconnected"
+
+    # 解锁抢
+    response = await service.unlockConnector(event_loop, connector_id=1)
+    assert response[0].status == "Unlocked" or response[0].status == "NotSupported"
+
+    logging.info("拔枪")
+    Connector.slot()
+
+    # 等待枪恢复可用
+    status = await waitConnectorStatus(1, "Available")
+    assert status == "Available"
+
+
+@allure.feature("test_EV_side_disconnected3")
+@pytest.mark.asyncio
+@pytest.mark.socket
+async def test_EV_side_disconnected3(event_loop):
+    # 获取配置信息"AuthorizeRemoteTxRequests"
+    result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
+    logging.info(result)
+    assert result[0]['value'] == "true"
+
+    # 改变配置信息"MinimumStatusDuration"
+    response = await service.changeConfiguration(event_loop, key="MinimumStatusDuration", value="0")
+    assert response[0].status == "Accepted" or response[0].status == "NotSupported"
+
+    # 清除缓存
+    response = await service.clearCache(event_loop)
+    assert response[0].status == RegistrationStatus.accepted
+
+    response = await service.changeConfiguration(event_loop, key="UnlockConnectorOnEVSideDisconnect", value="false")
+    assert response[0].status == "Accepted" or response[0].status == "Rejected"
+
+    # 改变配置信息"StopTransactionOnEVSideDisconnect"
+    response = await service.changeConfiguration(event_loop, key="StopTransactionOnEVSideDisconnect", value="false")
+    assert response[0].status == "Rejected" #产品定义，拔枪之后必须结束订单。所以StopTransactionOnEVSideDisconnect不能设置为false
+
+    # 经庞子乐确认，后面的流程不往下走
+    # logging.info("插枪")
+    # Connector.slot()
+    #
+    # # 获取桩充电之前的状态
+    # status = await waitConnectorStatus(1, "Preparing")
+    # assert status == "Preparing"
+    #
+    # clearTriggerMessage()
+    # with open("../schema/RemoteStartTransaction.json", 'r') as f:
+    #     data = json.load(f)
+    # response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
+    #                                                 connector_id=data.get('connectorId'),
+    #                                                 charging_profile=data.get('chargingProfile'))
+    # assert response[0].status == RegistrationStatus.accepted
+    #
+    # # 等待充电桩鉴权
+    # flag, _ = await waitRequest("authorize")
+    # assert flag == True
+    #
+    # flag, _ = await waitRequest("start_transaction")
+    # assert flag == True
+    #
+    # # 等待本地开始充电
+    # status = await waitConnectorStatus(1, "Charging")
+    # assert status == "Charging"
+    #
+    # logging.info("拔枪")
+    # Connector.unslot()
+    #
+    # # # 校验充电时拔枪后的状态
+    # # status = await waitConnectorStatus(1, "SuspendedEV", 40)
+    # # assert status == "SuspendedEV" or status == "SuspendedEVSE"
+    #
+    # flag, msg = await waitRequest("status_notification")
+    # assert flag == True
+    # logging.info(msg)
+    #
+    # # 结束远程充电
+    # response = await service.remoteStopTransaction(event_loop, Value.transactionId_1)
+    # assert response[0].status == RegistrationStatus.accepted
+    # status = await waitConnectorStatus(1, "Available")
+    # assert status == "Available"
+    #
+    # flag, msg = await waitRequest("stop_transaction")
+    # assert flag == True
+    # assert msg["reason"] == "Remote"
+    #
+    # logging.info("拔枪")
+    # Connector.slot()
+    #
+    # # 等待枪恢复可用
+    # status = await waitConnectorStatus(1, "Available")
+    # assert status == "Available"
+
 
 

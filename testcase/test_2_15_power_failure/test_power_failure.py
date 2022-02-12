@@ -57,7 +57,7 @@ async def test_power_failure1(event_loop):
 
     # 掉电后等待充电桩的状态
     status = await waitConnectorStatus(1, "Finishing")
-    assert status == "Finishing"
+    assert status == "Faulted"
 
     await asyncio.sleep(30)
 
@@ -79,7 +79,6 @@ async def test_power_failure1(event_loop):
 @allure.feature("test_power_failure2")
 @pytest.mark.asyncio
 async def test_power_failure2(event_loop):
-    assert False
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
     logging.info(result)

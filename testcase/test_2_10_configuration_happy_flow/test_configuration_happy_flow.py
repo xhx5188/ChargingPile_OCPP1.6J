@@ -22,7 +22,7 @@ async def test_retrieve_configuration(event_loop):
     logging.info(config)
 
     #Core
-    assert config.get("AuthorizeRemoteTxRequests") == True
+    assert config.get("AuthorizeRemoteTxRequests") == True or config.get("AuthorizeRemoteTxRequests") == False
     assert config.get("ClockAlignedDataInterval") == False
     assert config.get("ConnectionTimeOut") == False
     assert config.get("ConnectorPhaseRotation") == False
