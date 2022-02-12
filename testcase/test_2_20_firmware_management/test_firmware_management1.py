@@ -11,6 +11,7 @@ from server.connect import waitRequest, waitConnectorStatus, clearTriggerMessage
 
 
 # 充电桩在Available状态下出发远程升级
+@pytest.mark.need_long_time
 @allure.feature("test_firmware_update_available")
 @pytest.mark.asyncio
 async def test_firmware_update_available(event_loop):
@@ -56,6 +57,7 @@ async def test_firmware_update_available(event_loop):
 
 
 # 充电桩在Unavailable状态下触发远程升级
+@pytest.mark.need_long_time
 @allure.feature("test_firmware_update_unavailable1")
 @pytest.mark.asyncio
 async def test_firmware_update_unavailable1(event_loop):
@@ -103,6 +105,7 @@ async def test_firmware_update_unavailable1(event_loop):
 
 
 # 充电桩的枪在Unavailable状态下触发远程升级
+@pytest.mark.need_long_time
 @allure.feature("test_firmware_update_unavailable2")
 @pytest.mark.asyncio
 async def test_firmware_update_unavailable2(event_loop):
@@ -153,6 +156,7 @@ async def test_firmware_update_unavailable2(event_loop):
 
 
 # 充电桩在Faulted状态(接地错误)下出发远程升级
+@pytest.mark.need_long_time
 @pytest.mark.skip("需要模拟故障")
 @allure.feature("test_firmware_update_faulted")
 @pytest.mark.asyncio
@@ -198,6 +202,7 @@ async def test_firmware_update_faulted(event_loop):
     # assert status == "Available"
 
 # 充电桩的枪在Preparing状态下触发远程升级
+@pytest.mark.need_long_time
 @allure.feature("test_firmware_update_preparing")
 @pytest.mark.asyncio
 async def test_firmware_update_preparing(event_loop):

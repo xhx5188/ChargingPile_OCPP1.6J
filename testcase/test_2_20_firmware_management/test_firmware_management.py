@@ -8,6 +8,7 @@ import allure
 from server.connect import waitRequest, waitConnectorStatus, clearTriggerMessage
 
 
+@pytest.mark.need_long_time
 @allure.feature("test_download_and_install")
 @pytest.mark.asyncio
 async def test_download_and_install(event_loop):
@@ -77,6 +78,7 @@ async def test_download_failed(event_loop):
     assert status == "Available"
 
 
+@pytest.mark.need_long_time
 @allure.feature("test_installation_failed")
 @pytest.mark.asyncio
 async def test_installation_failed(event_loop):
