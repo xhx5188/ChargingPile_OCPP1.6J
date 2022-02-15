@@ -15,14 +15,28 @@ array=(01 02 03 04 05 06 07 08 09 10
         11 12 13 14 15 16 17 18 19
         20 21 23 25)
 
-if [[ $# -gt 1 ]]; then
-  echo "默认（没有参数）：执行全量用例；1：执行需要刷卡的用例；2：执行不需要刷卡的用例"
-  echo "参数个数错误，脚本退出！"
-  exit 1
-fi
 
-# 参数值为1时，执行需要刷卡的用例
-if [[ $# -eq 0 || $# -eq 1 && $1 -eq 1 ]]; then
+# 无参数时，默认执行全量用例
+if [[ $# -eq 0 ]]; then
+  echo "执行全量用例"
+  for e in ${array[@]}; do
+  cd test_2_${e}*
+  pytest test*.py --alluredir ${reprot_path}
+  cd ..
+  done
+
+# 参数值为1时，执行不需要刷卡并且不需要长时间运行的用例
+elif [[ $# -eq 1 && $1 -eq 1 ]]; then
+  echo "不需要刷卡测试用例"
+  for e in ${array[@]}; do
+  echo "执行不需要刷卡测试套_$e"
+  cd test_2_${e}*
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card" -m "not need_long_time"
+  cd ..
+  done
+
+# 参数值为2时，执行需要刷卡的用例
+elif [[ $# -eq 1 && $1 -eq 2 ]]; then
   echo "需要刷卡测试用例"
   for e in ${array[@]}; do
   echo "执行需要刷卡测试套_$e"
@@ -31,19 +45,21 @@ if [[ $# -eq 0 || $# -eq 1 && $1 -eq 1 ]]; then
   cd ..
   done
 
-
-# 参数值为2时，执行不需要刷卡的用例
-elif [[ $# -eq 0 || $# -eq 1 && $1 -eq 2 ]]; then
-  echo "不需要刷卡测试用例"
+# 参数值为3时，执行需要长时间运行的用例
+elif [[ $# -eq 1 && $1 -eq 3 ]]; then
+  echo "需要刷卡测试用例"
   for e in ${array[@]}; do
-  echo "执行不需要刷卡测试套_$e"
+  echo "执行需要刷卡测试套_$e"
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card"
+  pytest test*.py --alluredir ${reprot_path} -m "need_long_time"
   cd ..
   done
 
 else
-  echo "默认（没有参数）：执行全量用例；1：执行需要刷卡的用例；2：执行不需要刷卡的用例"
+  echo "默认（没有参数）：执行全量用例；"
+  echo "1：执行不需要刷卡并且不需要长时间运行的用例；"
+  echo "2：执行需要刷卡的用例；"
+  echo "3：执行需要长时间运行的用例"
   echo "参数值错误，脚本退出！"
   exit 1
 fi

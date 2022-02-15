@@ -4,7 +4,7 @@ from server.connect import Value, clearTriggerMessage
 
 async def remoteStartTransaction(event_loop, id_tag: str, connector_id: int = None, charging_profile: dict = {}, \
                                  balance: int = None, bill_template_id: str = None):
-    if charging_profile != {}:
+    if charging_profile:
         if connector_id == 1:
             Value.transactionId_1 = charging_profile.get("transactionId")
         elif connector_id == 2:

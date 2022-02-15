@@ -1,5 +1,5 @@
 connector:
-  STAIP: "00.00.00.00"
+  STAIP: "10.10.41.44"
   port: 8080
 
 bluetooth:
