@@ -4,7 +4,6 @@ import logging
 from datetime import datetime, timedelta
 import pytest
 from ocpp.v16.enums import RegistrationStatus
-
 from connector.connector import Connector
 from server import service
 from server.config import GetCfg
@@ -13,13 +12,12 @@ import allure
 
 
 @allure.feature("test_local_start_transaction")
-# @pytest.mark.skip("需要刷卡")
+@pytest.mark.skip("需要刷卡")
 @pytest.mark.asyncio
 async def test_local_start_transaction(event_loop):
     expiry_date = (datetime.utcnow() + timedelta(hours=1)).strftime('%Y-%m-%dT%H:%M:%S.123Z')
     response = await service.reserveNow(event_loop, connector_id=1, expiry_date=expiry_date,
                                         id_tag=GetCfg.get_id_tag(), reservation_id=1)
-    logging.info(response)
     assert response[0].status == RegistrationStatus.accepted
 
     # 获取枪状态
@@ -27,6 +25,16 @@ async def test_local_start_transaction(event_loop):
     assert status == "Reserved"
 
     # 刷一张非预约的卡
+    logging.info("[请刷一张非预约的卡启动充电:]")
+    # 等待充电桩鉴权，预期不会发送
+    flag, _ = await waitRequest("authorize", 30)
+    assert flag == False
+
+    # 刷一张预约的卡
+    logging.info("[请刷一张预约的卡启动充电:]")
+    # 等待充电桩鉴权，预期不会发送
+    flag, _ = await waitRequest("authorize")
+    assert flag == True
 
 
     # 刷一张预约的卡

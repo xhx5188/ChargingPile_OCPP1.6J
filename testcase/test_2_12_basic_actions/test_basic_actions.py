@@ -8,8 +8,8 @@ from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 import allure
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_start_charging_session_authorize_invalid")
+@pytest.mark.need_swipe_card
 @pytest.mark.asyncio
 async def test_start_charging_session_authorize_invalid(event_loop):
     # 改变配置信息"MinimumStatusDuration"
@@ -40,7 +40,7 @@ async def test_start_charging_session_authorize_invalid(event_loop):
 
 
 @allure.feature("test_start_charging_session_lock_failure")
-@pytest.mark.skip(reason="需要socket版本的桩")
+@pytest.mark.socket
 @pytest.mark.asyncio
 async def test_start_charging_session_lock_failure(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"

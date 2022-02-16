@@ -107,8 +107,8 @@ async def test_regular_start_charging_session(event_loop):
     assert status == "Available"
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_clear_authorization_data_in_authorization_cache")
+@pytest.mark.need_swipe_card
 @pytest.mark.asyncio
 async def test_clear_authorization_data_in_authorization_cache(event_loop):
     # 改变配置信息"AuthorizationCacheEnabled"

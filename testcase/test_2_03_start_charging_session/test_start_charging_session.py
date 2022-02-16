@@ -8,8 +8,8 @@ from server import service
 from server.connect import waitConnectorStatus, waitRequest
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_regular_charging_session1")
+@pytest.mark.need_swipe_card
 @pytest.mark.asyncio
 async def test_regular_charging_session1(event_loop):
     # 改变配置信息"MeterValueSampleInterval"
@@ -59,8 +59,8 @@ async def test_regular_charging_session1(event_loop):
     assert status == "Available"
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_regular_charging_session2")
+@pytest.mark.need_swipe_card
 @pytest.mark.asyncio
 async def test_regular_charging_session2(event_loop):
     # 清除缓存
@@ -110,8 +110,8 @@ async def test_regular_charging_session2(event_loop):
     assert status == "Available"
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_regular_charging_session3")
+@pytest.mark.need_swipe_card
 @pytest.mark.asyncio
 async def test_regular_charging_session3(event_loop):
     # 清除缓存

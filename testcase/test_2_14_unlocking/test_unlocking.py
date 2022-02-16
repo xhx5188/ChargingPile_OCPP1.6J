@@ -8,9 +8,9 @@ import allure
 from server.connect import waitConnectorStatus, clearTriggerMessage, waitRequest
 
 
-@pytest.mark.skip(reason="需要socket版本的桩进行测试")
 @allure.feature("test_unlock_failure")
 @pytest.mark.asyncio
+@pytest.mark.socket
 async def test_unlock_failure(event_loop):
     # 解锁枪
     response = await service.unlockConnector(event_loop, connector_id=1)
@@ -25,9 +25,9 @@ async def test_unknown_connector(event_loop):
     assert response[0].status == "NotSupported"
 
 
-@pytest.mark.skip(reason="需要socket版本的桩进行测试")
 @allure.feature("test_unlock_on_charging")
 @pytest.mark.asyncio
+@pytest.mark.socket
 async def test_unlock_on_charging(event_loop):
     # 插枪
     Connector.slot()

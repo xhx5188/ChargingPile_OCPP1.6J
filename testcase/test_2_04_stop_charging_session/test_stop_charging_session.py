@@ -8,10 +8,10 @@ from server import service
 from server.connect import waitConnectorStatus, waitRequest, clearTriggerMessage, Value
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_stop_transaction1")
 @pytest.mark.asyncio
 @pytest.mark.socket
+@pytest.mark.need_swipe_card
 async def test_stop_transaction1(event_loop):
     # 插枪
     logging.info("插枪")
@@ -50,10 +50,10 @@ async def test_stop_transaction1(event_loop):
     assert status == "Preparing"
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_stop_transaction2")
 @pytest.mark.asyncio
 @pytest.mark.socket
+@pytest.mark.need_swipe_card
 async def test_stop_transaction2(event_loop):
     # 插枪
     logging.info("插枪")

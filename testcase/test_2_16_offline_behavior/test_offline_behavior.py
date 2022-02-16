@@ -121,9 +121,9 @@ async def test_connection_loss_during_transaction(event_loop):
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_offline_start_transaction_1")
 @pytest.mark.asyncio
+@pytest.mark.need_swipe_card
 async def test_offline_start_transaction_1(event_loop):
     # 改变配置信息"AllowOfflineTxForUnknownId"
     response = await service.changeConfiguration(event_loop, key="AllowOfflineTxForUnknownId", value="true")
@@ -180,9 +180,9 @@ async def test_offline_start_transaction_1(event_loop):
     assert status == "Available"
 
 
-@pytest.mark.need_swipe_card
 @allure.feature("test_offline_start_transaction_2")
 @pytest.mark.asyncio
+@pytest.mark.need_swipe_card
 async def test_offline_start_transaction_2(event_loop):
     # 改变配置信息"AllowOfflineTxForUnknownId"
     response = await service.changeConfiguration(event_loop, key="AllowOfflineTxForUnknownId", value="true")
@@ -304,6 +304,7 @@ async def test_offline_start_transaction_3(event_loop):
 
 
 @allure.feature("test_stop_transaction")
+@pytest.mark.need_swipe_card
 @pytest.mark.asyncio
 async def test_stop_transaction(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
@@ -346,7 +347,11 @@ async def test_stop_transaction(event_loop):
     logging.info("断开连接")
     # 断开连接
     await waitServerClose(Value.server)
-    await asyncio.sleep(30)
+
+    # 刷卡
+    logging.info("[请刷一张已绑定卡启动充电(60s内完成操作):]")
+
+    await asyncio.sleep(60)
 
     # 重新建立连接
     clearTriggerMessage()

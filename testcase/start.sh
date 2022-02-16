@@ -25,13 +25,12 @@ if [[ $# -eq 0 ]]; then
   cd ..
   done
 
-# 参数值为1时，执行不需要刷卡并且不需要长时间运行的用例
+# 参数值为1时，执行不需要刷卡并且不需要长时间运行不需要socket桩的用例
 elif [[ $# -eq 1 && $1 -eq 1 ]]; then
   echo "不需要刷卡测试用例"
   for e in ${array[@]}; do
-  echo "执行不需要刷卡测试套_$e"
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card" -m "not need_long_time"
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card" -m "not need_long_time" -m "not socket"
   cd ..
   done
 
@@ -57,7 +56,7 @@ elif [[ $# -eq 1 && $1 -eq 3 ]]; then
 
 else
   echo "默认（没有参数）：执行全量用例；"
-  echo "1：执行不需要刷卡并且不需要长时间运行的用例；"
+  echo "1：执行不需要刷卡,不需要长时间运行,不需要socket桩的用例；"
   echo "2：执行需要刷卡的用例；"
   echo "3：执行需要长时间运行的用例"
   echo "参数值错误，脚本退出！"
