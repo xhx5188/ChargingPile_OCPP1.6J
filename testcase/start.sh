@@ -13,8 +13,7 @@ reprot_path="../report"
 # 执行的测试目录
 array=(01 02 03 04 05 06 07 08 09 10
         11 12 13 14 15 16 17 18 19
-        20 21 23 25)
-
+        20 21 23 25 51)
 
 
 # 无参数时，默认执行全量用例
@@ -23,6 +22,15 @@ if [[ $# -eq 0 ]]; then
   for e in ${array[@]}; do
   cd test_2_${e}*
   pytest test*.py --alluredir ${reprot_path}
+  cd ..
+  done
+
+# 参数值为0时，执行不需要刷卡并且不需要socket桩的用例
+elif [[ $# -eq 1 && $1 -eq 1 ]]; then
+  echo "不需要刷卡测试用例"
+  for e in ${array[@]}; do
+  cd test_2_${e}*
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not socket"
   cd ..
   done
 

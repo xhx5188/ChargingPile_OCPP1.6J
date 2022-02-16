@@ -11,8 +11,9 @@ from server.connect import clearTriggerMessage, waitConnectorStatus, waitRequest
 
 
 # 压力测试：远程反复启停充电
+@pytest.mark.need_long_time
 @pytest.mark.asyncio
-async def test_1(event_loop):
+async def test_transaction_stress(event_loop):
     # 插枪
     Connector.slot()
 
