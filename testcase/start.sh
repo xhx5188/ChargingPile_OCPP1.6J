@@ -26,7 +26,7 @@ if [[ $# -eq 0 ]]; then
   done
 
 # 参数值为0时，执行不需要刷卡并且不需要socket桩的用例
-elif [[ $# -eq 1 && $1 -eq 1 ]]; then
+elif [[ $# -eq 1 && $1 -eq 0 ]]; then
   echo "不需要刷卡测试用例"
   for e in ${array[@]}; do
   cd test_2_${e}*
