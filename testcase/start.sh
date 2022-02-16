@@ -16,6 +16,7 @@ array=(01 02 03 04 05 06 07 08 09 10
         20 21 23 25)
 
 
+
 # 无参数时，默认执行全量用例
 if [[ $# -eq 0 ]]; then
   echo "执行全量用例"
@@ -30,7 +31,7 @@ elif [[ $# -eq 1 && $1 -eq 1 ]]; then
   echo "不需要刷卡测试用例"
   for e in ${array[@]}; do
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card" -m "not need_long_time" -m "not socket"
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not need_long_time and not socket"
   cd ..
   done
 
