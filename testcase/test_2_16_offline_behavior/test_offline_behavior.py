@@ -121,12 +121,41 @@ async def test_connection_loss_during_transaction(event_loop):
     status = await waitConnectorStatus(1, "Available")
     assert status == "Available"
 
+
+
+@allure.feature("test_offline_start_transaction_1")
+@pytest.mark.asyncio
+@pytest.mark.need_swipe_card
+async def test_offline_start_transaction_1111(event_loop):
+    # 改变配置信息"AllowOfflineTxForUnknownId"   // 不支持离线时非法卡充电
+    response = await service.changeConfiguration(event_loop, key="AllowOfflineTxForUnknownId", value="true")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 改变配置信息"StopTransactionOnInvalidId"
+    response = await service.changeConfiguration(event_loop, key="StopTransactionOnInvalidId", value="false")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 改变配置信息"LocalAuthorizeOffline"
+    response = await service.changeConfiguration(event_loop, key="LocalAuthorizeOffline", value="true")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 清除缓存
+    response = await service.clearCache(event_loop)
+    assert response[0].status == RegistrationStatus.accepted
+
+
+    await asyncio.sleep(5000)
+
 @allure.feature("test_offline_start_transaction_1")
 @pytest.mark.asyncio
 @pytest.mark.need_swipe_card
 async def test_offline_start_transaction_1(event_loop):
-    # 改变配置信息"AllowOfflineTxForUnknownId"
+    # 改变配置信息"AllowOfflineTxForUnknownId"   // 不支持离线时非法卡充电
     response = await service.changeConfiguration(event_loop, key="AllowOfflineTxForUnknownId", value="true")
+    assert response[0].status == RegistrationStatus.accepted
+
+    # 改变配置信息"StopTransactionOnInvalidId"
+    response = await service.changeConfiguration(event_loop, key="StopTransactionOnInvalidId", value="false")
     assert response[0].status == RegistrationStatus.accepted
 
     # 改变配置信息"LocalAuthorizeOffline"
@@ -145,8 +174,9 @@ async def test_offline_start_transaction_1(event_loop):
     Connector.slot()
 
     # 刷卡
-    logging.info("[请刷一张未绑定卡启动充电:]")
+    logging.info("[请刷一张绑定卡启动充电:]")
     await asyncio.sleep(50)
+    logging.info("等待时间结束")
 
     # 重新建立连接
     clearTriggerMessage()
@@ -158,7 +188,7 @@ async def test_offline_start_transaction_1(event_loop):
     assert flag == True
 
     # 判断枪的状态
-    status = await waitConnectorStatus(1, "Charging", 40)
+    status = await waitConnectorStatus(1, "Charging", 1000)
     assert status == "Charging"
 
     logging.info("[请再刷卡停止充电:]")
@@ -166,7 +196,7 @@ async def test_offline_start_transaction_1(event_loop):
     # 本地主动发送停止充电请求。。。
     flag, msg = await waitRequest("stop_transaction", 40)
     assert flag == True
-    assert msg['reason'] == "Local"
+    # assert msg['reason'] == "Local"
 
     # 判断枪的停止充电后的状态
     status = await waitConnectorStatus(1, "Preparing")

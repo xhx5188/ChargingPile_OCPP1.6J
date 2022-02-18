@@ -18,38 +18,43 @@ array=(01 02 03 04 05 06 07 08 09 10
 
 # 无参数时，默认执行全量用例
 if [[ $# -eq 0 ]]; then
-  echo "执行全量用例"
+  # 先执行半自动化用例
+  for e in ${array[@]}; do
+  echo "执行需要刷卡测试套_$e"
+  cd test_2_${e}*
+  pytest test*.py --alluredir ${reprot_path} -m "need_swipe_card or need_power_down and not socket"
+  cd ..
+  done
+  # 再执行自动化用例
   for e in ${array[@]}; do
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path}
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not socket not need_power_down"
   cd ..
   done
 
-# 参数值为0时，执行不需要刷卡并且不需要socket桩的用例
+# 参数值为0时，执行不需要刷卡不需要掉电并且不需要socket桩的用例(执行自动化用例)
 elif [[ $# -eq 1 && $1 -eq 0 ]]; then
-  echo "不需要刷卡测试用例"
   for e in ${array[@]}; do
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not socket"
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not socket not need_power_down"
   cd ..
   done
 
-# 参数值为1时，执行不需要刷卡并且不需要长时间运行不需要socket桩的用例
+# 参数值为1时，执行不需要刷卡不需要socket桩不需要掉电并且不需要长时间运行不需要socket桩的用例
 elif [[ $# -eq 1 && $1 -eq 1 ]]; then
   echo "不需要刷卡测试用例"
   for e in ${array[@]}; do
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not need_long_time and not socket"
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not need_long_time and not socket not need_power_down"
   cd ..
   done
 
-# 参数值为2时，执行需要刷卡的用例
+# 参数值为2时，执行需要刷卡和需要掉电的用例(执行半自动化用例)
 elif [[ $# -eq 1 && $1 -eq 2 ]]; then
-  echo "需要刷卡测试用例"
   for e in ${array[@]}; do
   echo "执行需要刷卡测试套_$e"
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path} -m "need_swipe_card"
+  pytest test*.py --alluredir ${reprot_path} -m "need_swipe_card or need_power_down"
   cd ..
   done
 

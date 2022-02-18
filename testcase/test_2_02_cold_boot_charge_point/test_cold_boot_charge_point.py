@@ -13,6 +13,7 @@ import allure
 
 @allure.feature("test_cold_boot_charge_point")
 @pytest.mark.asyncio
+@pytest.mark.need_power_down
 async def test_cold_boot_charge_point(event_loop):
     Value.server: WebSocketServer = await websockets.serve(on_connect_boot_reject, \
                                                            '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
@@ -58,6 +59,7 @@ async def test_cold_boot_charge_point(event_loop):
 
 @allure.feature("test_cold_boot_charge_point_pending")
 @pytest.mark.asyncio
+@pytest.mark.need_power_down
 async def test_cold_boot_charge_point_pending(event_loop):
     Value.server: WebSocketServer = await websockets.serve(on_connect_boot_pending, \
                                                            '0.0.0.0', 9000, subprotocols=['ocpp1.6'])
