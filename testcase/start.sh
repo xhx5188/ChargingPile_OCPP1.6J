@@ -36,7 +36,7 @@ if [[ $# -eq 0 ]]; then
 elif [[ $# -eq 1 && $1 -eq 0 ]]; then
   for e in ${array[@]}; do
   cd test_2_${e}*
-  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not socket not need_power_down"
+  pytest test*.py --alluredir ${reprot_path} -m "not need_swipe_card and not socket and not need_power_down"
   cd ..
   done
 
