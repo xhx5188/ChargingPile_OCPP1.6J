@@ -179,7 +179,7 @@ async def waitConnectorStatus(ConnectorID: int, expected_status: str, timeout: i
     Value.message_status_notification[ConnectorID]["status"] = None
     return result
 
-async def waitRequest(requestType:str = "", timeout: int = 10):
+async def waitRequest(requestType:str = "", timeout: int = 30):
     count = 0
     while not Value.flag.get(requestType):
         await asyncio.sleep(3)
