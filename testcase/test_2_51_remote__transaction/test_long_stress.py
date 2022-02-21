@@ -63,12 +63,13 @@ async def test_transaction_stress(event_loop):
 
 
 
-@pytest.mark.asyncio
-@allure.feature("test_get_config")
-async def test_get_config(event_loop):
-    await service.getConfiguration(event_loop, ["ClockAlignedDataInterval"])
-    await asyncio.sleep(36000)
+# @pytest.mark.asyncio
+# @allure.feature("test_get_config")
+# async def test_get_config(event_loop):
+#     await service.getConfiguration(event_loop, ["ClockAlignedDataInterval"])
+#     await asyncio.sleep(30)
 
+# 充电过程中拔枪，预期订单结束，枪的状态恢复为"available"
 @pytest.mark.asyncio
 @allure.feature("test_unplug_in_transaction")
 async def test_get_config(event_loop):
@@ -77,7 +78,7 @@ async def test_get_config(event_loop):
 
     with open("../schema/RemoteStartTransaction.json", 'r') as f:
         data = json.load(f)
-    
+
     # 远程启动充电
     clearTriggerMessage()
     response = await service.remoteStartTransaction(event_loop, id_tag=data.get('idTag'),
@@ -97,12 +98,28 @@ async def test_get_config(event_loop):
     logging.info("拔枪")
     Connector.unslot()
 
-    await asyncio.sleep(10)
+    flag, msg = await waitRequest("stop_transaction")
+    assert flag == True
+    assert msg['reason'] == "EVDisconnected"
+
+    # 获取桩充电之前的状态
+    status = await waitConnectorStatus(1, "Available")
+    assert status == "Available"
+
+    flag, _ = await waitRequest("heartbeat")
+    assert flag == True
 
     # 重新插枪
     logging.info("重新插枪")
     Connector.slot()
 
-    await asyncio.sleep(50)
+    # 获取桩充电之前的状态
+    status = await waitConnectorStatus(1, "Preparing")
+    assert status == "Preparing"
 
-    #
+    flag, _ = await waitRequest("heartbeat")
+    assert flag == True
+
+    # 重新插枪
+    logging.info("重新拔枪")
+    Connector.unslot()

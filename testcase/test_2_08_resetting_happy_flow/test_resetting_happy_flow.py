@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import allure
@@ -118,28 +119,29 @@ async def test_hard_reset_with_transaction(event_loop):
     status = await waitConnectorStatus(1, "Charging")
     assert status == "Charging"
 
+    logging.info("硬重启")
     #重启充电桩
     clearTriggerMessage()
     response = await service.reset(event_loop, "Hard")
     assert response[0].status == RegistrationStatus.accepted
 
     #等待结束充电
-    flag, msg = await waitRequest("stop_transaction")
+    flag, msg = await waitRequest("stop_transaction", 30)
     assert flag == True
     assert msg["reason"] == "HardReset"
 
     # 等待桩发送Finishing
-    status = await waitConnectorStatus(1, "Preparing")
+    status = await waitConnectorStatus(1, "Preparing", 30)
     assert status == "Preparing"
 
     #等待充电桩重启
-    flag, _ = await waitRequest("boot_notification")
+    flag, _ = await waitRequest("boot_notification", 30)
     assert flag == True
 
     # 等待桩状态为可用
-    status = await waitConnectorStatus(0, "Available")
+    status = await waitConnectorStatus(0, "Available", 30)
     assert status == "Available"
-    status = await waitConnectorStatus(1, "Preparing")
+    status = await waitConnectorStatus(1, "Preparing", 30)
     assert status == "Preparing"
 
 
@@ -184,12 +186,13 @@ async def test_soft_reset_with_transaction(event_loop):
     assert status == "Charging"
 
     # 重启充电桩
+    logging.info("软重启")
     clearTriggerMessage()
     response = await service.reset(event_loop, "Soft")
     assert response[0].status == RegistrationStatus.accepted
 
     # 等待结束充电
-    flag, msg = await waitRequest("stop_transaction")
+    flag, msg = await waitRequest("stop_transaction", 30)
     assert flag == True
     assert msg["reason"] == "SoftReset"
 
