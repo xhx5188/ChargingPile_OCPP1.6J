@@ -11,7 +11,6 @@ import allure
 
 @allure.feature("test_power_failure1")
 @pytest.mark.asyncio
-@pytest.mark.need_power_down
 async def test_power_failure1(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
@@ -47,8 +46,8 @@ async def test_power_failure1(event_loop):
     assert status == "Charging"
 
     clearTriggerMessage()
-    # 掉电
-    logging.info("[请掉电。。。]")
+    logging.info("掉电")
+    Connector.unelectricity()
     await asyncio.sleep(60)
 
     # 掉电后等待充电桩发送结束充电请求
@@ -62,9 +61,8 @@ async def test_power_failure1(event_loop):
 
     await asyncio.sleep(30)
 
-    # 上电
-    logging.info("请上电。。。")
-    await asyncio.sleep(60)
+    logging.info("上电")
+    Connector.electricity()
 
     # 等待桩重启
     flag, _ = await waitRequest("boot_notification")
@@ -79,7 +77,6 @@ async def test_power_failure1(event_loop):
 
 @allure.feature("test_power_failure2")
 @pytest.mark.asyncio
-@pytest.mark.need_power_down
 async def test_power_failure2(event_loop):
     # 获取配置信息"AuthorizeRemoteTxRequests"
     result = await service.getConfiguration(event_loop, ["AuthorizeRemoteTxRequests"])
@@ -115,15 +112,12 @@ async def test_power_failure2(event_loop):
     assert status == "Charging"
 
     clearTriggerMessage()
-    # 掉电
-    logging.info("[请掉电。。。]")
+    logging.info("掉电")
+    Connector.unelectricity()
     await asyncio.sleep(60)
 
-    await asyncio.sleep(30)
-
-    # 上电
-    logging.info("[请上电。。。]")
-    await asyncio.sleep(60)
+    logging.info("上电")
+    Connector.electricity()
 
     # 等待桩重启
     flag, _ = await waitRequest("boot_notification")
@@ -143,8 +137,6 @@ async def test_power_failure2(event_loop):
 
 @allure.feature("test_power_failure3")
 @pytest.mark.asyncio
-@pytest.mark.need_power_down
-@pytest.mark.need_power_down
 async def test_power_failure3(event_loop):
     # 远程设置桩为不可用
     response = await service.changeAvailability(event_loop, connector_id=0, type="Inoperative")
@@ -157,13 +149,12 @@ async def test_power_failure3(event_loop):
     assert status == "Unavailable"
 
     clearTriggerMessage()
-    # 掉电
-    logging.info("[请掉电。。。]")
+    logging.info("掉电")
+    Connector.unelectricity()
     await asyncio.sleep(60)
 
-    # 上电
-    logging.info("[请上电。。。]")
-    await asyncio.sleep(60)
+    logging.info("上电")
+    Connector.electricity()
 
     # 等待桩重启
     flag, _ = await waitRequest("boot_notification")

@@ -29,10 +29,11 @@ async def server(event_loop):
 
 @pytest.fixture(scope="function", autouse=True)
 async def reboot(event_loop):
-    logging.info("[请掉电。。。]")
+    logging.info("掉电")
+    Connector.unelectricity()
     await asyncio.sleep(60)
-    logging.info("[请上电。。。]")
-    await asyncio.sleep(60)
+    logging.info("上电")
+    Connector.electricity()
     yield
 
 
