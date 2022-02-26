@@ -81,7 +81,6 @@ async def test_download_failed(event_loop):
 @pytest.mark.need_long_time
 @allure.feature("test_installation_failed")
 @pytest.mark.asyncio
-@pytest.mark.need_power_down
 async def test_installation_failed(event_loop):
     clearTriggerMessage()
     uri = "https://gateway-enetestuk.autel.com/api/app-version-manager/version/upgrade/ota"  # 英国测试环境
@@ -109,16 +108,13 @@ async def test_installation_failed(event_loop):
     assert msg["status"] == "Installing"
 
     clearTriggerMessage()
-    # 掉电
-    logging.info("[请掉电...]")
+    logging.info("掉电")
+    Connector.unelectricity()
     await asyncio.sleep(60)
-
-    await asyncio.sleep(30)
 
     clearTriggerMessage()
-    # 上电
-    logging.info("[请上电...]")
-    await asyncio.sleep(60)
+    logging.info("上电")
+    Connector.electricity()
 
     # 等待桩重启
     flag, _ = await waitRequest("boot_notification", 50)
