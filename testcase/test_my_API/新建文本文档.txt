@@ -1,0 +1,1296 @@
+bash: pipreqs: command not found
+-*-*-*-*-*-*-*-*开始循环执行1500次【反复启停订单并软重启桩的用例】-*-*-*-*-*-*-*-*
+============================= test session starts =============================
+platform win32 -- Python 3.7.1, pytest-6.2.5, py-1.11.0, pluggy-1.0.0 -- c:\users\autel\appdata\local\programs\python\python37\python.exe
+cachedir: .pytest_cache
+rootdir: D:\workspace\ocpp_test, configfile: pytest.ini
+plugins: allure-pytest-2.9.45, asyncio-0.17.0, timeout-2.0.2
+timeout: 1200.0s
+timeout method: thread
+timeout func_only: False
+collected 1 item
+
+test_Recurrent_cpVoltN.py::test_Recurrent_cpVoltN [INFO conftest.py:16] **************************************************set up*******************************************
+*******
+[INFO server.py:707] server listening on 0.0.0.0:9000
+[INFO conftest.py:18] Server Started listening to new connections...
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213261900000005","Heartbeat",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213261900000005",{"currentTime":"2022-01-22T13:26:21.123Z"}]
+[INFO conftest.py:21] the charge point has connected to this server
+[INFO conftest.py:22] **************************************************testcase**************************************************
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213262300000006","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213262300000006",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第1次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"20b0fb4a-0f20-4f88-b75a-02ea8d0f0952","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"20b0fb4a-0f20-4f88-b75a-02ea8d0f0952",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213262600000007","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213262600000007",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213262800000008","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213262800000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213262800000009","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:26:27.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213262800000009",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"606bf5e5-1044-4c85-a309-86e0bb4dd374","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221326300000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:26:30.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.230000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.380000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221326300000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221326400000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:27:00.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.200000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221326400000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"606bf5e5-1044-4c85-a309-86e0bb4dd374",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213272700000011","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:27:26.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213272700000011",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221326500000000C","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:27:31.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221326500000000C",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221327000000000D","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:27:31.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221327000000000D",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221327100000000E","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:27:32.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221327100000000E",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221327190000000F","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221327190000000F",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"6acfeb8b-8aa7-4083-80be-4a07a772fdfb","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"6acfeb8b-8aa7-4083-80be-4a07a772fdfb",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213275800000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213275800000001",{"currentTime":"2022-01-22T13:28:00.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213280000000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213280000000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213280000000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213280000000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第2次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"1d19ed82-8810-4825-bf12-ed5b3be172e6","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"1d19ed82-8810-4825-bf12-ed5b3be172e6",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213280400000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213280400000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213280600000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213280600000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213280700000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:28:06.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213280700000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213280800000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:28:09.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.130000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.380000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213280800000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"78970ab7-6110-4bb9-a38e-3c490f62e420","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213281900000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:28:19.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.190000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.380000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213281900000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213282900000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:28:49.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.000000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.380000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213282900000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"78970ab7-6110-4bb9-a38e-3c490f62e420",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221329080000000F","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:29:07.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221329080000000F",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221328400000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:29:19.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221328400000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221328500000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:29:20.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221328500000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221329000000000C","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:29:21.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221329000000000C",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221329000000000D","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221329000000000D",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"f372170a-138a-4768-9cf3-311a55da4e05","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"f372170a-138a-4768-9cf3-311a55da4e05",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213294500000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213294500000001",{"currentTime":"2022-01-22T13:29:47.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213294700000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213294700000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213294700000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213294700000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第3次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"0a3006a9-ec86-4712-8a7d-677383da107f","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"0a3006a9-ec86-4712-8a7d-677383da107f",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213295000000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213295000000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213295200000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213295200000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213295200000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:29:51.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213295200000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"b5ccc47a-db91-4fb0-96c8-cfe43d7f57f4","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213295400000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:29:54.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.540000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213295400000007",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213300400000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:30:24.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.370000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213300400000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"b5ccc47a-db91-4fb0-96c8-cfe43d7f57f4",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221330510000000E","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:30:50.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221330510000000E",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213301400000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:30:55.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213301400000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221330250000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:30:55.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221330250000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221330350000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:30:56.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221330350000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221330430000000C","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221330430000000C",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"b112ccfb-08dd-43b5-9990-6cd6511e695e","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"b112ccfb-08dd-43b5-9990-6cd6511e695e",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213312200000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213312200000001",{"currentTime":"2022-01-22T13:31:24.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213312400000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213312400000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213312400000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213312400000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第4次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"df1518d5-6733-42db-9c74-d4fc6327fdc9","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"df1518d5-6733-42db-9c74-d4fc6327fdc9",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213312500000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213312500000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213312800000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213312800000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213312900000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:31:28.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213312900000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213313100000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:31:31.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.230000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.380000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.010000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213313100000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"68f0f850-6cd4-4f3d-a5d7-02b23a76a11d","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213314100000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:31:41.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.400000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213314100000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213315100000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:32:11.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.480000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213315100000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"68f0f850-6cd4-4f3d-a5d7-02b23a76a11d",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221332290000000E","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:32:28.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221332290000000E",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221332020000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:32:41.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221332020000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221332120000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:32:42.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221332120000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221332220000000C","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221332220000000C",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"74801f51-4cb3-47b1-86a7-ac28a0ebcf51","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"74801f51-4cb3-47b1-86a7-ac28a0ebcf51",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213330800000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213330800000001",{"currentTime":"2022-01-22T13:33:09.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213330900000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213330900000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213330900000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213330900000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第5次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"23835d8b-fd77-44db-8455-35fd5bac53ba","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"23835d8b-fd77-44db-8455-35fd5bac53ba",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213331300000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213331300000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213331500000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213331500000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213331600000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:33:15.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213331600000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213331700000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:33:17.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.670000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213331700000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"3bf80cee-3cdd-4921-a750-001340c8543d","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213332800000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:33:28.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.720000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213332800000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213333800000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:33:58.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.560000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213333800000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"3bf80cee-3cdd-4921-a750-001340c8543d",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221334170000000F","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:34:16.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221334170000000F",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221333480000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:34:28.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221333480000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221333580000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:34:29.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221333580000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221334080000000C","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:34:29.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221334080000000C",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221334090000000D","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221334090000000D",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"eaf2e28e-c84f-4b58-aaa8-9436d817d753","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"eaf2e28e-c84f-4b58-aaa8-9436d817d753",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213345400000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213345400000001",{"currentTime":"2022-01-22T13:34:56.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213345600000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213345600000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213345600000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213345600000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第6次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"a8a17b29-9e45-479a-a169-746299d2d2d8","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"a8a17b29-9e45-479a-a169-746299d2d2d8",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213345700000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213345700000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213350100000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213350100000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213350100000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:35:00.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213350100000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"3f411a79-4a2c-46cc-942a-17d3bf734d67","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213350300000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:35:03.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.650000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213350300000007",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213351300000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:35:33.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.610000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213351300000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"3f411a79-4a2c-46cc-942a-17d3bf734d67",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221336020000000E","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:36:01.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221336020000000E",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213352300000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:36:03.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213352300000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221335330000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:36:04.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221335330000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221335430000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:36:05.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221335430000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221335540000000C","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221335540000000C",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"78431033-99fe-42c2-92f9-0d69bc90f932","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"78431033-99fe-42c2-92f9-0d69bc90f932",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213362900000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213362900000001",{"currentTime":"2022-01-22T13:36:30.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213363000000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213363000000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213363000000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213363000000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第7次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"36db750c-f11c-417c-9dcb-f669558d1c2a","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"36db750c-f11c-417c-9dcb-f669558d1c2a",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213363000000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213363000000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213363300000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213363300000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213363400000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:36:33.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213363400000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213363500000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:36:35.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.480000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213363500000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"62a5ba3d-44ec-4ef6-a597-650260b456b8","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213364500000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:36:45.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.570000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213364500000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213365600000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:37:16.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.710000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213365600000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"62a5ba3d-44ec-4ef6-a597-650260b456b8",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221337350000000F","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:37:34.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221337350000000F",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221337060000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:37:46.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221337060000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221337160000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:37:46.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221337160000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221337260000000C","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:37:47.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221337260000000C",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221337270000000D","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221337270000000D",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"2ffedac8-eaf0-4311-bea5-0733ce6070ba","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"2ffedac8-eaf0-4311-bea5-0733ce6070ba",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213381200000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213381200000001",{"currentTime":"2022-01-22T13:38:14.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213381400000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213381400000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213381400000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213381400000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第8次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"a54009a2-4ac7-4972-bd7b-924f4fe65363","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"a54009a2-4ac7-4972-bd7b-924f4fe65363",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213381600000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213381600000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213381900000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213381900000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213381900000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:38:18.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213381900000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213382000000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:38:20.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.470000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213382000000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"1500c13f-c806-4948-bcff-872ffab95f8d","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213383100000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:38:31.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.610000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213383100000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213384100000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:39:01.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.590000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213384100000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"1500c13f-c806-4948-bcff-872ffab95f8d",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221339200000000F","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:39:19.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221339200000000F",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221338510000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:39:31.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221338510000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221339020000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:39:32.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221339020000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221339120000000C","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:39:32.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221339120000000C",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221339120000000D","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221339120000000D",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"f2b2ba2c-1385-435d-810f-d6147b404d45","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"f2b2ba2c-1385-435d-810f-d6147b404d45",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213400000000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213400000000001",{"currentTime":"2022-01-22T13:40:01.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213400100000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213400100000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213400100000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213400100000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第9次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"f57d19b1-194f-4111-a5e9-84cdc3a48278","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"f57d19b1-194f-4111-a5e9-84cdc3a48278",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213400400000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213400400000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213400700000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213400700000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213400700000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:40:06.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213400700000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213400900000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:40:09.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.560000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213400900000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"f2645d94-261d-4dc4-9c28-b3c669cd4dba","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213401900000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:40:19.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.450000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213401900000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213402900000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:40:49.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.450000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.390000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213402900000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"f2645d94-261d-4dc4-9c28-b3c669cd4dba",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221341090000000F","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:41:08.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221341090000000F",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221340400000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:41:20.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221340400000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221340500000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:41:20.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221340500000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221341000000000C","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:41:21.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221341000000000C",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221341010000000D","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221341010000000D",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"4b50eff7-aeac-4610-86d4-b1c5e8058223","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"4b50eff7-aeac-4610-86d4-b1c5e8058223",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213414600000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213414600000001",{"currentTime":"2022-01-22T13:41:47.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213414700000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213414700000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213414700000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213414700000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第10次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"d8a3f7c0-554d-4970-8ef8-b654266dc456","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"d8a3f7c0-554d-4970-8ef8-b654266dc456",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213415100000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213415100000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213415400000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213415400000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213415500000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:41:54.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213415500000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"1ca3a3ef-73c7-40cf-b46b-d0902be7f66a","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213415700000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:41:57.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.460000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213415700000007",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213420700000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:42:27.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.660000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213420700000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"1ca3a3ef-73c7-40cf-b46b-d0902be7f66a",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221342550000000E","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:42:54.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221342550000000E",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213421700000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:42:57.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213421700000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221342280000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:42:58.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221342280000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221342380000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:42:59.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221342380000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221342470000000C","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221342470000000C",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"70adb45f-d3cc-47d3-aa33-2d2d75640b63","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"70adb45f-d3cc-47d3-aa33-2d2d75640b63",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213432300000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213432300000001",{"currentTime":"2022-01-22T13:43:25.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213432500000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213432500000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213432500000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213432500000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第11次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"66e2895c-9e94-46b0-95e8-08be33f5b0ea","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"66e2895c-9e94-46b0-95e8-08be33f5b0ea",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213432700000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213432700000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213433000000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213433000000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213433000000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:43:29.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213433000000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213433100000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:43:32.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.690000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213433100000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"fb4f3dc1-6e51-496c-aebb-5d2b19ff3dc4","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213434100000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:43:42.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.710000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213434100000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213435200000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:44:12.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.680000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213435200000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"fb4f3dc1-6e51-496c-aebb-5d2b19ff3dc4",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221344320000000F","StopTransaction",{"idTag":"AE0022A1GM9C00066K","transactionId":1,"meterStop
+":528242,"timestamp":"2022-01-22T13:44:31.000Z","reason":"Remote"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221344320000000F",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221344020000000A","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:44:42.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221344020000000A",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221344120000000B","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:44:42.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221344120000000B",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221344220000000C","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:44:43.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"0.000000","unit":"V","measurand":"Voltage",
+"phase":"L1"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.000000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","un
+it":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"Cu
+rrent.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221344220000000C",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"202201221344240000000D","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"202201221344240000000D",{}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"864fff17-87e0-4485-b39e-14c89e66bdd9","Reset",{"type":"Soft"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"864fff17-87e0-4485-b39e-14c89e66bdd9",{"status":"Accepted"}]
+[INFO test_Recurrent_cpVoltN.py:65] 稍等10秒，桩正在重启
+[ERROR server.py:233] connection handler failed
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 944, in transfer_data
+    message = await self.read_message()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1013, in read_message
+    frame = await self.read_data_frame(max_size=self.max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1089, in read_data_frame
+    frame = await self.read_frame(max_size)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 1148, in read_frame
+    extensions=self.extensions,
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\framing.py", line 70, in read
+    data = await reader(2)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 679, in readexactly
+    await self._wait_for_data('readexactly')
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\streams.py", line 473, in _wait_for_data
+    await self._waiter
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\selector_events.py", line 812, in _read_ready__data_received
+    data = self._sock.recv(self.max_size)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 231, in handler
+    await self.ws_handler(self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\server.py", line 1137, in _ws_handler
+    )(websocket, websocket.path)
+  File "D:\workspace\ocpp_test\server\connect.py", line 156, in on_connect
+    await Value.chargePoint.start()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\ocpp\charge_point.py", line 125, in start
+    message = await self._connection.recv()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 552, in recv
+    await self.ensure_open()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\websockets\legacy\protocol.py", line 920, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+[INFO server.py:259] connection closed
+[INFO server.py:641] connection open
+[INFO connect.py:146] Protocols Matched: ocpp1.6
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213450700000001","BootNotification",{"chargePointModel":"MaxiChargerAC","chargePointVendor":"
+Autel","firmwareVersion":"CAQoSPAGNL"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213450700000001",{"currentTime":"2022-01-22T13:45:08.123Z","interval":10,"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213450800000002","StatusNotification",{"connectorId":0,"status":"Available","errorCode":"NoEr
+ror"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213450800000002",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213450800000003","StatusNotification",{"connectorId":1,"status":"Preparing","errorCode":"NoEr
+ror","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213450800000003",{}]
+[INFO test_Recurrent_cpVoltN.py:31] ========这是第12次开始执行========
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"5c47092e-5795-4c9f-afa0-0900ab8db7c9","RemoteStartTransaction",{"idTag":"AE0022A1GM9C00066K","connectorId":1,"c
+hargingProfile":{"chargingProfileId":1,"transactionId":1,"stackLevel":1,"chargingProfilePurpose":"ChargePointMaxProfile","chargingProfileKind":"Absolute","recurrencyKind":
+"Daily","validFrom":"date-time","validTo":"date-time","chargingSchedule":{"duration":10,"startSchedule":"date-time","chargingRateUnit":"W","chargingSchedulePeriod":[{"star
+tPeriod":1,"limit":1.5,"numberPhases":1}],"minChargingRate":1.5}}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"5c47092e-5795-4c9f-afa0-0900ab8db7c9",{"status":"Accepted"}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213451000000004","Authorize",{"idTag":"AE0022A1GM9C00066K"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213451000000004",{"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213451300000005","StatusNotification",{"connectorId":1,"status":"Charging","errorCode":"NoErr
+or","info":"eCp_6V"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213451300000005",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213451400000006","StartTransaction",{"connectorId":1,"idTag":"AE0022A1GM9C00066K","meterStart
+":528242,"timestamp":"2022-01-22T13:45:13.000Z"}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213451400000006",{"transactionId":1,"idTagInfo":{"status":"Accepted"}}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213451500000007","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:45:15.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.780000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213451500000007",{}]
+[INFO test_Recurrent_cpVoltN.py:52] ********正在充电********稍等约1分钟********
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [2,"b46579d2-720e-44bb-ab61-b6725702bed6","RemoteStopTransaction",{"transactionId":1}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213452500000008","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:45:25.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"213.730000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.400000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213452500000008",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [2,"2022012213453600000009","MeterValues",{"connectorId":1,"transactionId":1,"meterValue":[{"timestamp":
+"2022-01-22T13:45:56.000Z","sampledValue":[{"value":"528242","unit":"Wh","measurand":"Energy.Active.Import.Register"},{"value":"214.130000","unit":"V","measurand":"Voltage
+","phase":"L1"},{"value":"7.420000","unit":"V","measurand":"Voltage","phase":"L2"},{"value":"0.950000","unit":"V","measurand":"Voltage","phase":"L3"},{"value":"0.009000","
+unit":"A","measurand":"Current.Export","phase":"L1"},{"value":"0.009000","unit":"A","measurand":"Current.Export","phase":"L2"},{"value":"0.009000","unit":"A","measurand":"
+Current.Export","phase":"L3"},{"value":"0","unit":"W","measurand":"Power.Offered"}]}]}]
+[INFO charge_point.py:317] CP_1AE0022A1GM9C00066K: send [3,"2022012213453600000009",{}]
+[INFO charge_point.py:126] CP_1AE0022A1GM9C00066K: receive message [3,"b46579d2-720e-44bb-ab61-b6725702bed6",{"status":"Accepted"}]
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Timeout +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Stack of MainThread (3524) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "C:\Users\Autel\AppData\Local\Programs\Python\Python37\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\config\__init__.py", line 185, in console_main
+    code = main()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\config\__init__.py", line 163, in main
+    config=config
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_hooks.py", line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_manager.py", line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_callers.py", line 39, in _multicall
+    res = hook_impl.function(*args)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\main.py", line 316, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\main.py", line 269, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\main.py", line 323, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_hooks.py", line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_manager.py", line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_callers.py", line 39, in _multicall
+    res = hook_impl.function(*args)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\main.py", line 348, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_hooks.py", line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_manager.py", line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_callers.py", line 39, in _multicall
+    res = hook_impl.function(*args)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\runner.py", line 109, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\runner.py", line 126, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\runner.py", line 215, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\runner.py", line 255, in call_runtest_hook
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\runner.py", line 311, in from_call
+    result: Optional[TResult] = func()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\runner.py", line 255, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_hooks.py", line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_manager.py", line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_callers.py", line 39, in _multicall
+    res = hook_impl.function(*args)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\runner.py", line 162, in pytest_runtest_call
+    item.runtest()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\python.py", line 1641, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_hooks.py", line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_manager.py", line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pluggy\_callers.py", line 39, in _multicall
+    res = hook_impl.function(*args)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\_pytest\python.py", line 183, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\site-packages\pytest_asyncio\plugin.py", line 319, in inner
+    _loop.run_until_complete(task)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\base_events.py", line 560, in run_until_complete
+    self.run_forever()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\base_events.py", line 528, in run_forever
+    self._run_once()
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\asyncio\base_events.py", line 1728, in _run_once
+    event_list = self._selector.select(timeout)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\selectors.py", line 323, in select
+    r, w, _ = self._select(self._readers, self._writers, [], timeout)
+  File "c:\users\autel\appdata\local\programs\python\python37\lib\selectors.py", line 314, in _select
+    r, w, x = select.select(r, w, w, timeout)
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Timeout +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Report successfully generated to report\html
+Generating report to temp directory...
+Report successfully generated to C:\Users\Autel\AppData\Local\Temp\5614627522047589581\allure-report
+Starting web server...
+2022-01-22 21:46:12.429:INFO::main: Logging initialized @1589ms to org.eclipse.jetty.util.log.StdErrLog
+Server started at <http://10.10.41.205:59284/>. Press <Ctrl+C> to exit
