@@ -1,0 +1,47 @@
+[
+  2,
+  "202112201627090000001C",
+  "DataTransfer",
+  {
+    "vendorId": "Autel",
+    "messageId": "BIllUpload",
+    "data": {
+      "connectorId": 2,
+      "LocalId": "DG1120B1CMBC00001C:2:61c03ddd:0",
+      "RemoteId": "2",
+      "startMode": 2,
+      "chargeMode": 0,
+      "chargeParam": 0,
+      "startUserId": "1",
+      "stopUserId": "1",
+      "svcStartTime": "2021-12-20T08:25:01.000Z",
+      "svcEndTime": "2021-12-20T08:27:08.000Z",
+      "chargeTimeSec": 127,
+      "stopTime": 0,
+      "meterStart": 596159,
+      "meterEnd": 597983,
+      "energy": 1824,
+      "stopReason": 3,
+      "startSoc": 0,
+      "endSoc": 60,
+      "startBalance": 1000000000,
+      "endBalance": 999854080,
+      "carVin": "",
+      "billTemplate": "8be537b74df84c7a9361",
+      "totalMoney": 145920,
+      "svcMoney": 72960,
+      "chargeMoney": 72960,
+      "accountFlag": 0,
+      "svcEndFlag": 1,
+      "sectNum": 1,
+      "secDataArry": [
+        {
+          "sectStartTime": "08:25:01",
+          "sectStopTime": "08:27:08",
+          "sectAttribute": 1,
+          "sectEnergy": 1824
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "listVersion": 192,
+  "localAuthorizationList": [
+    {
+      "idTag": "04F23ED28A6B21",
+      "idTagInfo": {
+          "status": "Accepted"
+      }
+    }
+  ],
+  "updateType": "Differential"
+}

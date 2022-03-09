@@ -1,0 +1,69 @@
+{
+  "vendorId": "Autel",
+  "messageId": "Billtemplate",
+  "data": {
+    "billTemplateid": "8be537b74df84c7a9361",
+    "templateItem": [
+      {
+        "startTime": "00:00",
+        "sectAttri": 2,
+        "energyPrice": 67000,
+        "servicePrice": 13000
+      },
+      {
+        "startTime": "01:00",
+        "sectAttri": 1,
+        "energyPrice": 102000,
+        "servicePrice": 8000
+      },
+      {
+        "startTime": "03:30",
+        "sectAttri": 2,
+        "energyPrice": 67000,
+        "servicePrice": 13000
+      },
+      {
+        "startTime": "06:00",
+        "sectAttri": 1,
+        "energyPrice": 102000,
+        "servicePrice": 8000
+      },
+      {
+        "startTime": "08:30",
+        "sectAttri": 2,
+        "energyPrice": 67000,
+        "servicePrice": 13000
+      },
+      {
+        "startTime": "11:00",
+        "sectAttri": 1,
+        "energyPrice": 102000,
+        "servicePrice": 8000
+      },
+      {
+        "startTime": "13:00",
+        "sectAttri": 2,
+        "energyPrice": 67000,
+        "servicePrice": 13000
+      },
+      {
+        "startTime": "15:00",
+        "sectAttri": 3,
+        "energyPrice": 23000,
+        "servicePrice": 35000
+      },
+      {
+        "startTime": "16:00",
+        "sectAttri": 3,
+        "energyPrice": 23000,
+        "servicePrice": 35000
+      },
+      {
+        "startTime": "23:00",
+        "sectAttri": 2,
+        "energyPrice": 67000,
+        "servicePrice": 13000
+      }
+    ]
+  }
+}

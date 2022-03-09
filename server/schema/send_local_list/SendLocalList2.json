@@ -1,0 +1,27 @@
+{
+  "listVersion": 2,
+  "localAuthorizationList": [
+    {
+      "idTag": "111111",
+      "idTagInfo": {
+          "status": "Blocked"
+      }
+    }, {
+      "idTag": "222222",
+      "idTagInfo": {
+          "status": "Blocked"
+      }
+    }, {
+      "idTag": "333333",
+      "idTagInfo": {
+          "status": "Accepted"
+      }
+    }, {
+      "idTag": "444444",
+      "idTagInfo": {
+          "status": "Accepted"
+      }
+    }
+  ],
+  "updateType": "Full"
+}

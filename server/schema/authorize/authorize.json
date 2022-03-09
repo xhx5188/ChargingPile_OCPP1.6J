@@ -1,0 +1,7 @@
+{
+  "idTagInfo": {
+    "expiryDate": "date-time",
+    "parentIdTag": "12345",
+    "status": "Accepted"
+  }
+}

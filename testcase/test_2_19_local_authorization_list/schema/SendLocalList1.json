@@ -1,0 +1,18 @@
+{
+  "listVersion": 191,
+  "localAuthorizationList": [
+    {
+      "idTag": "04F23ED28A6B11",
+      "idTagInfo": {
+          "status": "Accepted"
+      }
+    },
+    {
+      "idTag": "04F23ED28A6B12",
+      "idTagInfo": {
+          "status": "Accepted"
+      }
+    }
+  ],
+  "updateType": "Full"
+}
